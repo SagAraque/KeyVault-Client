@@ -1,0 +1,331 @@
+*{
+    -fx-color-main: #2a333f;
+    -fx-light-main: #475464;
+    -fx-light-gray: #e5e4e4;
+    -fx-color-white: #ffffff;
+    -fx-second-gray: #F5F5F5;
+    -fx-dark-gray: #676767;
+    -fx-error: #BD3D3D;
+}
+
+.text16, .text20, .text14{
+    -fx-font-family: "Libre Franklin";
+    -fx-font-size: 16px;
+}
+
+.bold{
+    -fx-font-family: "Libre Franklin Bold";
+}
+
+.medium{
+    -fx-font-family: "Libre Franklin Medium";
+}
+
+.text20{
+    -fx-font-size: 20px;
+}
+
+.text14{
+    -fx-font-size: 14px;
+}
+
+.lightWhiteText{
+    -fx-text-fill: -fx-second-gray;
+    -fx-opacity: 0.6;
+}
+
+/**
+----- LOGIN -----
+ */
+
+#authBody{
+    -fx-min-width: 600px;
+    -fx-max-width: 600px;
+    -fx-max-height: 800px;
+    -fx-min-height: 800px;
+    -fx-background-color: -fx-light-gray;
+    -fx-spacing: 50px;
+    -fx-alignment: top-center;
+}
+
+#authTop{
+    -fx-min-height: 52px;
+    -fx-max-height: 52px;
+    -fx-background-color: -fx-color-main;
+}
+
+.whiteFieldContainer{
+    -fx-min-width: 400px;
+    -fx-max-width: 500px;
+    -fx-min-height: 50px;
+    -fx-background-color: -fx-second-gray;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 15px;
+    -fx-spacing: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 2.0);
+}
+
+.fieldsBody{
+    -fx-max-height: 50px;
+    -fx-min-height: 50px;
+    -fx-spacing: 5px;
+    -fx-cursor: text;
+}
+
+.fields{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0px;
+}
+
+.authButton{
+    -fx-max-width: 200px;
+    -fx-min-width: 200px;
+    -fx-background-color: -fx-color-main;
+    -fx-font-size: 20px;
+    -fx-font-family: "Franklin Gothic Book";
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.authButton:hover{
+    -fx-background-color: -fx-light-main;
+}
+
+.verifyField{
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-min-width: 40px;
+    -fx-max-width: 40px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 2.0);
+}
+
+.messageContainer{
+    -fx-min-width: 350px;
+    -fx-max-width: 550px;
+    -fx-max-height: 50px;
+    -fx-min-height: 50px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
+.messageError{
+    -fx-background-color: -fx-error;
+}
+
+/**
+----- MAIN -----
+ */
+
+.topMenu{
+    -fx-background-color: -fx-light-main;
+    -fx-min-height: 68px;
+    -fx-pref-height: 68px;
+    -fx-max-height: 68px;
+}
+
+#searchBar{
+    -fx-background-color: -fx-color-main;
+    -fx-max-height: 40px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 15px;
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+#searchField{
+    -fx-min-height: 30px;
+    -fx-padding: 0px;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#leftSideMenu{
+    -fx-background-color: -fx-color-main;
+    -fx-min-width: 280px;
+    -fx-pref-width: 280px;
+    -fx-max-width: 280px;
+    -fx-padding: 25px;
+    -fx-spacing: 50px;
+}
+
+.menuButtonContainer{
+    -fx-spacing: 20px;
+}
+
+.menuButton{
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.menuButtonSelected, .menuButton:hover{
+    -fx-background-color: -fx-light-main;
+}
+
+/**
+----- ITEMS MENU -----
+ */
+
+#itemsMenu{
+    -fx-pref-width: 540px;
+    -fx-max-width: 540px;
+    -fx-min-width: 380px;
+    -fx-pref-height: 950px;
+    -fx-background-color: -fx-second-gray;
+    -fx-border-width: 0px;
+}
+
+#itemsContainer{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 10px;
+}
+
+#infoContainer{
+    -fx-background-color: -fx-light-gray;
+    -fx-pref-width: 1098px;
+    -fx-spacing: 40;
+}
+
+#addButton{
+    -fx-background-color: -fx-color-main;
+    -fx-text-fill: -fx-color-white;
+    -fx-max-width: 240px;
+    -fx-max-height: 40px;
+    -fx-min-width: 180px;
+    -fx-pref-width: 280px;
+    -fx-min-height: 40px;
+    -fx-text-alignment: center;
+    -fx-padding: 0px;
+}
+
+#addButton:hover{
+    -fx-background-color: -fx-light-main;
+}
+
+#buttonContainer{
+    -fx-max-height:80px;
+    -fx-pref-height: 80px;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.activeButton{
+    -fx-background-color: -fx-dark-main;
+}
+
+#menuButton{
+    -fx-pref-width: 72px;
+    -fx-pref-height: 72px;
+    -fx-alignment: center;
+}
+
+#menuButton:hover{
+    -fx-background-color: -fx-dark-main;
+}
+
+#userContainer{
+    -fx-spacing: 10px;
+}
+
+#userContainerText{
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+.itemContainer{
+    -fx-max-height: 50px;
+    -fx-alignment: center-left;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-spacing: 20px;
+}
+
+.itemContainer:hover{
+    -fx-cursor: hand;
+    -fx-background-color: -fx-light-gray;
+}
+
+.itemContainerBorder{
+    -fx-min-width: 10px;
+    -fx-max-width: 10px;
+    -fx-background-color: -fx-color-main;
+    -fx-background-radius: 5px 0px 0px 5px;
+    -fx-border-radius: 5px 0px 0px 5px;
+}
+
+.itemTextContainer{
+    -fx-padding: 10px 0px 10px 0px;
+}
+
+/**
+----- SHOW ITEMS -----
+ */
+
+#infoItemPane{
+    -fx-max-width: 640px;
+    -fx-pref-width: 640px;
+    -fx-min-width: 300px;
+    -fx-padding: 0px 40px 0px 20px;
+}
+
+.infoItem{
+    -fx-max-width: 600px;
+    -fx-pref-width: 600px;
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-spacing: 40px;
+
+}
+
+.itemWhiteContainer{
+    -fx-pref-width: 600px;
+    -fx-max-width: 600px;
+    -fx-max-height: infinite;
+}
+
+.itemField90{
+    -fx-pref-width: 525px;
+}
+
+.itemField80{
+    -fx-pref-width: 480px;
+}
+
+.itemIconButton{
+    -fx-max-width: 24px;
+    -fx-max-height: 24px;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.itemIconButton:hover{
+    -fx-background-color: -fx-light-gray;
+}
+
+.fieldsBodyTextArea{
+    -fx-max-height: 300px;
+}
+
+.fieldsArea{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0px;
+}
+
+.fieldsArea .content{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.MainController">
+   <children>
+      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" translateZ="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox id="leftSideMenu" fx:id="leftSideMenu" stylesheets="@style.css">
+               <children>
+                  <HBox id="userContainer" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@image.png" />
+                           </image>
+                        </ImageView>
+                        <VBox id="userContainerText">
+                           <children>
+                              <Label fx:id="userNameLabel" text="Label">
+                                 <styleClass>
+                                    <String fx:value="text16" />
+                                    <String fx:value="lightWhiteText" />
+                                 </styleClass>
+                              </Label>
+                              <Label styleClass="lightWhiteText" text="2 dispositivos" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox prefWidth="100.0" spacing="5.0">
+                     <children>
+                        <Label id="all" fx:id="allButton" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="448.0" text="Todos los items">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="menuButton" />
+                              <String fx:value="menuButtonSelected" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/vault.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <Label id="favorites" fx:id="menuFavorites" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="458.0" text="Favoritos">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="menuButton" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/star.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefWidth="100.0" spacing="5.0">
+                     <children>
+                        <Label text="Categorias">
+                           <styleClass>
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="text16" />
+                              <String fx:value="medium" />
+                           </styleClass>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label id="passwords" fx:id="menuPasswords" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="298.0" text="Contraseñas">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="menuButton" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/key.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <Label id="notes" fx:id="menuNotes" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="300.0" text="Notas seguras">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="menuButton" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/secure.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <HBox prefWidth="1173.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox id="itemsMenu" stylesheets="@style.css">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="topMenu" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox id="searchBar" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@style.css">
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="lightWhiteText">
+                                       <image>
+                                          <Image url="@icons/lupa.png" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField id="searchField" fx:id="searchField" focusTraversable="false" layoutX="59.0" layoutY="22.0" onKeyTyped="#searchItem" prefHeight="30.0" prefWidth="653.0" promptText="Buscar...">
+                                       <styleClass>
+                                          <String fx:value="lightWhiteText" />
+                                          <String fx:value="text16" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <ScrollPane id="itemsContainer" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox fx:id="scrollItemContainer" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
+                           </content>
+                        </ScrollPane>
+                        <VBox id="buttonContainer" prefHeight="200.0" prefWidth="100.0" stylesheets="@style.css">
+                           <children>
+                              <Button id="addButton" mnemonicParsing="false" stylesheets="@style.css" text="+">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox id="infoContainer" fx:id="infoContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@style.css">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="topMenu" stylesheets="@style.css">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
