@@ -1,17 +1,16 @@
 package com.example.keyvault_client;
 import com.keyvault.entities.Items;
-import com.keyvault.entities.Notes;
-import com.keyvault.entities.Passwords;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 
@@ -28,6 +27,8 @@ public class MainController {
     public Label userNameLabel, allButton, menuFavorites, menuPasswords, menuNotes;
     @FXML
     public TextField searchField;
+    @FXML
+    public StackPane mainBody;
     private Label selectedMenu;
     private List<Items> userItems = new ArrayList<>();
     public List<Items> userFavorites = new ArrayList<>();
@@ -81,9 +82,28 @@ public class MainController {
         }
     }
 
+    @FXML
+    public void showCreateView(){
+        try {
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/create-view.fxml"));
+            AnchorPane box = loader.load();
+
+            CreateController controller = loader.getController();
+            controller.initialize(mainBody);
+
+            if(infoContainer.getChildren().size() == 2)
+                infoContainer.getChildren().remove(1);
+
+            infoContainer.getChildren().add(box);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showItemInfo(Items target){
         try {
-            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("item-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/item-view.fxml"));
             AnchorPane box = loader.load();
 
             ShowController controller = loader.getController();
@@ -162,4 +182,17 @@ public class MainController {
             Platform.runLater(() -> scrollItemContainer.getChildren().add(generateItemCard(i)));
         }
     }
+
+    public static void changeNodeVisibility(boolean visible, Node... nodes) {
+        for (Node node : nodes)
+        {
+            if(node != null)
+            {
+                node.setVisible(visible);
+                node.setManaged(visible);
+            }
+
+        }
+    }
+
 }

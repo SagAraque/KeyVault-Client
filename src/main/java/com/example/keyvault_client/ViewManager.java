@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class ViewManager extends Application {
         try {
             restartExecutor();
 
-            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource(fxml));
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
             Scene scene = new Scene(loader.load(), width, height,true, SceneAntialiasing.BALANCED);
 
             window.setScene(scene);
@@ -59,6 +60,23 @@ public class ViewManager extends Application {
             window.setMaximized(isResizable);
             window.setResizable(isResizable);
             window.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void displayModalWindow(String fxml, StackPane parent){
+        try {
+            if(parent.getChildren().size() == 1)
+            {
+                FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
+                HBox modal = loader.load();
+
+                modal.toFront();
+                parent.getChildren().add(modal);
+            }
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

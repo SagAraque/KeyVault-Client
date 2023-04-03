@@ -9,23 +9,34 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.MainController">
+<StackPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.MainController">
    <children>
-      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" translateZ="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <left>
-            <VBox id="leftSideMenu" fx:id="leftSideMenu" stylesheets="@style.css">
+      <GridPane minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="280.0" prefWidth="280.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1649.0" minWidth="10.0" prefWidth="1641.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="405.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="764.0" minHeight="10.0" prefHeight="764.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+        </rowConstraints>
+         <children>
+            <VBox id="leftSideMenu" fx:id="leftSideMenu" stylesheets="@../style.css" GridPane.rowSpan="3">
                <children>
                   <HBox id="userContainer" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@image.png" />
+                              <Image url="@../image.png" />
                            </image>
                         </ImageView>
                         <VBox id="userContainerText">
@@ -53,7 +64,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@icons/vault.png" />
+                                    <Image url="@../icons/vault.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -67,7 +78,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@icons/star.png" />
+                                    <Image url="@../icons/star.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -98,7 +109,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@icons/key.png" />
+                                    <Image url="@../icons/key.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -112,7 +123,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@icons/secure.png" />
+                                    <Image url="@../icons/secure.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -121,22 +132,20 @@
                   </VBox>
                </children>
             </VBox>
-         </left>
-         <center>
-            <HBox prefWidth="1173.0" BorderPane.alignment="CENTER">
+            <HBox prefWidth="1173.0" GridPane.columnIndex="1" GridPane.rowSpan="3">
                <children>
-                  <VBox id="itemsMenu" stylesheets="@style.css">
+                  <VBox id="itemsMenu" stylesheets="@../style.css">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="topMenu" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="topMenu" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
                            <children>
-                              <HBox id="searchBar" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@style.css">
+                              <HBox id="searchBar" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../style.css">
                                  <VBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </VBox.margin>
                                  <children>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="lightWhiteText">
                                        <image>
-                                          <Image url="@icons/lupa.png" />
+                                          <Image url="@../icons/lupa.png" />
                                        </image>
                                     </ImageView>
                                     <TextField id="searchField" fx:id="searchField" focusTraversable="false" layoutX="59.0" layoutY="22.0" onKeyTyped="#searchItem" prefHeight="30.0" prefWidth="653.0" promptText="Buscar...">
@@ -149,14 +158,14 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <ScrollPane id="itemsContainer" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+                        <ScrollPane id="itemsContainer" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
                            <content>
                               <VBox fx:id="scrollItemContainer" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
                            </content>
                         </ScrollPane>
-                        <VBox id="buttonContainer" prefHeight="200.0" prefWidth="100.0" stylesheets="@style.css">
+                        <VBox id="buttonContainer" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style.css">
                            <children>
-                              <Button id="addButton" mnemonicParsing="false" stylesheets="@style.css" text="+">
+                              <Button id="addButton" mnemonicParsing="false" onAction="#showCreateView" stylesheets="@../style.css" text="+">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -168,9 +177,9 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox id="infoContainer" fx:id="infoContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@style.css">
+                  <VBox id="infoContainer" fx:id="infoContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style.css">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="topMenu" stylesheets="@style.css">
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="topMenu" stylesheets="@../style.css">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -179,7 +188,7 @@
                   </VBox>
                </children>
             </HBox>
-         </center>
-      </BorderPane>
+         </children>
+      </GridPane>
    </children>
-</AnchorPane>
+</StackPane>

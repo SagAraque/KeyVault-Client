@@ -15,16 +15,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane id="authBody" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.AuthController">
+<StackPane id="authBody" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.AuthController">
    <children>
-      <VBox id="authBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css">
+      <VBox id="authBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css">
          <children>
             <VBox id="authTop" prefHeight="200.0" prefWidth="100.0" />
             <VBox alignment="TOP_CENTER" prefWidth="100.0" spacing="10.0">
                <children>
                   <ImageView id="authImage" fitHeight="134.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@image.png" />
+                        <Image url="@../image.png" />
                      </image>
                   </ImageView>
                   <Label styleClass="medium" text="Iniciar sesión">

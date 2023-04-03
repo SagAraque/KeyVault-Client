@@ -108,16 +108,8 @@ public class ShowController {
         clipboard.setContents(new StringSelection(copyText), null);
     }
 
-    private void hideNode(Node... nodes) {
-        for (Node node : nodes)
-        {
-            if(node != null)
-            {
-                node.setVisible(false);
-                node.setManaged(false);
-            }
-
-        }
-
+    private void hideNode(Node... nodes){
+        MainController.changeNodeVisibility(false, nodes);
     }
+
 }
