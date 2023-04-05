@@ -62,7 +62,7 @@
 .whiteFieldContainer{
     -fx-min-width: 400px;
     -fx-max-width: 500px;
-    -fx-min-height: 50px;
+    -fx-min-height: 20px;
     -fx-background-color: -fx-second-gray;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
@@ -135,6 +135,9 @@
     -fx-min-height: 68px;
     -fx-pref-height: 68px;
     -fx-max-height: 68px;
+    -fx-spacing: 15px;
+    -fx-alignment: center;
+    -fx-padding: 0px 20px 0px 20px;
 }
 
 #searchBar{
@@ -176,6 +179,18 @@
 
 .menuButtonSelected, .menuButton:hover{
     -fx-background-color: -fx-light-main;
+}
+
+.actionButton{
+    -fx-background-color: -fx-color-main;
+    -fx-min-width: 58px;
+    -fx-max-height: 34px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-font-family: "Libre Franklin";
+    -fx-font-size: 16px;
 }
 
 /**
@@ -383,7 +398,7 @@
 
 .generatorBody{
     -fx-padding: 15px 10px 5px 10px;
-    -fx-spacing: 20px;
+    -fx-spacing: 30px;
     -fx-alignment: top-center;
 }
 
@@ -396,6 +411,35 @@
     -fx-text-fill: white;
 }
 
+.generatorButtonWhite{
+    -fx-background-color: white;
+    -fx-text-fill: -fx-light-main;
+    -fx-border-color: -fx-light-main;
+}
+
 .generatorButton:hover{
     -fx-background-color: -fx-color-main;
+}
+
+.generatorCheckBox .box{
+    -fx-background-color: -fx-light-gray;
+    -fx-border-color: #b6b6b6;
+    -fx-border-radius:3px;
+}
+
+.generatorCheckBox:selected .mark {
+    -fx-background-color: white;
+}
+
+.generatorCheckBox:selected .box {
+    -fx-background-color: -fx-light-main;
+    -fx-border-color: transparent;
+}
+
+.generatorSlider .thumb{
+    -fx-background-color: -fx-color-main;
+}
+
+.generatorSlider .track{
+    -fx-background-color: linear-gradient(to right, #475464 0.1, #e5e4e4 0.2);
 }

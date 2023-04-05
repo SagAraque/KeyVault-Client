@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.CreateController">
+   <children>
+      <VBox styleClass="infoItem" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="passwordButton" alignment="CENTER" onMouseClicked="#actionMenu" text="Contraseña" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="medium" />
+                              <String fx:value="createSelectorSelected" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="noteButton" alignment="CENTER" onMouseClicked="#actionMenu" text="Nota segura" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="medium" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              </items>
+               <styleClass>
+                  <String fx:value="itemWhiteContainer" />
+                  <String fx:value="whiteFieldContainer" />
+                  <String fx:value="createSelector" />
+               </styleClass>
+            </SplitPane>
+            <VBox>
+               <styleClass>
+                  <String fx:value="whiteFieldContainer" />
+                  <String fx:value="itemWhiteContainer" />
+               </styleClass>
+               <children>
+                  <VBox styleClass="fieldsBody">
+                     <children>
+                        <Label styleClass="text16" text="Nombre" textFill="#676767" />
+                        <TextField fx:id="nameField">
+                           <styleClass>
+                              <String fx:value="fields" />
+                              <String fx:value="text16" />
+                           </styleClass>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="userBox" styleClass="fieldsBody">
+                     <children>
+                        <Label styleClass="text16" text="Usuario" textFill="#676767" />
+                        <TextField fx:id="usernameField">
+                           <styleClass>
+                              <String fx:value="itemField90" />
+                              <String fx:value="fields" />
+                              <String fx:value="text16" />
+                           </styleClass>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <HBox fx:id="passwordBox" alignment="BOTTOM_CENTER" spacing="20.0" styleClass="fieldsBody">
+                     <children>
+                        <VBox styleClass="fieldsBody">
+                           <children>
+                              <Label styleClass="text16" text="Contraseña" textFill="#676767" />
+                              <PasswordField fx:id="passwordField">
+                                 <styleClass>
+                                    <String fx:value="itemField80" />
+                                    <String fx:value="fields" />
+                                    <String fx:value="text16" />
+                                 </styleClass>
+                              </PasswordField>
+                           </children>
+                        </VBox>
+                        <Button fx:id="showPass" mnemonicParsing="false" styleClass="itemIconButton">
+                           <graphic>
+                              <ImageView fx:id="eyeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/closeEye.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="copyPass" mnemonicParsing="false" onAction="#displayGenerator" styleClass="itemIconButton">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/reload.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="urlBox">
+               <styleClass>
+                  <String fx:value="whiteFieldContainer" />
+                  <String fx:value="itemWhiteContainer" />
+               </styleClass>
+               <children>
+                  <VBox styleClass="fieldsBody">
+                     <children>
+                        <Label styleClass="text16" text="URL" textFill="#676767" />
+                        <TextField fx:id="urlField">
+                           <styleClass>
+                              <String fx:value="fields" />
+                              <String fx:value="text16" />
+                           </styleClass>
+                        </TextField>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox>
+               <styleClass>
+                  <String fx:value="whiteFieldContainer" />
+                  <String fx:value="itemWhiteContainer" />
+               </styleClass>
+               <children>
+                  <VBox>
+                     <children>
+                        <Label fx:id="noteTitle" styleClass="text16" text="Anotación" textFill="#676767" />
+                        <TextArea fx:id="noteField" wrapText="true">
+                           <styleClass>
+                              <String fx:value="fieldsArea" />
+                              <String fx:value="text16" />
+                           </styleClass>
+                        </TextArea>
+                     </children>
+                     <styleClass>
+                        <String fx:value="fieldsBody" />
+                        <String fx:value="fieldsBodyTextArea" />
+                     </styleClass>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets left="20.0" right="40.0" />
+   </padding>
+</AnchorPane>

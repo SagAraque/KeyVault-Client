@@ -70,7 +70,27 @@ public class ConnectionController extends Thread{
         int response = api.getItems();
 
         return response == 200 ? (List<Items>) api.getResponseContent()[0] : null;
+    }
 
+    public int deleteItem(Items item){
+        return api.deleteItem(item);
+
+    }
+
+    public int modItem(Items item){
+        return api.modItem(item);
+    }
+
+    public Items createNote(String name, String content){
+        return  api.createNote(name, "", content);
+    }
+
+    public Items createPassword(String name, String observations, String url, String email, String pass){
+        return api.createPassword(name, observations, url, email, pass);
+    }
+
+    public int insertItem(Items newItem){
+        return api.insertItem(newItem);
     }
 
     public KeyVault getApi() {

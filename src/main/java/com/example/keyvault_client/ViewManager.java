@@ -30,6 +30,7 @@ public class ViewManager extends Application {
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/LibreFranklin-Medium.ttf"), 12);
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/LibreFranklin-Regular.ttf"), 12);
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/LibreFranklin-Bold.ttf"), 12);
+        System.setProperty("prism.lcdtext", "false");
 
         launch();
     }

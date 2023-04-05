@@ -5,6 +5,7 @@ import com.keyvault.entities.Notes;
 import com.keyvault.entities.Passwords;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.ExecutorService;
 
 public class ShowController {
     @FXML
@@ -40,12 +42,13 @@ public class ShowController {
     VBox urlBox;
     @FXML
     ImageView eyeIcon;
+    HBox topMenuContainer;
+    Items selectedItem;
     Image openEyeIcon = new Image(getClass().getResourceAsStream("icons/openEye.png"));
     Image closeEyeIcon = new Image(getClass().getResourceAsStream("icons/closeEye.png"));
-
     boolean passIsVisible = false;
 
-    public void initialize(Items item){
+    public void initialize(Items item, HBox topMenu){
         nameField.setText(item.getName());
 
         if(item.getPasswordsByIdI() != null)
@@ -73,6 +76,9 @@ public class ShowController {
                 return super.maskText(text);
             }
         });
+
+        topMenuContainer = topMenu;
+        selectedItem = item;
     }
 
     @FXML
@@ -111,5 +117,4 @@ public class ShowController {
     private void hideNode(Node... nodes){
         MainController.changeNodeVisibility(false, nodes);
     }
-
 }

@@ -1,19 +1,21 @@
 package com.example.keyvault_client;
 import com.keyvault.entities.Items;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,13 @@ public class MainController {
     public TextField searchField;
     @FXML
     public StackPane mainBody;
+    @FXML
+    public HBox topMenuContainer;
     private Label selectedMenu;
     private List<Items> userItems = new ArrayList<>();
-    public List<Items> userFavorites = new ArrayList<>();
+    private List<Items> userFavorites = new ArrayList<>();
+    private Items selectedItem = null;
+    private CreateController createController = null;
     private ExecutorService executorService;
 
     public void initialize(){
@@ -88,13 +94,14 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/create-view.fxml"));
             AnchorPane box = loader.load();
 
-            CreateController controller = loader.getController();
-            controller.initialize(mainBody);
+            createController = loader.getController();
+            createController.initialize(mainBody);
 
             if(infoContainer.getChildren().size() == 2)
                 infoContainer.getChildren().remove(1);
 
             infoContainer.getChildren().add(box);
+            generateCreateActionButtons();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,12 +114,15 @@ public class MainController {
             AnchorPane box = loader.load();
 
             ShowController controller = loader.getController();
-            controller.initialize(target);
+            controller.initialize(target, topMenuContainer);
 
             if(infoContainer.getChildren().size() == 2)
                 infoContainer.getChildren().remove(1);
 
             infoContainer.getChildren().add(box);
+
+            selectedItem = target;
+            generateActionButtons();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,6 +152,101 @@ public class MainController {
         container.setOnMouseClicked((e) -> showItemInfo(item));
 
         return container;
+    }
+
+    private void generateActionButtons(){
+        Button editButton = NodeGenerator.generateActionButton("pencil.png", null, "actionButton");
+        Button deleteButton = NodeGenerator.generateActionButton("trash.png", null, "actionButton");
+        Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() == 1 ? "starFill.png" : "star.png", null, "actionButton");
+        Button reloadButton = NodeGenerator.generateActionButton("reloadWhite.png", null, "actionButton");
+
+        deleteButton.setOnMouseClicked((e) -> executorService.execute(this::deleteItem));
+        favButton.setOnMouseClicked((e) -> changeFav(favButton));
+        addButtonsTopMenu(Pos.CENTER_RIGHT, editButton, deleteButton, favButton, reloadButton);
+    }
+
+    private void generateCreateActionButtons(){
+        Button cancel = NodeGenerator.generateActionButton("x.png", "   Cancelar", "actionButton");
+        Button accept = NodeGenerator.generateActionButton("tick.png", "   Aceptar", "actionButton");
+
+        accept.getStyleClass().add("actionButton");
+        cancel.getStyleClass().add("actionButton");
+
+        accept.setOnMouseClicked((e) -> executorService.execute(this::insertItem));
+        cancel.setOnMouseClicked((e) -> {
+            Platform.runLater(() -> infoContainer.getChildren().remove(1));
+            topMenuContainer.getChildren().clear();
+        });
+        addButtonsTopMenu(Pos.CENTER, cancel, accept);
+    }
+
+    private void addButtonsTopMenu(Pos pos, Button... buttons){
+        topMenuContainer.getChildren().clear();
+        topMenuContainer.getChildren().addAll(buttons);
+        topMenuContainer.setAlignment(pos);
+    }
+
+    private void insertItem(){
+        int response = createController.insertItem();
+        userItems.add(createController.getItem());
+        createController = null;
+
+        Platform.runLater(() ->{
+            scrollItemContainer.getChildren().clear();
+            infoContainer.getChildren().remove(1);
+        });
+
+        switch (selectedMenu.getId()) {
+            case "all" -> getAllContent();
+            case "favorites" -> getFavorites();
+            case "notes" -> getNotes();
+            case "passwords" -> getPasswords();
+        }
+    }
+
+    private void deleteItem(){
+        int response = ViewManager.conn.deleteItem(selectedItem);
+
+        if(response == 200)
+        {
+            Platform.runLater(() -> {
+                infoContainer.getChildren().remove(1);
+
+                userItems.remove(selectedItem);
+
+                if(userFavorites.contains(selectedItem))
+                    userFavorites.remove(selectedItem);
+
+                selectedItem = null;
+                topMenuContainer.getChildren().clear();
+
+                scrollItemContainer.getChildren().clear();
+
+                switch (selectedMenu.getId()) {
+                    case "all" -> getAllContent();
+                    case "favorites" -> getFavorites();
+                    case "notes" -> getNotes();
+                    case "passwords" -> getPasswords();
+                }
+            });
+
+        }
+    }
+
+    private void changeFav(Button favButton){
+        selectedItem.setFav((byte) Math.abs(selectedItem.getFav() - 1));
+        favButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(selectedItem.getFav() == 1 ? "icons/starFill.png" : "icons/star.png"))));
+
+        if(selectedItem.getFav() == 1)
+        {
+            userFavorites.add(selectedItem);
+        }
+        else
+        {
+            userFavorites.remove(selectedItem);
+        }
+
+        executorService.execute(() -> ViewManager.conn.modItem(selectedItem));
     }
 
     private void getContent(){
