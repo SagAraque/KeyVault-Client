@@ -6,6 +6,7 @@
     -fx-second-gray: #F5F5F5;
     -fx-dark-gray: #676767;
     -fx-error: #BD3D3D;
+    -fx-success: #509F43;
 }
 
 .text16, .text20, .text14{
@@ -124,6 +125,15 @@
 
 .messageError{
     -fx-background-color: -fx-error;
+}
+
+.messageSuccess{
+    -fx-background-color: -fx-success;
+}
+
+.infoMessage{
+    -fx-min-width: 580px;
+    -fx-max-width: 580px;
 }
 
 /**
@@ -441,5 +451,5 @@
 }
 
 .generatorSlider .track{
-    -fx-background-color: linear-gradient(to right, #475464 0.1, #e5e4e4 0.2);
+    -fx-background-color: linear-gradient(to right, #475464 0, #e5e4e4 0);
 }

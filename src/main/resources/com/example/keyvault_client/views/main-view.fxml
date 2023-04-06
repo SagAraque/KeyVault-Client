@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.MainController">
+<StackPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.MainController">
    <children>
       <GridPane minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0">
         <columnConstraints>
@@ -177,13 +178,32 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox id="infoContainer" fx:id="infoContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style.css">
+                  <VBox id="infoContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style.css">
                      <children>
                         <HBox fx:id="topMenuContainer" prefHeight="100.0" prefWidth="200.0" styleClass="topMenu" stylesheets="@../style.css">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </HBox>
+                        <SplitPane dividerPositions="0.9" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
+                           <items>
+                              <HBox id="infoContainer" fx:id="infoContainer" alignment="TOP_CENTER" />
+                              <HBox id="infoContainer" alignment="CENTER">
+                                 <children>
+                                    <VBox fx:id="messageContainer" alignment="BOTTOM_CENTER" visible="false">
+                                       <styleClass>
+                                          <String fx:value="messageContainer" />
+                                          <String fx:value="infoMessage" />
+                                          <String fx:value="messageSuccess" />
+                                       </styleClass>
+                                       <children>
+                                          <Label fx:id="messageLabel" styleClass="text16" text="Contraseña creada" textFill="WHITE" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </items>
+                        </SplitPane>
                      </children>
                   </VBox>
                </children>

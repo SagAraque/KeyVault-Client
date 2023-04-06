@@ -8,4 +8,6 @@ module com.example.keyvault_client {
 
     opens com.example.keyvault_client to javafx.fxml;
     exports com.example.keyvault_client;
+    exports com.example.keyvault_client.viewControllers;
+    opens com.example.keyvault_client.viewControllers to javafx.fxml;
 }

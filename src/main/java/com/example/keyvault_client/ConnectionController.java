@@ -1,5 +1,7 @@
 package com.example.keyvault_client;
 
+import com.example.keyvault_client.viewControllers.AuthController;
+import com.example.keyvault_client.viewControllers.MainController;
 import com.keyvault.KeyVault;
 import com.keyvault.entities.Items;
 import com.keyvault.entities.Users;
@@ -20,9 +22,12 @@ public class ConnectionController extends Thread{
         int response = api.register(user);
 
         Platform.runLater(() ->{
-            if(response == 200){
+            if(response == 200)
+            {
                 ViewManager.switchToRegister();
-            }else{
+            }
+            else
+            {
                 controller.displayMessage(api.getResponseMessage(response));
             }
         });
@@ -58,9 +63,12 @@ public class ConnectionController extends Thread{
         int response = api.verifyLogin(code, saveDevice, user);
 
         Platform.runLater(() -> {
-            if (response == 200) {
+            if (response == 200)
+            {
                 ViewManager.switchToMainView();
-            } else {
+            }
+            else
+            {
                 controller.displayMessage(api.getResponseMessage(response));
             }
         });
@@ -72,13 +80,70 @@ public class ConnectionController extends Thread{
         return response == 200 ? (List<Items>) api.getResponseContent()[0] : null;
     }
 
-    public int deleteItem(Items item){
-        return api.deleteItem(item);
+    public void deleteItem(Items item, MainController controller){
+        int response =  api.deleteItem(item);
+        boolean isNote = item.getNotesByIdI() != null;
 
+        Platform.runLater(() ->{
+            if(response == 200)
+            {
+                controller.removeItemFromArray(item);
+                controller.showMessage(isNote ? "Nota modificada con éxito" : "Contraseña modificada con éxito", false);
+                controller.reloadView();
+            }
+            else
+            {
+                controller.showMessage(api.getResponseMessage(response), true);
+            }
+        });
     }
 
-    public int modItem(Items item){
-        return api.modItem(item);
+    public void modItem(Items item, MainController controller){
+        int response = api.modItem(item);
+        boolean isNote = item.getNotesByIdI() != null;
+
+        Platform.runLater(() ->{
+            if(response == 200)
+            {
+                controller.updateItemFromArray(item);
+                controller.showMessage(isNote ? "Nota modificada con éxito" : "Contraseña modificada con éxito" , false);
+                controller.reloadView();
+            }
+            else
+            {
+                controller.showMessage(api.getResponseMessage(response), true);
+            }
+        });
+    }
+
+    public void changeFav(Items item, MainController controller){
+        int response = api.modItem(item);
+
+        Platform.runLater(() ->{
+            if(response != 200)
+            {
+                controller.showMessage(api.getResponseMessage(response), false);
+            }
+        });
+    }
+
+    public void insertItem(Items newItem, MainController controller){
+        int response = api.insertItem(newItem);
+        boolean isNote = newItem.getNotesByIdI() != null;
+
+
+        Platform.runLater(() ->{
+            if(response == 200)
+            {
+                controller.addItemToArray(newItem);
+                controller.showMessage(isNote ? "Nota modificada con éxito" : "Contraseña modificada con éxito", false);
+                controller.reloadView();
+            }
+            else
+            {
+                controller.showMessage(api.getResponseMessage(response), true);
+            }
+        });
     }
 
     public Items createNote(String name, String content){
@@ -87,10 +152,6 @@ public class ConnectionController extends Thread{
 
     public Items createPassword(String name, String observations, String url, String email, String pass){
         return api.createPassword(name, observations, url, email, pass);
-    }
-
-    public int insertItem(Items newItem){
-        return api.insertItem(newItem);
     }
 
     public KeyVault getApi() {

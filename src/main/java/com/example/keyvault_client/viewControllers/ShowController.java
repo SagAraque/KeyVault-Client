@@ -1,11 +1,10 @@
-package com.example.keyvault_client;
+package com.example.keyvault_client.viewControllers;
 
 import com.keyvault.entities.Items;
 import com.keyvault.entities.Notes;
 import com.keyvault.entities.Passwords;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -23,7 +22,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.ExecutorService;
 
 public class ShowController {
     @FXML
@@ -57,6 +55,7 @@ public class ShowController {
             usernameField.setText(password.getEmailP());
             passwordField.setText(password.getPassP());
             noteField.setText(item.getObservations());
+            urlField.setText(password.getUrl());
         }
         else
         {

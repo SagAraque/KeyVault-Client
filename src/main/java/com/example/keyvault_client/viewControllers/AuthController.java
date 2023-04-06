@@ -1,5 +1,6 @@
-package com.example.keyvault_client;
+package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.ViewManager;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -130,7 +131,6 @@ public class AuthController {
     }
 
     public void displayMessage(String message){
-
         FadeTransition fade = new FadeTransition(Duration.millis(200), errorMessage);
         progressIndicator.setProgress(0);
         errorMessage.setVisible(true);

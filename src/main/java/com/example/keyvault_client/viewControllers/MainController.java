@@ -1,5 +1,8 @@
-package com.example.keyvault_client;
+package com.example.keyvault_client.viewControllers;
+import com.example.keyvault_client.NodeGenerator;
+import com.example.keyvault_client.ViewManager;
 import com.keyvault.entities.Items;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +18,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.SVGPath;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,7 @@ import java.util.concurrent.ExecutorService;
 public class MainController {
 
     @FXML
-    public VBox scrollItemContainer, infoContainer;
+    public VBox scrollItemContainer, messageContainer;
     @FXML
     public Label userNameLabel, allButton, menuFavorites, menuPasswords, menuNotes;
     @FXML
@@ -32,12 +36,12 @@ public class MainController {
     @FXML
     public StackPane mainBody;
     @FXML
-    public HBox topMenuContainer;
-    private Label selectedMenu;
+    public HBox topMenuContainer,infoContainer;
+    public Label selectedMenu, messageLabel;
     private List<Items> userItems = new ArrayList<>();
     private List<Items> userFavorites = new ArrayList<>();
     private Items selectedItem = null;
-    private CreateController createController = null;
+    private CreateUpdateController createUpdateController = null;
     private ExecutorService executorService;
 
     public void initialize(){
@@ -73,39 +77,61 @@ public class MainController {
         String toSearch = searchField.getText().trim();
         System.out.println(toSearch);
 
-        if(!toSearch.isBlank() && !toSearch.isEmpty()){
+        if(!toSearch.isBlank() && !toSearch.isEmpty())
+        {
             scrollItemContainer.getChildren().clear();
 
             for (Items i : userItems) {
-                System.out.println(i.getName().contains(toSearch));
-                if (i.getName().contains(toSearch)) {
+                if (i.getName().contains(toSearch))
+                {
                    HBox card = generateItemCard(i);
                    scrollItemContainer.getChildren().add(card);
                 }
             }
-        }else{
+        }
+        else
+        {
             changeMenu(selectedMenu);
         }
     }
 
     @FXML
     public void showCreateView(){
-        try {
-            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/create-view.fxml"));
-            AnchorPane box = loader.load();
+        addViewToInfoContainer("create-update-view.fxml", false);
+    }
 
-            createController = loader.getController();
-            createController.initialize(mainBody);
+    public void showEditView(){
+        addViewToInfoContainer("create-update-view.fxml", true);
+    }
 
-            if(infoContainer.getChildren().size() == 2)
-                infoContainer.getChildren().remove(1);
-
-            infoContainer.getChildren().add(box);
-            generateCreateActionButtons();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void showMessage(String text, boolean isError){
+        FadeTransition fade = new FadeTransition(Duration.millis(200), messageContainer);
+        if(isError)
+        {
+            messageContainer.getStyleClass().add("messageError");
         }
+        else
+        {
+            messageContainer.getStyleClass().remove("messageError");
+        }
+
+        messageContainer.setVisible(true);
+        fade.setFromValue(0.0);
+        fade.setToValue(1.0);
+        fade.play();
+        messageLabel.setText(text);
+
+        new Thread(() ->{
+            try {
+                Thread.sleep(3000);
+                fade.setFromValue(1.0);
+                fade.setToValue(0.0);
+                fade.setOnFinished(e -> messageContainer.setVisible(false));
+                fade.play();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     private void showItemInfo(Items target){
@@ -116,8 +142,8 @@ public class MainController {
             ShowController controller = loader.getController();
             controller.initialize(target, topMenuContainer);
 
-            if(infoContainer.getChildren().size() == 2)
-                infoContainer.getChildren().remove(1);
+            if(infoContainer.getChildren().size() == 1)
+                infoContainer.getChildren().clear();
 
             infoContainer.getChildren().add(box);
 
@@ -129,26 +155,30 @@ public class MainController {
         }
     }
 
+    private void addViewToInfoContainer(String fxml, boolean isEdit){
+        try {
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
+            AnchorPane box = loader.load();
+
+            createUpdateController = loader.getController();
+            createUpdateController.initialize(this);
+
+            if(isEdit)
+                createUpdateController.enableEditMode(selectedItem);
+
+            if(infoContainer.getChildren().size() == 1)
+                infoContainer.getChildren().clear();
+
+            infoContainer.getChildren().add(box);
+            generateCreateActionButtons(isEdit);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private HBox generateItemCard(Items item){
-        Label title = new Label(item.getName());
-        Label account = new Label(item.getPasswordsByIdI() != null ? item.getPasswordsByIdI().getEmailP() : "Nota segura");
-
-        title.getStyleClass().addAll("text16", "medium");
-        account.getStyleClass().add("text14");
-
-        VBox textContainer = new VBox(title, account);
-        SVGPath icon = new SVGPath();
-        HBox border = new HBox();
-
-        textContainer.getStyleClass().add("itemTextContainer");
-        icon.setContent("M18.102 12.129c0-0 0-0 0-0.001 0-1.564 1.268-2.831 2.831-2.831s2.831 1.268 2.831 2.831c0 1.564-1.267 2.831-2.831 2.831-0 0-0 0-0.001 0h0c-0 0-0 0-0.001 0-1.563 0-2.83-1.267-2.83-2.83 0-0 0-0 0-0.001v0zM24.691 12.135c0-2.081-1.687-3.768-3.768-3.768s-3.768 1.687-3.768 3.768c0 2.081 1.687 3.768 3.768 3.768v0c2.080-0.003 3.765-1.688 3.768-3.767v-0zM10.427 23.76l-1.841-0.762c0.524 1.078 1.611 1.808 2.868 1.808 1.317 0 2.448-0.801 2.93-1.943l0.008-0.021c0.155-0.362 0.246-0.784 0.246-1.226 0-1.757-1.424-3.181-3.181-3.181-0.405 0-0.792 0.076-1.148 0.213l0.022-0.007 1.903 0.787c0.852 0.364 1.439 1.196 1.439 2.164 0 1.296-1.051 2.347-2.347 2.347-0.324 0-0.632-0.066-0.913-0.184l0.015 0.006zM15.974 1.004c-7.857 0.001-14.301 6.046-14.938 13.738l-0.004 0.054 8.038 3.322c0.668-0.462 1.495-0.737 2.387-0.737 0.001 0 0.002 0 0.002 0h-0c0.079 0 0.156 0.005 0.235 0.008l3.575-5.176v-0.074c0.003-3.12 2.533-5.648 5.653-5.648 3.122 0 5.653 2.531 5.653 5.653s-2.531 5.653-5.653 5.653h-0.131l-5.094 3.638c0 0.065 0.005 0.131 0.005 0.199 0 0.001 0 0.002 0 0.003 0 2.342-1.899 4.241-4.241 4.241-2.047 0-3.756-1.451-4.153-3.38l-0.005-0.027-5.755-2.383c1.841 6.345 7.601 10.905 14.425 10.905 8.281 0 14.994-6.713 14.994-14.994s-6.713-14.994-14.994-14.994c-0 0-0.001 0-0.001 0h0z");
-        icon.setScaleY(1);
-        icon.setScaleX(1);
-        border.getStyleClass().add("itemContainerBorder");
-
-        HBox container = new HBox(border, icon, textContainer);
-        container.getStyleClass().add("itemContainer");
-
+        HBox container = NodeGenerator.generateItemCard(item);
         container.setOnMouseClicked((e) -> showItemInfo(item));
 
         return container;
@@ -162,19 +192,20 @@ public class MainController {
 
         deleteButton.setOnMouseClicked((e) -> executorService.execute(this::deleteItem));
         favButton.setOnMouseClicked((e) -> changeFav(favButton));
+        editButton.setOnMouseClicked((e) -> showEditView());
         addButtonsTopMenu(Pos.CENTER_RIGHT, editButton, deleteButton, favButton, reloadButton);
     }
 
-    private void generateCreateActionButtons(){
+    private void generateCreateActionButtons(boolean isEdit){
         Button cancel = NodeGenerator.generateActionButton("x.png", "   Cancelar", "actionButton");
         Button accept = NodeGenerator.generateActionButton("tick.png", "   Aceptar", "actionButton");
 
         accept.getStyleClass().add("actionButton");
         cancel.getStyleClass().add("actionButton");
 
-        accept.setOnMouseClicked((e) -> executorService.execute(this::insertItem));
+        accept.setOnMouseClicked((e) -> executorService.execute(isEdit ? this::updateItem : this::insertItem));
         cancel.setOnMouseClicked((e) -> {
-            Platform.runLater(() -> infoContainer.getChildren().remove(1));
+            Platform.runLater(() -> infoContainer.getChildren().clear());
             topMenuContainer.getChildren().clear();
         });
         addButtonsTopMenu(Pos.CENTER, cancel, accept);
@@ -187,49 +218,30 @@ public class MainController {
     }
 
     private void insertItem(){
-        int response = createController.insertItem();
-        userItems.add(createController.getItem());
-        createController = null;
+        Items newItem = createUpdateController.generateItem();
+        executorService.execute(() -> ViewManager.conn.insertItem(newItem, this));
+    }
 
-        Platform.runLater(() ->{
-            scrollItemContainer.getChildren().clear();
-            infoContainer.getChildren().remove(1);
-        });
+    private void deleteItem(){
+        executorService.execute(() -> ViewManager.conn.deleteItem(selectedItem, this));
+    }
+
+    private void updateItem(){
+        Items modItem = createUpdateController.updateItem();
+        executorService.execute(() -> ViewManager.conn.modItem(modItem, this));
+    }
+
+    public void reloadView(){
+        selectedItem = null;
+        infoContainer.getChildren().clear();
+        topMenuContainer.getChildren().clear();
+        scrollItemContainer.getChildren().clear();
 
         switch (selectedMenu.getId()) {
             case "all" -> getAllContent();
             case "favorites" -> getFavorites();
             case "notes" -> getNotes();
             case "passwords" -> getPasswords();
-        }
-    }
-
-    private void deleteItem(){
-        int response = ViewManager.conn.deleteItem(selectedItem);
-
-        if(response == 200)
-        {
-            Platform.runLater(() -> {
-                infoContainer.getChildren().remove(1);
-
-                userItems.remove(selectedItem);
-
-                if(userFavorites.contains(selectedItem))
-                    userFavorites.remove(selectedItem);
-
-                selectedItem = null;
-                topMenuContainer.getChildren().clear();
-
-                scrollItemContainer.getChildren().clear();
-
-                switch (selectedMenu.getId()) {
-                    case "all" -> getAllContent();
-                    case "favorites" -> getFavorites();
-                    case "notes" -> getNotes();
-                    case "passwords" -> getPasswords();
-                }
-            });
-
         }
     }
 
@@ -246,7 +258,7 @@ public class MainController {
             userFavorites.remove(selectedItem);
         }
 
-        executorService.execute(() -> ViewManager.conn.modItem(selectedItem));
+        executorService.execute(() -> ViewManager.conn.changeFav(selectedItem, this));
     }
 
     private void getContent(){
@@ -288,6 +300,24 @@ public class MainController {
         }
     }
 
+    public void removeItemFromArray(Items item){
+        userItems.remove(item);
+
+        if(userFavorites.contains(item))
+            userFavorites.remove(item);
+    }
+
+    public void updateItemFromArray(Items items){
+        if(userFavorites.contains(selectedItem))
+            userFavorites.set(userFavorites.indexOf(selectedItem), items);
+
+        userItems.set(userItems.indexOf(selectedItem), items);
+    }
+
+    public void addItemToArray(Items items){
+        userItems.add(items);
+    }
+
     public static void changeNodeVisibility(boolean visible, Node... nodes) {
         for (Node node : nodes)
         {
@@ -300,4 +330,26 @@ public class MainController {
         }
     }
 
+    public void displayGenerator(CreateUpdateController controller, String fxml) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
+        HBox modal = loader.load();
+
+        GeneratorController generatorController = loader.getController();
+        generatorController.initialize(controller);
+
+        displayModalWindow(modal);
+    }
+
+    public void removeModal(){
+        if(mainBody.getChildren().size() != 1)
+            mainBody.getChildren().remove(1);
+    }
+
+    public void displayModalWindow(HBox modal){
+        if(mainBody.getChildren().size() == 1)
+        {
+            modal.toFront();
+            mainBody.getChildren().add(modal);
+        }
+    }
 }

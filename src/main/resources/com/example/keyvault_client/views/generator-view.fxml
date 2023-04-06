@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="modalWindow" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.GeneratorController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="modalWindow" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.GeneratorController">
    <children>
       <VBox id="generatorBody" prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -32,10 +32,10 @@
                         <String fx:value="itemWhiteContainer" />
                      </styleClass>
                      <children>
-                        <Label fx:id="password" styleClass="text16" text="9bdsjs8db2k29" />
+                        <Label fx:id="password" styleClass="text14" text="9bdsjs8db2k29" />
                      </children>
                   </VBox>
-                  <Button fx:id="generate" mnemonicParsing="false" text="Generar">
+                  <Button fx:id="generate" mnemonicParsing="false" onAction="#generatePassword" text="Generar">
                      <styleClass>
                         <String fx:value="generatorButton" />
                         <String fx:value="text16" />
@@ -55,8 +55,8 @@
                               </VBox>
                               <HBox alignment="CENTER" spacing="20.0">
                                  <children>
-                                    <Label fx:id="sliderNum" prefHeight="25.0" prefWidth="36.0" styleClass="text16" text="32" />
-                                    <Slider fx:id="slider" blockIncrement="16.0" majorTickUnit="16.0" max="128.0" min="16.0" minorTickCount="16" prefHeight="14.0" prefWidth="172.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="generatorSlider" value="32.0" />
+                                    <Label fx:id="sliderNum" prefHeight="25.0" prefWidth="36.0" styleClass="text16" text="16" />
+                                    <Slider fx:id="slider" blockIncrement="8.0" majorTickUnit="8.0" max="64.0" min="16.0" minorTickCount="0" prefHeight="14.0" prefWidth="172.0" snapToTicks="true" styleClass="generatorSlider" value="16.0" />
                                  </children>
                               </HBox>
                            </items>
@@ -111,7 +111,7 @@
                   </VBox>
                   <HBox alignment="CENTER" spacing="40.0">
                      <children>
-                        <Button fx:id="cancel" mnemonicParsing="false" text="Cancelar">
+                        <Button fx:id="cancel" mnemonicParsing="false" onAction="#removeModal" text="Cancelar">
                            <styleClass>
                               <String fx:value="generatorButton" />
                               <String fx:value="text16" />
@@ -121,7 +121,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="accept" mnemonicParsing="false" text="Aceptar">
+                        <Button fx:id="accept" mnemonicParsing="false" onAction="#setPassword" text="Aceptar">
                            <styleClass>
                               <String fx:value="generatorButton" />
                               <String fx:value="text16" />
