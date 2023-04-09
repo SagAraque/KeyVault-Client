@@ -35,10 +35,13 @@
                <children>
                   <HBox id="userContainer" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#changeUserImage" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image.png" />
                            </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
                         <VBox id="userContainerText">
                            <children>
@@ -48,7 +51,7 @@
                                     <String fx:value="lightWhiteText" />
                                  </styleClass>
                               </Label>
-                              <Label styleClass="lightWhiteText" text="2 dispositivos" />
+                              <Label fx:id="devicesLabel" styleClass="lightWhiteText" text="devices" />
                            </children>
                         </VBox>
                      </children>
@@ -125,6 +128,38 @@
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../icons/secure.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="BOTTOM_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label id="passwords" fx:id="menuSettings" graphicTextGap="15.0" prefHeight="40.0" prefWidth="298.0" text="Configuración">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="menuButton" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/settings.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <Label id="notes" fx:id="closeSession" graphicTextGap="15.0" onMouseClicked="#closeSession" prefHeight="40.0" prefWidth="300.0" text="Cerrar sesión">
+                           <styleClass>
+                              <String fx:value="text16" />
+                              <String fx:value="lightWhiteText" />
+                              <String fx:value="menuButton" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/turn-off.png" />
                                  </image>
                               </ImageView>
                            </graphic>

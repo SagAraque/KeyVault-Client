@@ -1,5 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.ViewManager;
 import com.keyvault.entities.Items;
 import com.keyvault.entities.Notes;
 import com.keyvault.entities.Passwords;
@@ -42,8 +43,8 @@ public class ShowController {
     ImageView eyeIcon;
     HBox topMenuContainer;
     Items selectedItem;
-    Image openEyeIcon = new Image(getClass().getResourceAsStream("icons/openEye.png"));
-    Image closeEyeIcon = new Image(getClass().getResourceAsStream("icons/closeEye.png"));
+    Image openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye.png"));
+    Image closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye.png"));
     boolean passIsVisible = false;
 
     public void initialize(Items item, HBox topMenu){

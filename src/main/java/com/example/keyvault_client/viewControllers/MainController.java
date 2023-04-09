@@ -1,6 +1,7 @@
 package com.example.keyvault_client.viewControllers;
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
+import com.keyvault.entities.Devices;
 import com.keyvault.entities.Items;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -18,8 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +40,10 @@ public class MainController {
     public StackPane mainBody;
     @FXML
     public HBox topMenuContainer,infoContainer;
-    public Label selectedMenu, messageLabel;
+    public Label selectedMenu, messageLabel, devicesLabel;
     private List<Items> userItems = new ArrayList<>();
     private List<Items> userFavorites = new ArrayList<>();
+    private List<Devices> userDevices = new ArrayList<>();
     private Items selectedItem = null;
     private CreateUpdateController createUpdateController = null;
     private ExecutorService executorService;
@@ -48,6 +52,7 @@ public class MainController {
         executorService = ViewManager.executorService;
         userNameLabel.setText(ViewManager.conn.getEmail());
         executorService.execute(this::getContent);
+        executorService.execute(this::getDevices);
         selectedMenu = allButton;
     }
 
@@ -73,6 +78,11 @@ public class MainController {
     }
 
     @FXML
+    public void closeSession(MouseEvent event){
+        ViewManager.conn.closeSession(true);
+    }
+
+    @FXML
     public void searchItem(){
         String toSearch = searchField.getText().trim();
         System.out.println(toSearch);
@@ -93,6 +103,15 @@ public class MainController {
         {
             changeMenu(selectedMenu);
         }
+    }
+
+    @FXML
+    public void changeUserImage(){
+        FileChooser fileChooser = new FileChooser();
+        File file = null;
+        fileChooser.setTitle("Imagen de perfil");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images (*.png , *.jpg, *.jpeg)", "*.png", "*.jpg", "*.jpeg"));
+        file = fileChooser.showOpenDialog(ViewManager.getStage());
     }
 
     @FXML
@@ -259,6 +278,11 @@ public class MainController {
         }
 
         executorService.execute(() -> ViewManager.conn.changeFav(selectedItem, this));
+    }
+
+    private void getDevices(){
+        userDevices = ViewManager.conn.getDevices();
+        Platform.runLater(() -> devicesLabel.setText(userDevices.size() + " dispositivos"));
     }
 
     private void getContent(){

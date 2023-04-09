@@ -50,6 +50,9 @@ public class AuthController {
                 });
             }
         }
+
+        if(repeatPasswordField == null && ViewManager.conn.getEmail() != null)
+            usernameField.setText(ViewManager.conn.getEmail());
     }
 
     @FXML

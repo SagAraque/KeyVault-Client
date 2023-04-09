@@ -31,8 +31,8 @@ public class CreateUpdateController {
     SplitPane topMenu;
     @FXML
     ImageView eyeIcon;
-    Image openEyeIcon = new Image(getClass().getResourceAsStream("icons/openEye.png"));
-    Image closeEyeIcon = new Image(getClass().getResourceAsStream("icons/closeEye.png"));
+    Image openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye.png"));
+    Image closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye.png"));
     MainController mainController;
     Items newItem = null;
     boolean isNote = false;

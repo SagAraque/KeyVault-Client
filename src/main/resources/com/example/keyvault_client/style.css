@@ -10,16 +10,16 @@
 }
 
 .text16, .text20, .text14{
-    -fx-font-family: "Libre Franklin";
+    -fx-font-family: "Noto Sans";
     -fx-font-size: 16px;
 }
 
 .bold{
-    -fx-font-family: "Libre Franklin Bold";
+    -fx-font-family: "Noto Sans Bold";
 }
 
 .medium{
-    -fx-font-family: "Libre Franklin Medium";
+    -fx-font-family: "Noto Sans Medium";
 }
 
 .text20{
@@ -90,7 +90,7 @@
     -fx-min-width: 200px;
     -fx-background-color: -fx-color-main;
     -fx-font-size: 20px;
-    -fx-font-family: "Franklin Gothic Book";
+    -fx-font-family: "Noto Sans";
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-text-fill: white;
@@ -199,7 +199,7 @@
     -fx-background-radius: 10px;
     -fx-cursor: hand;
     -fx-text-fill: white;
-    -fx-font-family: "Libre Franklin";
+    -fx-font-family: "Noto Sans";
     -fx-font-size: 16px;
 }
 

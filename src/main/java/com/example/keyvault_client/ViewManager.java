@@ -2,10 +2,12 @@ package com.example.keyvault_client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -22,13 +24,12 @@ public class ViewManager extends Application {
         window.setTitle("KeyVault");
         window.getIcons().add(new Image(getClass().getResourceAsStream("icons/icon.png")));
         switchToLogin();
-
     }
 
     public static void main(String[] args) {
-        Font.loadFont(ViewManager.class.getResourceAsStream("fonts/LibreFranklin-Medium.ttf"), 12);
-        Font.loadFont(ViewManager.class.getResourceAsStream("fonts/LibreFranklin-Regular.ttf"), 12);
-        Font.loadFont(ViewManager.class.getResourceAsStream("fonts/LibreFranklin-Bold.ttf"), 12);
+        Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Medium.ttf"), 12);
+        Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Regular.ttf"), 12);
+        Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Bold.ttf"), 12);
         System.setProperty("prism.lcdtext", "false");
 
         launch();
@@ -42,9 +43,7 @@ public class ViewManager extends Application {
 
     public static void switchToVerify(){loadFXML("verify.fxml", 800, 600, false);}
 
-    public static void switchToMainView(){
-        loadFXML("main-view.fxml", 900, 1280, true);
-    }
+    public static void switchToMainView(){loadFXML("main-view.fxml", 900, 1280, true);}
 
     private static void loadFXML(String fxml, int height, int width, boolean isResizable){
 
@@ -53,12 +52,16 @@ public class ViewManager extends Application {
 
             FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
             Scene scene = new Scene(loader.load(), width, height,true, SceneAntialiasing.BALANCED);
+            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
             window.setScene(scene);
             window.setMinWidth(width);
             window.setMinHeight(height);
+            window.setWidth(isResizable ? screenBounds.getWidth() : width);
+            window.setHeight(isResizable ? screenBounds.getHeight() : height);
             window.setMaximized(isResizable);
             window.setResizable(isResizable);
+
             window.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -74,5 +77,11 @@ public class ViewManager extends Application {
     public void stop(){
         if(executorService != null)
             executorService.shutdownNow();
+
+        conn.killTimer();
+    }
+
+    public static Stage getStage(){
+        return window;
     }
 }
