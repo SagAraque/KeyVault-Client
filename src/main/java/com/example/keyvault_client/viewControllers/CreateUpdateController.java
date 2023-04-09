@@ -2,6 +2,8 @@ package com.example.keyvault_client.viewControllers;
 
 import com.example.keyvault_client.ViewManager;
 import com.keyvault.entities.Items;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -50,6 +52,11 @@ public class CreateUpdateController {
         });
 
         this.mainController = mainController;
+
+        setMaxFields(32, nameField);
+        setMaxFields(256, usernameField);
+        setMaxFields(128, passwordField);
+        setMaxTextArea(256, noteField);
     }
 
     @FXML
@@ -166,6 +173,20 @@ public class CreateUpdateController {
         }
 
         return newItem;
+    }
+
+    private void setMaxFields(int max, TextField field){
+        field.textProperty().addListener((observableValue, s, t1) -> {
+            if(field.getText().length() > max)
+                field.setText(field.getText().substring(0, max));
+        });
+    }
+
+    private void setMaxTextArea(int max, TextArea field){
+        field.textProperty().addListener((observableValue, s, t1) -> {
+            if(field.getText().length() > max)
+                field.setText(field.getText().substring(0, max));
+        });
     }
 
     public Items getItem(){
