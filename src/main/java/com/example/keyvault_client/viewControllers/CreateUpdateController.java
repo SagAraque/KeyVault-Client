@@ -55,7 +55,7 @@ public class CreateUpdateController {
 
         setMaxFields(32, nameField);
         setMaxFields(256, usernameField);
-        setMaxFields(128, passwordField);
+        setMaxFields(64, passwordField);
         setMaxTextArea(256, noteField);
     }
 
