@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.ShowController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="infoItem" stylesheets="@../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -110,13 +109,13 @@
                         <VBox styleClass="fieldsBody">
                            <children>
                               <Label styleClass="text16" text="URL" textFill="#676767" />
-                              <PasswordField fx:id="urlField" editable="false">
+                              <TextField fx:id="urlField">
                                  <styleClass>
                                     <String fx:value="itemField80" />
                                     <String fx:value="fields" />
                                     <String fx:value="text16" />
                                  </styleClass>
-                              </PasswordField>
+                              </TextField>
                            </children>
                         </VBox>
                         <Button fx:id="goToLink" mnemonicParsing="false" onAction="#goTo" styleClass="itemIconButton">
