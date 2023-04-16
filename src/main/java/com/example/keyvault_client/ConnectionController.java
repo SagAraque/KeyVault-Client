@@ -11,7 +11,7 @@ import javafx.application.Platform;
 import java.util.List;
 
 public class ConnectionController extends Thread{
-    private KeyVault api = new KeyVault();
+    private KeyVault api = new KeyVault(true);
     private Timer sessionTimer;
     String email, plainPassword;
 
@@ -38,12 +38,6 @@ public class ConnectionController extends Thread{
     public void login(String username, String password, AuthController controller){
         email = username;
         plainPassword = password;
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
         Users user = api.createUser(username, password);
         int response = api.login(user);

@@ -51,7 +51,7 @@ public class AuthController {
             }
         }
 
-        if(repeatPasswordField == null && ViewManager.conn.getEmail() != null)
+        if(repeatPasswordField == null && ViewManager.conn.getEmail() != null && usernameField != null)
             usernameField.setText(ViewManager.conn.getEmail());
     }
 
