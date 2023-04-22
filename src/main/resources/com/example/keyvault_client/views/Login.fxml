@@ -27,7 +27,7 @@
                         <Image url="@../image.png" />
                      </image>
                   </ImageView>
-                  <Label styleClass="medium" text="Iniciar sesión">
+                  <Label styleClass="medium" text="%loginTitle">
                      <font>
                         <Font name="MS Outlook" size="24.0" />
                      </font>
@@ -38,7 +38,7 @@
                <children>
                   <VBox onMouseClicked="#cursorToField" prefHeight="200.0" prefWidth="100.0" styleClass="fieldsBody">
                      <children>
-                        <Label styleClass="text16" text="Usuario" textFill="#676767">
+                        <Label styleClass="text16" text="%loginEmail" textFill="#676767">
                            <font>
                               <Font name="Franklin Gothic Book" size="16.0" />
                            </font>
@@ -52,7 +52,7 @@
                   </VBox>
                   <VBox onMouseClicked="#cursorToField" styleClass="fieldsBody">
                      <children>
-                        <Label styleClass="text16" text="Contraseña" textFill="#676767">
+                        <Label styleClass="text16" text="%loginPassword" textFill="#676767">
                            <font>
                               <Font name="Franklin Gothic Book" size="16.0" />
                            </font>
@@ -68,8 +68,8 @@
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" styleClass="authButton" text="Iniciar sesión" />
-                  <Label styleClass="text16" text="¿Aún no tienes cuenta?">
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" styleClass="authButton" text="%loginTitle" />
+                  <Label styleClass="text16" text="%loginRegister">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -77,7 +77,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label onMouseClicked="#toRegister" styleClass="text16" text="Crear cuenta" textFill="#2a333f">
+                  <Label onMouseClicked="#toRegister" styleClass="text16" text="%createAccount" textFill="#2a333f">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Label>
