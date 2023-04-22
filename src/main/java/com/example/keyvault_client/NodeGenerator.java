@@ -1,5 +1,6 @@
 package com.example.keyvault_client;
 
+import com.keyvault.entities.Devices;
 import com.keyvault.entities.Items;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,6 +44,26 @@ public class NodeGenerator {
 
         HBox container = new HBox(border, icon, textContainer);
         container.getStyleClass().add("itemContainer");
+
+        return container;
+    }
+
+    public static HBox generateDeviceCard(Devices device)
+    {
+        ImageView iconView = new ImageView(new Image(NodeGenerator.class.getResourceAsStream("icons/windows.png")));
+        iconView.setFitHeight(32);
+        iconView.setFitWidth(32);
+
+        Label deviceType = new Label("Windows - Wichita, USA");
+        deviceType.getStyleClass().addAll("text16", "medium");
+
+        Label deviceDate = new Label("14 de Diciembre de 2022");
+        deviceDate.getStyleClass().add("text12");
+
+        VBox textContainer = new VBox(deviceType, deviceDate);
+
+        HBox container = new HBox(iconView, textContainer);
+        container.getStyleClass().addAll("whiteFieldContainer", "deviceCard");
 
         return container;
     }

@@ -364,12 +364,23 @@ public class MainController {
         displayModalWindow(modal);
     }
 
+    @FXML
+    public void displayConfig() throws IOException {
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"));
+        VBox modal = loader.load();
+
+        ConfigController configController = loader.getController();
+        configController.initialize(this, userDevices);
+
+        displayModalWindow(modal);
+    }
+
     public void removeModal(){
         if(mainBody.getChildren().size() != 1)
             mainBody.getChildren().remove(1);
     }
 
-    public void displayModalWindow(HBox modal){
+    public void displayModalWindow(Node modal){
         if(mainBody.getChildren().size() == 1)
         {
             modal.toFront();

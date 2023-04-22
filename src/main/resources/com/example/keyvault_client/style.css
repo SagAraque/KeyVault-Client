@@ -14,6 +14,12 @@
     -fx-font-size: 16px;
 }
 
+.text12
+{
+    -fx-font-family: "Noto Sans";
+    -fx-font-size: 12px;
+}
+
 .bold{
     -fx-font-family: "Noto Sans Bold";
 }
@@ -452,4 +458,74 @@
 
 .generatorSlider .track{
     -fx-background-color: linear-gradient(to right, #475464 0, #e5e4e4 0);
+}
+
+/**
+----- CONFIGURATION VIEW -----
+ */
+
+#configModal
+{
+    -fx-min-width: 600px;
+    -fx-max-width: 600px;
+    -fx-max-height: 730px;
+    -fx-background-color: -fx-light-gray;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-spacing: 20px;
+}
+
+#configWhiteContainer
+{
+    -fx-min-width: 560px;
+    -fx-max-width: 560px;
+}
+
+.configSelect
+{
+    -fx-background-color: white;
+    -fx-border-color: rgba(0, 0, 0, 0.70);
+    -fx-border-radius: 2px;
+    -fx-min-height: 32px;
+}
+
+.configSelect .context-menu {
+    -fx-pref-width: 540;
+}
+
+.switchBody
+{
+    -fx-max-width: 50px;
+    -fx-min-width: 50px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-color: rgba(0, 0, 0, 0.70);
+}
+
+.switchContent
+{
+    -fx-background-color: -fx-light-main;
+    -fx-max-width: 20px;
+    -fx-min-width: 20px;
+    -fx-max-height: 20px;
+    -fx-min-height: 20px;
+    -fx-border-radius: 100px;
+    -fx-background-radius: 100px;
+}
+
+.deviceCard
+{
+    -fx-min-height: 55px;
+    -fx-max-height: 55px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.5, 0.0, 0.0);
+    -fx-padding: 20px 10px 20px 10px;
+    -fx-alignment: center-left;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-spacing: 20px;
+}
+
+.dangerButton
+{
+    -fx-background-color: -fx-error;
 }

@@ -136,7 +136,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label id="passwords" fx:id="menuSettings" graphicTextGap="15.0" prefHeight="40.0" prefWidth="298.0" text="Configuración">
+                        <Label id="passwords" fx:id="menuSettings" graphicTextGap="15.0" onMouseClicked="#displayConfig" prefHeight="40.0" prefWidth="298.0" text="Configuración">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
