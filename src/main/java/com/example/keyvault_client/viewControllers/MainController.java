@@ -366,7 +366,7 @@ public class MainController {
 
     @FXML
     public void displayConfig() throws IOException {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"), ViewManager.bundle);
         VBox modal = loader.load();
 
         ConfigController configController = loader.getController();
