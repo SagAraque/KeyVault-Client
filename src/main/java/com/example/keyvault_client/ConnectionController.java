@@ -11,7 +11,8 @@ import javafx.application.Platform;
 import java.util.List;
 
 public class ConnectionController extends Thread{
-    private KeyVault api = new KeyVault(true);
+    boolean local = true;
+    private KeyVault api = new KeyVault(local);
     private Timer sessionTimer;
     String email, plainPassword;
 
@@ -191,11 +192,19 @@ public class ConnectionController extends Thread{
 
     public void closeSession(boolean fullDelete){
         plainPassword = null;
-        api = new KeyVault();
+        api = new KeyVault(local);
 
         if(fullDelete) email = null;
 
         ViewManager.switchToLogin();
+    }
+
+    public void closeAllSessions()
+    {
+        api.clearDevices();
+        plainPassword = null;
+        api = new KeyVault(local);
+        Platform.runLater(ViewManager::switchToLogin);
     }
 
     public KeyVault getApi() {

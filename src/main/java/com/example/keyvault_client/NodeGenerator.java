@@ -54,10 +54,10 @@ public class NodeGenerator {
         iconView.setFitHeight(32);
         iconView.setFitWidth(32);
 
-        Label deviceType = new Label("Windows - Wichita, USA");
+        Label deviceType = new Label(device.getAgent() + " - " + device.getLocation());
         deviceType.getStyleClass().addAll("text16", "medium");
 
-        Label deviceDate = new Label("14 de Diciembre de 2022");
+        Label deviceDate = new Label(device.getLastLogin().toString());
         deviceDate.getStyleClass().add("text12");
 
         VBox textContainer = new VBox(deviceType, deviceDate);
