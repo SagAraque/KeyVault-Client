@@ -499,18 +499,27 @@
     -fx-min-width: 50px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
-    -fx-border-color: rgba(0, 0, 0, 0.70);
+    -fx-background-color: -fx-light-gray;
+    -fx-border-color: rgba(0, 0, 0, 0.30);
+    -fx-cursor: hand;
 }
 
 .switchContent
 {
-    -fx-background-color: -fx-light-main;
-    -fx-max-width: 20px;
-    -fx-min-width: 20px;
-    -fx-max-height: 20px;
-    -fx-min-height: 20px;
+    -fx-background-color: white;
+    -fx-max-width: 22px;
+    -fx-min-width: 22px;
+    -fx-max-height: 22px;
+    -fx-min-height: 22px;
     -fx-border-radius: 100px;
     -fx-background-radius: 100px;
+    -fx-border-color: rgba(0, 0, 0, 0.20);
+}
+
+.switchBodyActive
+{
+    -fx-background-color: -fx-light-main;
+    -fx-alignment: center-right;
 }
 
 .deviceCard
