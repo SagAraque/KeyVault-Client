@@ -9,9 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +45,8 @@ public class MainController {
     private CreateUpdateController createUpdateController = null;
     private ExecutorService executorService;
 
-    public void initialize(){
+    public void initialize()
+    {
         executorService = ViewManager.executorService;
         userNameLabel.setText(ViewManager.conn.getEmail());
         executorService.execute(this::getContent);
@@ -57,7 +55,8 @@ public class MainController {
     }
 
     @FXML
-    public void actionMenu(MouseEvent e){
+    public void actionMenu(MouseEvent e)
+    {
         Label target = (Label) e.getSource();
         changeMenu(target);
     }
@@ -83,8 +82,9 @@ public class MainController {
     }
 
     @FXML
-    public void searchItem(){
-        String toSearch = searchField.getText().trim();
+    public void searchItem()
+    {
+        String toSearch = searchField.getText().trim().toLowerCase();
         System.out.println(toSearch);
 
         if(!toSearch.isBlank() && !toSearch.isEmpty())
@@ -117,7 +117,8 @@ public class MainController {
     }
 
     @FXML
-    public void changeUserImage(){
+    public void changeUserImage()
+    {
         FileChooser fileChooser = new FileChooser();
         File file = null;
         fileChooser.setTitle("Imagen de perfil");
@@ -134,8 +135,10 @@ public class MainController {
         addViewToInfoContainer("create-update-view.fxml", true);
     }
 
-    public void showMessage(String text, boolean isError){
+    public void showMessage(String text, boolean isError)
+    {
         FadeTransition fade = new FadeTransition(Duration.millis(200), messageContainer);
+
         if(isError)
         {
             messageContainer.getStyleClass().add("messageError");
@@ -164,7 +167,8 @@ public class MainController {
         }).start();
     }
 
-    private void showItemInfo(Items target){
+    private void showItemInfo(Items target)
+    {
         try {
             FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/item-view.fxml"));
             AnchorPane box = loader.load();
@@ -185,7 +189,8 @@ public class MainController {
         }
     }
 
-    private void addViewToInfoContainer(String fxml, boolean isEdit){
+    private void addViewToInfoContainer(String fxml, boolean isEdit)
+    {
         try {
             FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
             AnchorPane box = loader.load();
@@ -207,14 +212,16 @@ public class MainController {
         }
     }
 
-    private HBox generateItemCard(Items item){
+    private HBox generateItemCard(Items item)
+    {
         HBox container = NodeGenerator.generateItemCard(item);
         container.setOnMouseClicked((e) -> showItemInfo(item));
 
         return container;
     }
 
-    private void generateActionButtons(){
+    private void generateActionButtons()
+    {
         Button editButton = NodeGenerator.generateActionButton("pencil.png", null, "actionButton");
         Button deleteButton = NodeGenerator.generateActionButton("trash.png", null, "actionButton");
         Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() == 1 ? "starFill.png" : "star.png", null, "actionButton");
@@ -226,7 +233,8 @@ public class MainController {
         addButtonsTopMenu(Pos.CENTER_RIGHT, editButton, deleteButton, favButton, reloadButton);
     }
 
-    private void generateCreateActionButtons(boolean isEdit){
+    private void generateCreateActionButtons(boolean isEdit)
+    {
         Button cancel = NodeGenerator.generateActionButton("x.png", "   Cancelar", "actionButton");
         Button accept = NodeGenerator.generateActionButton("tick.png", "   Aceptar", "actionButton");
 
@@ -241,13 +249,15 @@ public class MainController {
         addButtonsTopMenu(Pos.CENTER, cancel, accept);
     }
 
-    private void addButtonsTopMenu(Pos pos, Button... buttons){
+    private void addButtonsTopMenu(Pos pos, Button... buttons)
+    {
         topMenuContainer.getChildren().clear();
         topMenuContainer.getChildren().addAll(buttons);
         topMenuContainer.setAlignment(pos);
     }
 
-    private void insertItem(){
+    private void insertItem()
+    {
         Items newItem = createUpdateController.generateItem();
         executorService.execute(() -> ViewManager.conn.insertItem(newItem, this));
     }
@@ -256,12 +266,14 @@ public class MainController {
         executorService.execute(() -> ViewManager.conn.deleteItem(selectedItem, this));
     }
 
-    private void updateItem(){
+    private void updateItem()
+    {
         Items modItem = createUpdateController.updateItem();
         executorService.execute(() -> ViewManager.conn.modItem(modItem, this));
     }
 
-    public void reloadView(){
+    public void reloadView()
+    {
         selectedItem = null;
         infoContainer.getChildren().clear();
         topMenuContainer.getChildren().clear();
@@ -275,11 +287,13 @@ public class MainController {
         }
     }
 
-    private void changeFav(Button favButton){
-        selectedItem.setFav((byte) Math.abs(selectedItem.getFav() - 1));
-        favButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(selectedItem.getFav() == 1 ? "icons/starFill.png" : "icons/star.png"))));
+    private void changeFav(Button favButton)
+    {
+        selectedItem.setFav(!selectedItem.getFav());
 
-        if(selectedItem.getFav() == 1)
+        favButton.setGraphic(new ImageView(selectedItem.getFav() ? fillStar : emptyStar));
+
+        if(selectedItem.getFav())
         {
             userFavorites.add(selectedItem);
         }
@@ -291,12 +305,14 @@ public class MainController {
         executorService.execute(() -> ViewManager.conn.changeFav(selectedItem, this));
     }
 
-    private void getDevices(){
+    private void getDevices()
+    {
         userDevices = ViewManager.conn.getDevices();
         Platform.runLater(() -> devicesLabel.setText(userDevices.size() + " dispositivos"));
     }
 
-    private void getContent(){
+    private void getContent()
+    {
         userItems = ViewManager.conn.getItems();
 
         for (Items item : userItems)
@@ -306,13 +322,16 @@ public class MainController {
         getAllContent();
     }
 
-    private void getAllContent(){
         getPasswords();
         getNotes();
+    private void getAllContent()
+    {
     }
 
-    private void getPasswords(){
-        for (Items i : userItems) {
+    private void getPasswords()
+    {
+        for (Items i : userItems)
+        {
             if(i.getPasswordsByIdI() != null)
                 Platform.runLater(() -> scrollItemContainer.getChildren().add(
                         generateItemCard(i)
@@ -320,8 +339,10 @@ public class MainController {
         }
     }
 
-    private void getNotes(){
-        for (Items i : userItems) {
+    private void getNotes()
+    {
+        for (Items i : userItems)
+        {
             if(i.getNotesByIdI() != null)
                 Platform.runLater(() -> scrollItemContainer.getChildren().add(
                         generateItemCard(i)
@@ -329,20 +350,23 @@ public class MainController {
         }
     }
 
-    private void getFavorites(){
-        for (Items i : userFavorites) {
+    private void getFavorites()
+    {
+        for (Items i : userFavorites)
             Platform.runLater(() -> scrollItemContainer.getChildren().add(generateItemCard(i)));
-        }
+
     }
 
-    public void removeItemFromArray(Items item){
+    public void removeItemFromArray(Items item)
+    {
         userItems.remove(item);
 
         if(userFavorites.contains(item))
             userFavorites.remove(item);
     }
 
-    public void updateItemFromArray(Items items){
+    public void updateItemFromArray(Items items)
+    {
         if(userFavorites.contains(selectedItem))
             userFavorites.set(userFavorites.indexOf(selectedItem), items);
 
@@ -353,7 +377,8 @@ public class MainController {
         userItems.add(items);
     }
 
-    public static void changeNodeVisibility(boolean visible, Node... nodes) {
+    public static void changeNodeVisibility(boolean visible, Node... nodes)
+    {
         for (Node node : nodes)
         {
             if(node != null)
@@ -365,8 +390,9 @@ public class MainController {
         }
     }
 
-    public void displayGenerator(CreateUpdateController controller, String fxml) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
+    public void displayGenerator(CreateUpdateController controller, String fxml) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml), ViewManager.bundle);
         HBox modal = loader.load();
 
         GeneratorController generatorController = loader.getController();
@@ -376,7 +402,8 @@ public class MainController {
     }
 
     @FXML
-    public void displayConfig() throws IOException {
+    public void displayConfig() throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"), ViewManager.bundle);
         VBox modal = loader.load();
 
@@ -386,12 +413,14 @@ public class MainController {
         displayModalWindow(modal);
     }
 
-    public void removeModal(){
+    public void removeModal()
+    {
         if(mainBody.getChildren().size() != 1)
             mainBody.getChildren().remove(1);
     }
 
-    public void displayModalWindow(Node modal){
+    public void displayModalWindow(Node modal)
+    {
         if(mainBody.getChildren().size() == 1)
         {
             modal.toFront();
