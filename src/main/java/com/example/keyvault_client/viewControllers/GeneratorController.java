@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
 
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,6 +44,7 @@ public class GeneratorController {
         });
 
         this.controller = controller;
+        generatePassword();
     }
 
     @FXML
@@ -73,8 +75,6 @@ public class GeneratorController {
         }
 
         password.setText(new String(passwordArray));
-
-        System.out.println(new String(passwordArray).length());
 
     }
 
