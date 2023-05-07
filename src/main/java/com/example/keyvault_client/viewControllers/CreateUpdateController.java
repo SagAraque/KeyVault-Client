@@ -1,8 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
 import com.example.keyvault_client.ViewManager;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import com.keyvault.database.models.Items;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
