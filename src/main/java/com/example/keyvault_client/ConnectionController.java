@@ -50,7 +50,6 @@ public class ConnectionController extends Thread{
                     ViewManager.switchToMainView();
                 }
                 case 102 ->ViewManager.switchToVerify();
-                case 204 -> api.forceDisconnect();
                 default -> controller.displayMessage(api.getResponseMessage(response));
             }
         });
@@ -80,7 +79,7 @@ public class ConnectionController extends Thread{
 
         if(response == 200)
         {
-            return (List<Items>) api.getResponseContent()[0];
+            return (List<Items>) api.getResponseContent();
         }
         else if (response == 201)
         {
@@ -99,7 +98,7 @@ public class ConnectionController extends Thread{
 
         if(response == 200)
         {
-            return (List<Devices>) api.getResponseContent()[0];
+            return (List<Devices>) api.getResponseContent();
         }
         else if (response == 201)
         {
