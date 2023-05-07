@@ -210,7 +210,7 @@ public class ConnectionController extends Thread{
             switch (response) {
                 case 200 -> {
                     controller.addItemToArray(newItem);
-                    controller.showMessage(isNote ? "Nota modificada con éxito" : "Contraseña modificada con éxito", false);
+                    controller.showMessage(isNote ? "Nota creada con éxito" : "Contraseña creada con éxito", false);
                     controller.reloadView();
                 }
                 case 201 -> closeSession(false);
