@@ -49,6 +49,8 @@ public class MainController {
     {
         executorService = ViewManager.executorService;
         userNameLabel.setText(ViewManager.conn.getEmail());
+        scrollItemContainer.setAlignment(Pos.CENTER);
+        scrollItemContainer.getChildren().add(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
         executorService.execute(this::getContent);
         executorService.execute(this::getDevices);
         selectedMenu = allButton;
@@ -61,18 +63,23 @@ public class MainController {
         changeMenu(target);
     }
 
-    private void changeMenu(Label target){
-        selectedMenu.getStyleClass().remove("menuButtonSelected");
-        target.getStyleClass().add("menuButtonSelected");
-        selectedMenu = target;
+    private void changeMenu(Label target)
+    {
+        if(!userItems.isEmpty())
+        {
+            selectedMenu.getStyleClass().remove("menuButtonSelected");
+            target.getStyleClass().add("menuButtonSelected");
+            selectedMenu = target;
 
-        scrollItemContainer.getChildren().clear();
+            scrollItemContainer.getChildren().clear();
 
-        switch (target.getId()) {
-            case "all" -> getAllContent();
-            case "favorites" -> getFavorites();
-            case "notes" -> getNotes();
-            case "passwords" -> getPasswords();
+            switch (target.getId())
+            {
+                case "all" -> getAllContent();
+                case "favorites" -> getFavorites();
+                case "notes" -> getNotes();
+                case "passwords" -> getPasswords();
+            }
         }
     }
 
@@ -319,13 +326,16 @@ public class MainController {
             if(item.getFav())
                 userFavorites.add(item);
 
-        getAllContent();
+        executorService.execute(this::getAllContent);
     }
 
-        getPasswords();
-        getNotes();
     private void getAllContent()
     {
+        scrollItemContainer.setAlignment(Pos.TOP_LEFT);
+        Platform.runLater(() -> scrollItemContainer.getChildren().clear());
+
+        executorService.execute(this::getPasswords);
+        executorService.execute(this::getNotes);
     }
 
     private void getPasswords()
