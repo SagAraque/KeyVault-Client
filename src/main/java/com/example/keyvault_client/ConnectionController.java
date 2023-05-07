@@ -3,9 +3,9 @@ package com.example.keyvault_client;
 import com.example.keyvault_client.viewControllers.AuthController;
 import com.example.keyvault_client.viewControllers.MainController;
 import com.keyvault.KeyVault;
-import com.keyvault.entities.Devices;
-import com.keyvault.entities.Items;
-import com.keyvault.entities.Users;
+import com.keyvault.database.models.Devices;
+import com.keyvault.database.models.Items;
+import com.keyvault.database.models.Users;
 import javafx.application.Platform;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.example.keyvault_client;
 
-import com.keyvault.entities.Devices;
-import com.keyvault.entities.Items;
+import com.keyvault.database.models.Devices;
+import com.keyvault.database.models.Items;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

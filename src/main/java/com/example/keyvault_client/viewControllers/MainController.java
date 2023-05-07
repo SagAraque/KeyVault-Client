@@ -1,8 +1,8 @@
 package com.example.keyvault_client.viewControllers;
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
-import com.keyvault.entities.Devices;
-import com.keyvault.entities.Items;
+import com.keyvault.database.models.Devices;
+import com.keyvault.database.models.Items;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

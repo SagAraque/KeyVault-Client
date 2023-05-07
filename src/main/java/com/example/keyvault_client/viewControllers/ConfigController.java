@@ -2,8 +2,8 @@ package com.example.keyvault_client.viewControllers;
 
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
-import com.keyvault.entities.Devices;
 import javafx.beans.value.ChangeListener;
+import com.keyvault.database.models.Devices;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
