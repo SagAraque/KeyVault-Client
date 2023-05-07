@@ -27,7 +27,7 @@
                         <Image url="@../image.png" />
                      </image>
                   </ImageView>
-                  <Label text="Registro">
+                  <Label text="%signUpTitle">
                      <font>
                         <Font name="Franklin Gothic Medium" size="24.0" />
                      </font>
@@ -38,7 +38,7 @@
                <children>
                   <VBox onMouseClicked="#cursorToField" prefHeight="200.0" prefWidth="100.0" styleClass="fieldsBody">
                      <children>
-                        <Label styleClass="text16" text="Usuario" textFill="#676767">
+                        <Label styleClass="text16" text="%loginEmail" textFill="#676767">
                            <font>
                               <Font name="Franklin Gothic Book" size="16.0" />
                            </font>
@@ -50,40 +50,74 @@
                         </TextField>
                      </children>
                   </VBox>
-                  <VBox onMouseClicked="#cursorToField" styleClass="fieldsBody">
+                  <HBox alignment="BOTTOM_CENTER">
                      <children>
-                        <Label styleClass="text16" text="Contraseña" textFill="#676767">
-                           <font>
-                              <Font name="Franklin Gothic Book" size="16.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="passwordField" styleClass="fields">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </PasswordField>
+                        <VBox onMouseClicked="#cursorToField">
+                           <children>
+                              <Label styleClass="text16" text="%loginPassword" textFill="#676767">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="16.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="passwordField" styleClass="fields">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </PasswordField>
+                           </children>
+                           <styleClass>
+                              <String fx:value="fieldsBody" />
+                              <String fx:value="itemField90" />
+                           </styleClass>
+                        </VBox>
+                        <Button fx:id="showPassword" mnemonicParsing="false" onAction="#changePasswordVisibility" styleClass="itemIconButton">
+                           <graphic>
+                              <ImageView fx:id="eyeIconPassword" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/closeEye.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
-                  </VBox>
-                  <VBox onDragDetected="#cursorToField" onMouseClicked="#cursorToField" styleClass="fieldsBody">
+                  </HBox>
+                  <HBox alignment="BOTTOM_CENTER">
                      <children>
-                        <Label styleClass="text16" text="Repetir contraseña" textFill="#676767">
-                           <font>
-                              <Font name="Franklin Gothic Book" size="16.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="repeatPasswordField" styleClass="fields">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </PasswordField>
+                        <VBox onDragDetected="#cursorToField" onMouseClicked="#cursorToField" styleClass="fieldsBody">
+                           <children>
+                              <Label styleClass="text16" text="%signUpRepeat" textFill="#676767">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="16.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="repeatPasswordField">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="fields" />
+                                    <String fx:value="itemField90" />
+                                 </styleClass>
+                              </PasswordField>
+                           </children>
+                        </VBox>
+                        <Button fx:id="showRepeatPassword" mnemonicParsing="false" onAction="#changePasswordRepeatVisibility" styleClass="itemIconButton">
+                           <graphic>
+                              <ImageView fx:id="eyeIconRepeatPassword" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/closeEye.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" styleClass="authButton" text="Registrarse" />
-                  <Label styleClass="text16" text="¿Ya tienes cuenta?">
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" styleClass="authButton" text="%signUpButton" />
+                  <Label styleClass="text16" text="%signUpAccount">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -91,7 +125,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label onMouseClicked="#toLogin" styleClass="text16" text="Iniciar sesión" textFill="#2a333f">
+                  <Label onMouseClicked="#toLogin" styleClass="text16" text="%loginTitle" textFill="#2a333f">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Label>

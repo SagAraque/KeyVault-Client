@@ -2,6 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -12,14 +13,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="modalWindow" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.ConfigController">
    <children>
       <VBox id="configModal" alignment="TOP_CENTER">
          <children>
             <HBox styleClass="modalTop">
                <children>
-                  <Label text="Configuración" textFill="WHITE">
+                  <Label fx:id="modalTitle" text="%configTitle" textFill="WHITE">
                      <styleClass>
                         <String fx:value="text20" />
                         <String fx:value="medium" />
@@ -31,24 +31,30 @@
                <children>
                   <VBox spacing="5.0">
                      <children>
-                        <Label text="Tema de la aplicación">
+                        <Label fx:id="themeLabel" text="%themeLabel">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="medium" />
                            </styleClass>
                         </Label>
-                        <ChoiceBox fx:id="themeSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect" />
+                        <ChoiceBox fx:id="themeSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ChoiceBox>
                      </children>
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <Label text="Idioma">
+                        <Label fx:id="languageLabel" text="%languageLabel">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="medium" />
                            </styleClass>
                         </Label>
-                        <ChoiceBox fx:id="languageSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect" />
+                        <ChoiceBox fx:id="languageSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ChoiceBox>
                      </children>
                   </VBox>
                   <GridPane>
@@ -60,7 +66,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" styleClass="switchBody" GridPane.columnIndex="1">
+                        <VBox fx:id="switchBody" alignment="CENTER_LEFT" onMouseClicked="#changeSwitch" prefHeight="200.0" prefWidth="100.0" styleClass="switchBody" GridPane.columnIndex="1">
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" styleClass="switchContent" />
                            </children>
@@ -68,7 +74,7 @@
                               <Insets left="2.0" right="2.0" />
                            </padding>
                         </VBox>
-                        <Label text="Habilitar aplicación de doble factor">
+                        <Label fx:id="totpLabel" text="%totpLabel">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="medium" />
@@ -87,13 +93,13 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label prefHeight="25.0" prefWidth="393.0" text="Dispositivos donde has iniciado sesión">
+                              <Label fx:id="sessionsLabel" prefHeight="25.0" prefWidth="393.0" text="%sessionsLabel">
                                  <styleClass>
                                     <String fx:value="text16" />
                                     <String fx:value="medium" />
                                  </styleClass>
                               </Label>
-                              <Button mnemonicParsing="false" styleClass="generatorButton" text="Cerrar las sesiones" GridPane.columnIndex="1" />
+                              <Button fx:id="closeSessionButton" mnemonicParsing="false" onAction="#closeAllSessions" styleClass="generatorButton" text="%closeSessions" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="290.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
@@ -116,23 +122,29 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label prefHeight="25.0" prefWidth="393.0" text="Eliminar cuenta permanentemente">
+                        <Label fx:id="deleteLabel" prefHeight="25.0" prefWidth="393.0" text="%deleteLabel">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="medium" />
                            </styleClass>
                         </Label>
-                        <Button mnemonicParsing="false" text="Eliminar cuenta" GridPane.columnIndex="1">
+                        <Button fx:id="deleteButton" mnemonicParsing="false" text="%deleteAccount" GridPane.columnIndex="1">
                            <styleClass>
                               <String fx:value="generatorButton" />
                               <String fx:value="dangerButton" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </GridPane>
                </children>
             </VBox>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeModal" styleClass="generatorButton" text="Cerrar" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeModal" styleClass="generatorButton" text="%close">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
          <padding>
             <Insets bottom="20.0" />

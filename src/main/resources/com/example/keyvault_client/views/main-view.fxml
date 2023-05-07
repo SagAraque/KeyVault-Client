@@ -45,20 +45,20 @@
                         </ImageView>
                         <VBox id="userContainerText">
                            <children>
-                              <Label fx:id="userNameLabel" text="Label">
+                              <Label fx:id="userNameLabel">
                                  <styleClass>
                                     <String fx:value="text16" />
                                     <String fx:value="lightWhiteText" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="devicesLabel" styleClass="lightWhiteText" text="devices" />
+                              <Label fx:id="devicesLabel" styleClass="lightWhiteText" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
                   <VBox prefWidth="100.0" spacing="5.0">
                      <children>
-                        <Label id="all" fx:id="allButton" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="448.0" text="Todos los items">
+                        <Label id="all" fx:id="allButton" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="448.0" text="%allItems">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
@@ -73,7 +73,7 @@
                               </ImageView>
                            </graphic>
                         </Label>
-                        <Label id="favorites" fx:id="menuFavorites" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="458.0" text="Favoritos">
+                        <Label id="favorites" fx:id="menuFavorites" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="458.0" text="%favorites">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
@@ -91,7 +91,7 @@
                   </VBox>
                   <VBox prefWidth="100.0" spacing="5.0">
                      <children>
-                        <Label text="Categorias">
+                        <Label fx:id="categoriesTitle" text="%categories">
                            <styleClass>
                               <String fx:value="lightWhiteText" />
                               <String fx:value="text16" />
@@ -104,7 +104,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Label id="passwords" fx:id="menuPasswords" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="298.0" text="Contraseñas">
+                        <Label id="passwords" fx:id="menuPasswords" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="298.0" text="%passwords">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
@@ -118,7 +118,7 @@
                               </ImageView>
                            </graphic>
                         </Label>
-                        <Label id="notes" fx:id="menuNotes" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="300.0" text="Notas seguras">
+                        <Label id="notes" fx:id="menuNotes" graphicTextGap="15.0" onMouseClicked="#actionMenu" prefHeight="40.0" prefWidth="300.0" text="%notes">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
@@ -136,7 +136,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label id="passwords" fx:id="menuSettings" graphicTextGap="15.0" onMouseClicked="#displayConfig" prefHeight="40.0" prefWidth="298.0" text="Configuración">
+                        <Label id="passwords" fx:id="menuSettings" graphicTextGap="15.0" onMouseClicked="#displayConfig" prefHeight="40.0" prefWidth="298.0" text="%configuration">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
@@ -150,7 +150,7 @@
                               </ImageView>
                            </graphic>
                         </Label>
-                        <Label id="notes" fx:id="closeSession" graphicTextGap="15.0" onMouseClicked="#closeSession" prefHeight="40.0" prefWidth="300.0" text="Cerrar sesión">
+                        <Label id="notes" fx:id="closeSession" graphicTextGap="15.0" onMouseClicked="#closeSession" prefHeight="40.0" prefWidth="300.0" text="%closeSession">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="lightWhiteText" />
@@ -184,7 +184,7 @@
                                           <Image url="@../icons/lupa.png" />
                                        </image>
                                     </ImageView>
-                                    <TextField id="searchField" fx:id="searchField" focusTraversable="false" layoutX="59.0" layoutY="22.0" onKeyTyped="#searchItem" prefHeight="30.0" prefWidth="653.0" promptText="Buscar...">
+                                    <TextField id="searchField" fx:id="searchField" focusTraversable="false" layoutX="59.0" layoutY="22.0" onKeyTyped="#searchItem" prefHeight="30.0" prefWidth="653.0" promptText="%search">
                                        <styleClass>
                                           <String fx:value="lightWhiteText" />
                                           <String fx:value="text16" />
@@ -194,7 +194,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <ScrollPane id="itemsContainer" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
+                        <ScrollPane id="itemsContainer" fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
                            <content>
                               <VBox fx:id="scrollItemContainer" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
                            </content>

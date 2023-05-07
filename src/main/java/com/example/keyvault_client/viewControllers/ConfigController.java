@@ -75,10 +75,12 @@ public class ConfigController {
 
     public void changeLanguage(int index)
     {
-        System.out.println(index);
         Locale lang =  index == 0 ? new Locale("es", "Es") : new Locale("en", "Us");
+        int indexTheme = themeSelect.getSelectionModel().getSelectedIndex();
+        int indexLang = languageSelect.getSelectionModel().getSelectedIndex();
 
         ViewManager.bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", lang);
+
         modalTitle.setText(ViewManager.bundle.getString("configTitle"));
         languageLabel.setText(ViewManager.bundle.getString("languageLabel"));
         themeLabel.setText(ViewManager.bundle.getString("themeLabel"));
@@ -88,5 +90,17 @@ public class ConfigController {
         closeButton.setText(ViewManager.bundle.getString("close"));
         closeSessionButton.setText(ViewManager.bundle.getString("closeSessions"));
         deleteButton.setText(ViewManager.bundle.getString("deleteAccount"));
+
+        languageSelect.getItems().clear();
+        languageSelect.getItems().add(ViewManager.bundle.getString("spanish"));
+        languageSelect.getItems().add(ViewManager.bundle.getString("english"));
+        languageSelect.getSelectionModel().select(indexLang);
+
+        themeSelect.getItems().clear();
+        themeSelect.getItems().add(ViewManager.bundle.getString("light"));
+        themeSelect.getItems().add(ViewManager.bundle.getString("dark"));
+        themeSelect.getSelectionModel().select(indexTheme);
+
+        mainController.changeLanguage();
     }
 }

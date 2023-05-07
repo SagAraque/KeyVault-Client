@@ -33,7 +33,7 @@ public class MainController {
     @FXML
     public VBox scrollItemContainer, messageContainer;
     @FXML
-    public Label userNameLabel, allButton, menuFavorites, menuPasswords, menuNotes;
+    public Label userNameLabel, allButton, menuFavorites, menuPasswords, menuNotes, menuSettings, closeSession, categoriesTitle;
     @FXML
     public TextField searchField;
     @FXML
@@ -103,6 +103,17 @@ public class MainController {
         {
             changeMenu(selectedMenu);
         }
+    }
+    public void changeLanguage()
+    {
+        allButton.setText(ViewManager.bundle.getString("allItems"));
+        menuFavorites.setText(ViewManager.bundle.getString("favorites"));
+        searchField.setPromptText(ViewManager.bundle.getString("search"));
+        categoriesTitle.setText(ViewManager.bundle.getString("categories"));
+        menuPasswords.setText(ViewManager.bundle.getString("passwords"));
+        menuNotes.setText(ViewManager.bundle.getString("notes"));
+        menuSettings.setText(ViewManager.bundle.getString("configuration"));
+        closeSession.setText(ViewManager.bundle.getString("closeSession"));
     }
 
     @FXML
