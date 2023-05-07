@@ -2,7 +2,6 @@ package com.example.keyvault_client.viewControllers;
 
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
-import javafx.beans.value.ChangeListener;
 import com.keyvault.database.models.Devices;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -68,6 +67,8 @@ public class ConfigController {
             switchBody.getStyleClass().remove("switchBodyActive");
         else
             switchBody.getStyleClass().add("switchBodyActive");
+
+        ViewManager.conn.changeTOTPstate();
 
         switchIsActive = !switchIsActive;
     }
