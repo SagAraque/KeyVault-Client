@@ -316,7 +316,7 @@ public class MainController {
         userItems = ViewManager.conn.getItems();
 
         for (Items item : userItems)
-            if(item.getFav() == 1)
+            if(item.getFav())
                 userFavorites.add(item);
 
         getAllContent();
