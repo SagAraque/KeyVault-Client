@@ -7,7 +7,12 @@ import com.keyvault.database.models.Devices;
 import com.keyvault.database.models.Items;
 import com.keyvault.database.models.Users;
 import javafx.application.Platform;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class ConnectionController extends Thread{
@@ -159,6 +164,39 @@ public class ConnectionController extends Thread{
             else if(response != 200)
             {
                 controller.showMessage(api.getResponseMessage(response), false);
+            }
+        });
+    }
+
+    public void changeTOTPstate()
+    {
+        restartTimer();
+        int response = api.totp();
+
+        Platform.runLater(() -> {
+            if(response == 200)
+            {
+                String qr = (String) api.getResponseContent();
+
+                if(qr != null)
+                {
+                    BufferedImage bufferedImage = api.generateQR(qr);
+                    WritableImage image = new WritableImage(bufferedImage.getWidth(), bufferedImage.getHeight());
+                    PixelWriter pixelWriter = image.getPixelWriter();
+
+                    for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                        for (int y = 0; y < bufferedImage.getHeight(); y++) {
+                            pixelWriter.setArgb(x, y, bufferedImage.getRGB(x, y));
+                        }
+                    }
+
+
+                }
+
+            }
+            else
+            {
+
             }
         });
     }
