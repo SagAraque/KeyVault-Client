@@ -41,6 +41,8 @@ public class MainController {
     private List<Items> userItems = new ArrayList<>();
     private List<Items> userFavorites = new ArrayList<>();
     private List<Devices> userDevices = new ArrayList<>();
+    private final Image fillStar = new Image(ViewManager.class.getResourceAsStream("icons/starFill.png"));
+    private final Image emptyStar = new Image(ViewManager.class.getResourceAsStream("icons/star.png"));
     private Items selectedItem = null;
     private CreateUpdateController createUpdateController = null;
     private ExecutorService executorService;
@@ -231,7 +233,7 @@ public class MainController {
     {
         Button editButton = NodeGenerator.generateActionButton("pencil.png", null, "actionButton");
         Button deleteButton = NodeGenerator.generateActionButton("trash.png", null, "actionButton");
-        Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() == 1 ? "starFill.png" : "star.png", null, "actionButton");
+        Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() ? "starFill.png" : "star.png", null, "actionButton");
         Button reloadButton = NodeGenerator.generateActionButton("reloadWhite.png", null, "actionButton");
 
         deleteButton.setOnMouseClicked((e) -> executorService.execute(this::deleteItem));
