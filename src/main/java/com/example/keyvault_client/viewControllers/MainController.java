@@ -101,7 +101,7 @@ public class MainController {
             scrollItemContainer.getChildren().clear();
 
             for (Items i : userItems) {
-                if (i.getName().contains(toSearch))
+                if (i.getName().toLowerCase().contains(toSearch))
                 {
                    HBox card = generateItemCard(i);
                    scrollItemContainer.getChildren().add(card);
