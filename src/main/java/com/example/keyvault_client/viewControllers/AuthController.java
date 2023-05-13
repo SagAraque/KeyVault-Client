@@ -2,22 +2,16 @@ package com.example.keyvault_client.viewControllers;
 
 import com.example.keyvault_client.ConnectionController;
 import com.example.keyvault_client.ViewManager;
-import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
+import com.example.keyvault_client.nodes.PasswordFieldSkin;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
-
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
 
@@ -26,7 +20,7 @@ public class AuthController {
     private TextField usernameField;
     private static String username, password;
     @FXML
-    private PasswordField passwordField, repeatPasswordField;
+    private PasswordFieldSkin passwordField, repeatPasswordField;
     @FXML
     private ImageView eyeIconPassword, eyeIconRepeatPassword;
     @FXML
@@ -40,82 +34,30 @@ public class AuthController {
     private Image openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye.png"));
     private Image closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye.png"));
     private ExecutorService executorService;
-    boolean isPassVisible, isPassRepeatVisible;
-
-    public void initialize(){
-        executorService = ViewManager.executorService;
-
-        if(verifyFields != null){
     private ConnectionController connectionController;
 
-            List<Node> fields = verifyFields.getChildren();
-
-            for (Node node : fields) {
-                TextField field = (TextField) node;
-                field.setTextFormatter(new TextFormatter<>(change ->
-                    change.getControlNewText().length() <= 1 ? change : null
-                ));
-
-                field.textProperty().addListener((obs, oldValue, newValue) ->{
-                    if(!newValue.matches("\\d*"))
-                        field.setText(newValue.replaceAll("[^\\d]", ""));
-                });
-            }
-        }
-
-        if(repeatPasswordField == null && ViewManager.conn.getEmail() != null && usernameField != null)
-            usernameField.setText(ViewManager.conn.getEmail());
-
-        if(repeatPasswordField != null)
-        {
-            repeatPasswordField.setSkin(new TextFieldSkin(repeatPasswordField){
-                @Override
-                protected String maskText(String text){
-                    if(isPassRepeatVisible)
-                        return text;
-
-                    return super.maskText(text);
-                }
-            });
-        }
     public void initialize()
     {
         this.executorService = ViewManager.executorService;
         this.connectionController = ViewManager.conn;
 
-        passwordField.setSkin(new TextFieldSkin(passwordField){
-            @Override
-            protected String maskText(String text){
-                if(isPassVisible)
-                    return text;
         if(repeatPasswordField == null && connectionController.getEmail() != null && usernameField != null)
             usernameField.setText(connectionController.getEmail());
 
-                return super.maskText(text);
-            }
-        });
     }
 
     @FXML
     public void changePasswordVisibility()
     {
-        String pass = passwordField.getText();
-        isPassVisible = !isPassVisible;
-        passwordField.setText(null);
-        passwordField.setText(pass);
-
-        eyeIconPassword.setImage(isPassVisible ? openEyeIcon : closeEyeIcon);
+        passwordField.changeVisibility();
+        eyeIconPassword.setImage(passwordField.isPassVisible() ? openEyeIcon : closeEyeIcon);
     }
 
     @FXML
     public void changePasswordRepeatVisibility()
     {
-        String pass = repeatPasswordField.getText();
-        isPassRepeatVisible = !isPassRepeatVisible;
-        repeatPasswordField.setText(null);
-        repeatPasswordField.setText(pass);
-
-        eyeIconRepeatPassword.setImage(isPassRepeatVisible ? openEyeIcon : closeEyeIcon);
+        repeatPasswordField.changeVisibility();
+        eyeIconRepeatPassword.setImage(repeatPasswordField.isPassVisible() ? openEyeIcon : closeEyeIcon);
     }
 
 

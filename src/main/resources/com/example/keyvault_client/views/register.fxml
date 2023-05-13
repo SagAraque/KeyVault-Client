@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import com.example.keyvault_client.nodes.PasswordFieldSkin?>
 <StackPane id="authBody" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.AuthController">
    <children>
       <VBox id="authBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css">
@@ -59,11 +60,11 @@
                                     <Font name="Franklin Gothic Book" size="16.0" />
                                  </font>
                               </Label>
-                              <PasswordField fx:id="passwordField" styleClass="fields">
+                              <PasswordFieldSkin fx:id="passwordField" styleClass="fields">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
-                              </PasswordField>
+                              </PasswordFieldSkin>
                            </children>
                            <styleClass>
                               <String fx:value="fieldsBody" />
@@ -90,7 +91,7 @@
                                     <Font name="Franklin Gothic Book" size="16.0" />
                                  </font>
                               </Label>
-                              <PasswordField fx:id="repeatPasswordField">
+                              <PasswordFieldSkin fx:id="repeatPasswordField">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -98,7 +99,7 @@
                                     <String fx:value="fields" />
                                     <String fx:value="itemField90" />
                                  </styleClass>
-                              </PasswordField>
+                              </PasswordFieldSkin>
                            </children>
                         </VBox>
                         <Button fx:id="showRepeatPassword" mnemonicParsing="false" onAction="#changePasswordRepeatVisibility" styleClass="itemIconButton">

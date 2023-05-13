@@ -1,11 +1,11 @@
 package com.example.keyvault_client.viewControllers;
 
 import com.example.keyvault_client.ViewManager;
+import com.example.keyvault_client.nodes.PasswordFieldSkin;
 import com.keyvault.database.models.Items;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +20,7 @@ public class CreateUpdateController {
     @FXML
     TextField nameField, usernameField, urlField;
     @FXML
-    PasswordField passwordField;
+    PasswordFieldSkin passwordField;
     @FXML
     TextArea noteField;
     @FXML
@@ -36,19 +36,8 @@ public class CreateUpdateController {
     MainController mainController;
     Items newItem = null;
     boolean isNote = false;
-    boolean passIsVisible = false;
 
     public void initialize(MainController mainController){
-        passwordField.setSkin(new TextFieldSkin(passwordField){
-            @Override
-            protected String maskText(String text){
-                if(passIsVisible)
-                    return text;
-
-                return super.maskText(text);
-            }
-        });
-
         this.mainController = mainController;
 
         setMaxFields(32, nameField);
@@ -88,13 +77,8 @@ public class CreateUpdateController {
 
     @FXML
     public void changePasswordVisibility() {
-        String pass = passwordField.getText();
-
-        passIsVisible = !passIsVisible;
-        passwordField.setText(null);
-        passwordField.setText(pass);
-
-        eyeIcon.setImage(passIsVisible ? openEyeIcon : closeEyeIcon);
+        passwordField.changeVisibility();
+        eyeIcon.setImage(passwordField.isPassVisible() ? openEyeIcon : closeEyeIcon);
     }
 
     public void setPasswordOnField(String password){
