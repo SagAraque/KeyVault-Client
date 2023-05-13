@@ -565,3 +565,18 @@
 {
     -fx-background-color: -fx-error;
 }
+
+/**
+----- VERIFY TOTP VIEW -----
+ */
+
+#verifyTotpModal
+{
+    -fx-min-width: 600px;
+    -fx-max-width: 600px;
+    -fx-max-height: 730px;
+    -fx-background-color: -fx-light-gray;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-spacing: 40px;
+}
