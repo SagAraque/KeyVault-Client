@@ -148,23 +148,6 @@ public class AuthController {
         ViewManager.switchToRegister();
     }
 
-    @FXML
-    public void moveFocusVerify(KeyEvent e){
-        TextField field = (TextField) e.getSource();
-        int pos = verifyFields.getChildren().indexOf(field);
-        List<Node> childs = verifyFields.getChildren();
-
-
-        if(pos < childs.size() - 1  && !e.getCharacter().trim().isBlank()){
-            childs.get(pos + 1).requestFocus();
-        }else if(pos != 0 && e.getCharacter().trim().isBlank()){
-            if(pos != childs.size() - 1)
-                ((TextField) childs.get(pos - 1)).setText("");
-
-            childs.get(pos - 1).requestFocus();
-        }
-    }
-
     private String verifyFields(String username, String password, String repeatPassword)
     {
         Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[!@#$&*])(?=\\S+$).{8,}$");

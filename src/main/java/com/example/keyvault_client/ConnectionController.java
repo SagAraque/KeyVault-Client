@@ -25,7 +25,6 @@ public class ConnectionController extends Thread{
     public int register(String username, String password)
     {
         Users user = api.createUser(username, password);
-        int response = api.register(user);
 
         return api.register(user);
     }

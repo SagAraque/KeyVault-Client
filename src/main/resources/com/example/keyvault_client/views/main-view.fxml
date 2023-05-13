@@ -225,7 +225,7 @@
                               <HBox id="infoContainer" fx:id="infoContainer" alignment="TOP_CENTER" />
                               <HBox id="infoContainer" alignment="CENTER">
                                  <children>
-                                    <VBox fx:id="messageContainer" alignment="BOTTOM_CENTER" visible="false">
+                                    <HBox fx:id="messageContainer" alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
                                        <styleClass>
                                           <String fx:value="messageContainer" />
                                           <String fx:value="infoMessage" />
@@ -234,7 +234,7 @@
                                        <children>
                                           <Label fx:id="messageLabel" styleClass="text16" text="Contraseña creada" textFill="WHITE" />
                                        </children>
-                                    </VBox>
+                                    </HBox>
                                  </children>
                               </HBox>
                            </items>
