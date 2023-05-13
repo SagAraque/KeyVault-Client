@@ -4,7 +4,6 @@ import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
 import com.keyvault.database.models.Devices;
 import com.keyvault.database.models.Items;
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +18,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -50,11 +49,13 @@ public class MainController {
     private CreateUpdateController createUpdateController = null;
     private ExecutorService executorService;
     private ConnectionController connectionController;
+    private ResourceBundle resourceBundle;
 
     public void initialize()
     {
         this.executorService = ViewManager.executorService;
         this.connectionController = ViewManager.conn;
+        this.resourceBundle = ViewManager.bundle;
 
         this.executorService.execute(this::getContent);
         this.executorService.execute(this::getDevices);
@@ -120,16 +121,18 @@ public class MainController {
             changeMenu(selectedMenu);
         }
     }
-    public void changeLanguage()
+    public void changeLanguage(ResourceBundle bundle)
     {
-        allButton.setText(ViewManager.bundle.getString("allItems"));
-        menuFavorites.setText(ViewManager.bundle.getString("favorites"));
-        searchField.setPromptText(ViewManager.bundle.getString("search"));
-        categoriesTitle.setText(ViewManager.bundle.getString("categories"));
-        menuPasswords.setText(ViewManager.bundle.getString("passwords"));
-        menuNotes.setText(ViewManager.bundle.getString("notes"));
-        menuSettings.setText(ViewManager.bundle.getString("configuration"));
-        closeSession.setText(ViewManager.bundle.getString("closeSession"));
+        resourceBundle = bundle;
+
+        allButton.setText(resourceBundle.getString("allItems"));
+        menuFavorites.setText(resourceBundle.getString("favorites"));
+        searchField.setPromptText(resourceBundle.getString("search"));
+        categoriesTitle.setText(resourceBundle.getString("categories"));
+        menuPasswords.setText(resourceBundle.getString("passwords"));
+        menuNotes.setText(resourceBundle.getString("notes"));
+        menuSettings.setText(resourceBundle.getString("configuration"));
+        closeSession.setText(resourceBundle.getString("closeSession"));
     }
 
     @FXML
@@ -416,8 +419,8 @@ public class MainController {
 
     public void displayGenerator(CreateUpdateController controller, String fxml) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml), ViewManager.bundle);
-        HBox modal = loader.load();
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml), resourceBundle);
+        VBox modal = loader.load();
 
         GeneratorController generatorController = loader.getController();
         generatorController.initialize(controller);
@@ -428,7 +431,7 @@ public class MainController {
     @FXML
     public void displayConfig() throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"), ViewManager.bundle);
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"), resourceBundle);
         VBox modal = loader.load();
 
         ConfigController configController = loader.getController();

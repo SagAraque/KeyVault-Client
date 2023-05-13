@@ -10,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -28,6 +29,7 @@ public class ConfigController {
     MainController mainController;
     private ExecutorService executorService;
     private ConnectionController connectionController;
+    private ResourceBundle bundle;
     boolean switchIsActive = false;
 
     public void initialize(MainController mainController, List<Devices> userDevices)
@@ -35,11 +37,10 @@ public class ConfigController {
         this.mainController = mainController;
         this.executorService = ViewManager.executorService;
         this.connectionController = ViewManager.conn;
+        this.bundle = ViewManager.bundle;
 
-        languageSelect.getItems().addAll("Castellano", "Inglés");
-        languageSelect.getSelectionModel().selectFirst();
-        themeSelect.getItems().addAll("Claro", "Oscuro");
-        themeSelect.getSelectionModel().selectFirst();
+        setSelects();
+
         if(connectionController.getApi().getAuthUser().isTotpverified())
         {
             switchBody.getStyleClass().add("switchBodyActive");
@@ -93,31 +94,37 @@ public class ConfigController {
     public void changeLanguage(int index)
     {
         Locale lang =  index == 0 ? new Locale("es", "Es") : new Locale("en", "Us");
-        int indexTheme = themeSelect.getSelectionModel().getSelectedIndex();
-        int indexLang = languageSelect.getSelectionModel().getSelectedIndex();
 
-        ViewManager.bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", lang);
+        bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", lang);
+        ViewManager.bundle = bundle;
 
-        modalTitle.setText(ViewManager.bundle.getString("configTitle"));
-        languageLabel.setText(ViewManager.bundle.getString("languageLabel"));
-        themeLabel.setText(ViewManager.bundle.getString("themeLabel"));
-        sessionsLabel.setText(ViewManager.bundle.getString("sessionsLabel"));
-        totpLabel.setText(ViewManager.bundle.getString("totpLabel"));
-        deleteLabel.setText(ViewManager.bundle.getString("deleteLabel"));
-        closeButton.setText(ViewManager.bundle.getString("close"));
-        closeSessionButton.setText(ViewManager.bundle.getString("closeSessions"));
-        deleteButton.setText(ViewManager.bundle.getString("deleteAccount"));
+        modalTitle.setText(bundle.getString("configTitle"));
+        languageLabel.setText(bundle.getString("languageLabel"));
+        themeLabel.setText(bundle.getString("themeLabel"));
+        sessionsLabel.setText(bundle.getString("sessionsLabel"));
+        totpLabel.setText(bundle.getString("totpLabel"));
+        deleteLabel.setText(bundle.getString("deleteLabel"));
+        closeButton.setText(bundle.getString("close"));
+        closeSessionButton.setText(bundle.getString("closeSessions"));
+        deleteButton.setText(bundle.getString("deleteAccount"));
+
+        setSelects();
+
+        mainController.changeLanguage(bundle);
+    }
+
+    private void setSelects()
+    {
+        int indexLang = bundle.getLocale().toString().equals("es_ES") ? 0 : 1;
 
         languageSelect.getItems().clear();
-        languageSelect.getItems().add(ViewManager.bundle.getString("spanish"));
-        languageSelect.getItems().add(ViewManager.bundle.getString("english"));
+        languageSelect.getItems().add(bundle.getString("spanish"));
+        languageSelect.getItems().add(bundle.getString("english"));
         languageSelect.getSelectionModel().select(indexLang);
 
         themeSelect.getItems().clear();
-        themeSelect.getItems().add(ViewManager.bundle.getString("light"));
-        themeSelect.getItems().add(ViewManager.bundle.getString("dark"));
-        themeSelect.getSelectionModel().select(indexTheme);
-
-        mainController.changeLanguage();
+        themeSelect.getItems().add(bundle.getString("light"));
+        themeSelect.getItems().add(bundle.getString("dark"));
+        themeSelect.getSelectionModel().selectFirst();
     }
 }
