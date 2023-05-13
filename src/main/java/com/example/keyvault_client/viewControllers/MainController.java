@@ -1,4 +1,5 @@
 package com.example.keyvault_client.viewControllers;
+import com.example.keyvault_client.ConnectionController;
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
 import com.keyvault.database.models.Devices;
@@ -24,11 +25,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class MainController {
 
     @FXML
-    public VBox scrollItemContainer, messageContainer;
+    public VBox scrollItemContainer;
     @FXML
     public Label userNameLabel, allButton, menuFavorites, menuPasswords, menuNotes, menuSettings, closeSession, categoriesTitle;
     @FXML
@@ -36,7 +39,7 @@ public class MainController {
     @FXML
     public StackPane mainBody;
     @FXML
-    public HBox topMenuContainer,infoContainer;
+    public HBox topMenuContainer,infoContainer, messageContainer;
     public Label selectedMenu, messageLabel, devicesLabel;
     private List<Items> userItems = new ArrayList<>();
     private List<Items> userFavorites = new ArrayList<>();
@@ -46,15 +49,20 @@ public class MainController {
     private Items selectedItem = null;
     private CreateUpdateController createUpdateController = null;
     private ExecutorService executorService;
+    private ConnectionController connectionController;
 
     public void initialize()
     {
-        executorService = ViewManager.executorService;
-        userNameLabel.setText(ViewManager.conn.getEmail());
+        this.executorService = ViewManager.executorService;
+        this.connectionController = ViewManager.conn;
+
+        this.executorService.execute(this::getContent);
+        this.executorService.execute(this::getDevices);
+
+        userNameLabel.setText(connectionController.getEmail());
         scrollItemContainer.setAlignment(Pos.CENTER);
         scrollItemContainer.getChildren().add(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
-        executorService.execute(this::getContent);
-        executorService.execute(this::getDevices);
+
         selectedMenu = allButton;
     }
 
@@ -87,14 +95,13 @@ public class MainController {
 
     @FXML
     public void closeSession(MouseEvent event){
-        ViewManager.conn.closeSession(true);
+        connectionController.closeSession(true);
     }
 
     @FXML
     public void searchItem()
     {
         String toSearch = searchField.getText().trim().toLowerCase();
-        System.out.println(toSearch);
 
         if(!toSearch.isBlank() && !toSearch.isEmpty())
         {
@@ -146,8 +153,6 @@ public class MainController {
 
     public void showMessage(String text, boolean isError)
     {
-        FadeTransition fade = new FadeTransition(Duration.millis(200), messageContainer);
-
         if(isError)
         {
             messageContainer.getStyleClass().add("messageError");
@@ -157,23 +162,7 @@ public class MainController {
             messageContainer.getStyleClass().remove("messageError");
         }
 
-        messageContainer.setVisible(true);
-        fade.setFromValue(0.0);
-        fade.setToValue(1.0);
-        fade.play();
-        messageLabel.setText(text);
-
-        new Thread(() ->{
-            try {
-                Thread.sleep(3000);
-                fade.setFromValue(1.0);
-                fade.setToValue(0.0);
-                fade.setOnFinished(e -> messageContainer.setVisible(false));
-                fade.play();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        ViewManager.displayMessage(text, messageContainer, messageLabel, null);
     }
 
     private void showItemInfo(Items target)
@@ -268,17 +257,42 @@ public class MainController {
     private void insertItem()
     {
         Items newItem = createUpdateController.generateItem();
-        executorService.execute(() -> ViewManager.conn.insertItem(newItem, this));
+        executorService.execute(() -> {
+            consumeOperation("create", newItem, connectionController::insertItem, this::addItemToArray);
+        });
     }
 
     private void deleteItem(){
-        executorService.execute(() -> ViewManager.conn.deleteItem(selectedItem, this));
+        executorService.execute(() -> {
+            consumeOperation("delete", selectedItem, connectionController::deleteItem, this::removeItemFromArray);
+        });
     }
 
     private void updateItem()
     {
         Items modItem = createUpdateController.updateItem();
-        executorService.execute(() -> ViewManager.conn.modItem(modItem, this));
+        modItem.setIdI(selectedItem.getIdI());
+
+        executorService.execute(() -> {
+            consumeOperation("update", modItem, connectionController::modItem, this::updateItemFromArray);
+        });
+    }
+
+    private void consumeOperation(String successMessage, Items item, Function<Items, Integer> operation, Consumer<Items> arrayOpertation)
+    {
+        int response = operation.apply(item);
+        Platform.runLater(() -> {
+            switch (response) {
+                case 200 -> {
+                    arrayOpertation.accept(item);
+                    this.showMessage(successMessage , false);
+                    this.reloadView();
+                }
+                case 201 -> connectionController.closeSession(false);
+                default -> this.showMessage("message" + response, true);
+            }
+        });
+
     }
 
     public void reloadView()
@@ -311,18 +325,18 @@ public class MainController {
             userFavorites.remove(selectedItem);
         }
 
-        executorService.execute(() -> ViewManager.conn.changeFav(selectedItem, this));
+        executorService.execute(() -> connectionController.changeFav(selectedItem, this));
     }
 
     private void getDevices()
     {
-        userDevices = ViewManager.conn.getDevices();
+        userDevices = connectionController.getDevices();
         Platform.runLater(() -> devicesLabel.setText(userDevices.size() + " dispositivos"));
     }
 
     private void getContent()
     {
-        userItems = ViewManager.conn.getItems();
+        userItems = connectionController.getItems();
 
         for (Items item : userItems)
             if(item.getFav())
@@ -372,9 +386,7 @@ public class MainController {
     public void removeItemFromArray(Items item)
     {
         userItems.remove(item);
-
-        if(userFavorites.contains(item))
-            userFavorites.remove(item);
+        userFavorites.remove(item);
     }
 
     public void updateItemFromArray(Items items)
@@ -425,13 +437,23 @@ public class MainController {
         displayModalWindow(modal);
     }
 
+    public void displayVerifyTotp() throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/verify-totp-view.fxml"), resourceBundle);
+        VBox modal = loader.load();
+        VerifyTotpController controller = loader.getController();
+        controller.initialize(this);
+
+        displayModalWindow(modal);
+    }
+
     public void removeModal()
     {
         if(mainBody.getChildren().size() != 1)
             mainBody.getChildren().remove(1);
     }
 
-    public void displayModalWindow(Node modal)
+    private void displayModalWindow(Node modal)
     {
         if(mainBody.getChildren().size() == 1)
         {

@@ -1,5 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.ConnectionController;
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
 import com.keyvault.database.models.Devices;
@@ -26,12 +27,14 @@ public class ConfigController {
     VBox devicesContainer, switchBody;
     MainController mainController;
     private ExecutorService executorService;
+    private ConnectionController connectionController;
     boolean switchIsActive = false;
 
     public void initialize(MainController mainController, List<Devices> userDevices)
     {
         this.mainController = mainController;
         this.executorService = ViewManager.executorService;
+        this.connectionController = ViewManager.conn;
 
         languageSelect.getItems().addAll("Castellano", "Inglés");
         languageSelect.getSelectionModel().selectFirst();
@@ -62,7 +65,7 @@ public class ConfigController {
     {
         devicesContainer.getChildren().clear();
         devicesContainer.getChildren().add(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
-        executorService.execute(() -> ViewManager.conn.closeAllSessions());
+        executorService.execute(() -> connectionController.closeAllSessions());
     }
 
     @FXML

@@ -1,14 +1,21 @@
 package com.example.keyvault_client;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -84,6 +91,33 @@ public class ViewManager extends Application {
     private static void restartExecutor(){
         executorService.shutdownNow();
         executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public static void displayMessage(String message, HBox errorMessage, Label errorLabel, ProgressIndicator progressIndicator){
+        Platform.runLater(() -> {
+            FadeTransition fade = new FadeTransition(Duration.millis(200), errorMessage);
+
+            if(progressIndicator != null)
+                progressIndicator.setProgress(0);
+
+            errorMessage.setVisible(true);
+            fade.setFromValue(0.0);
+            fade.setToValue(1.0);
+            fade.play();
+            errorLabel.setText(ViewManager.bundle.getString(message));
+
+            new Thread(() ->{
+                try {
+                    Thread.sleep(3000);
+                    fade.setFromValue(1.0);
+                    fade.setToValue(0.0);
+                    fade.setOnFinished(e -> errorMessage.setVisible(false));
+                    fade.play();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        });
     }
 
     @Override

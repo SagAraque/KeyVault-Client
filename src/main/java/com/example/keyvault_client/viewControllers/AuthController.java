@@ -1,8 +1,10 @@
 package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.ConnectionController;
 import com.example.keyvault_client.ViewManager;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -44,6 +46,7 @@ public class AuthController {
         executorService = ViewManager.executorService;
 
         if(verifyFields != null){
+    private ConnectionController connectionController;
 
             List<Node> fields = verifyFields.getChildren();
 
@@ -75,12 +78,18 @@ public class AuthController {
                 }
             });
         }
+    public void initialize()
+    {
+        this.executorService = ViewManager.executorService;
+        this.connectionController = ViewManager.conn;
 
         passwordField.setSkin(new TextFieldSkin(passwordField){
             @Override
             protected String maskText(String text){
                 if(isPassVisible)
                     return text;
+        if(repeatPasswordField == null && connectionController.getEmail() != null && usernameField != null)
+            usernameField.setText(connectionController.getEmail());
 
                 return super.maskText(text);
             }
@@ -111,55 +120,81 @@ public class AuthController {
 
 
     @FXML
-    public void cursorToField(MouseEvent e){
+    public void cursorToField(MouseEvent e)
+    {
         VBox parent = (VBox) e.getSource();
         parent.getChildren().get(1).requestFocus();
     }
 
     @FXML
-    public void login(){
+    public void login()
+    {
         username = usernameField.getText().trim();
         password = passwordField.getText().trim();
 
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-        executorService.execute(() -> ViewManager.conn.login(username, password, this));
+        executorService.execute(() -> {
+            int response = connectionController.login(username, password);
+            Platform.runLater(() -> consumeResponse(response, ViewManager::switchToMainView));
+        } );
     }
 
     @FXML
-    public void register(){
+    public void register()
+    {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         String repeatPassword = repeatPasswordField.getText().trim();
+        String fieldsCheck = verifyFields(username, password, repeatPassword);
 
-        switch (verifyFields(username, password, repeatPassword)) {
-            case "EMPTY-FIELDS" -> displayMessage("Los campos no pueden estar vacios");
-            case "PASSWORDS-WRONG-FORMAT" -> displayMessage("La contraseña debe ser mayor a 8 carateres e incluir una mayúscula");
-            case "PASSWORDS-NOT-EQUALS" -> displayMessage("Las contraseñas no coinciden");
-            case "EMAIL-WRONG-FORMAT" -> displayMessage("Correo electrónico invalido");
-            case "OK" -> executorService.execute(() ->{
-                progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        if(fieldsCheck.equals("OK"))
+        {
+            progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-                ViewManager.conn.register(username, password, this);
+            executorService.execute(() ->{
+                int response = connectionController.register(username, password);
+                Platform.runLater(() -> consumeResponse(response, ViewManager::switchToLogin));
             });
+        }
+        else
+        {
+            ViewManager.displayMessage(fieldsCheck,  errorMessage, errorLabel, progressIndicator);
         }
     }
 
     @FXML
-    public void verify(){
+    public void verify()
+    {
         StringBuilder code = new StringBuilder();
 
         for (Node node : verifyFields.getChildren())
             code.append(((TextField) node).getText().trim());
 
-        if(code.toString().length() == 6){
+        if(code.toString().length() == 6)
+        {
             progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-            executorService.execute(() -> ViewManager.conn.verify(code.toString(), saveDevice.isSelected(), this));
-        }else{
-            displayMessage("El código debe contener 6 dígitos");
+            executorService.execute(() -> {
+                int response = connectionController.verify(code.toString(), saveDevice.isSelected());
+                Platform.runLater(() -> consumeResponse(response, ViewManager::switchToMainView));
+            });
         }
+        else
+        {
 
+            ViewManager.displayMessage("codeFormat", errorMessage, errorLabel, progressIndicator);
+        }
+    }
+
+    private void consumeResponse(int response, Runnable successFunction)
+    {
+        switch (response)
+        {
+            case 200 -> successFunction.run();
+            case 103 -> ViewManager.switchToVerify();
+            default -> ViewManager.displayMessage("message" + response, errorMessage, errorLabel, progressIndicator);
+        }
     }
 
     @FXML
@@ -188,43 +223,22 @@ public class AuthController {
         }
     }
 
-    public void displayMessage(String message){
-        FadeTransition fade = new FadeTransition(Duration.millis(200), errorMessage);
-        progressIndicator.setProgress(0);
-        errorMessage.setVisible(true);
-        fade.setFromValue(0.0);
-        fade.setToValue(1.0);
-        fade.play();
-        errorLabel.setText(message);
-
-        new Thread(() ->{
-            try {
-                Thread.sleep(3000);
-                fade.setFromValue(1.0);
-                fade.setToValue(0.0);
-                fade.setOnFinished(e -> errorMessage.setVisible(false));
-                fade.play();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-    }
-
-    private String verifyFields(String username, String password, String repeatPassword){
+    private String verifyFields(String username, String password, String repeatPassword)
+    {
         Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[!@#$&*])(?=\\S+$).{8,}$");
         Pattern emailPattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
         if(username.length() == 0 || password.length() == 0 || repeatPassword.length() == 0)
-            return "EMPTY-FIELDS";
+            return "emptyFields";
 
         if(!pattern.matcher(password).matches())
-            return "PASSWORDS-WRONG-FORMAT";
+            return "wrongPasswordFormat";
 
         if(!password.equals(repeatPassword))
-            return "PASSWORDS-NOT-EQUALS";
+            return "wrongMatch";
 
         if(!emailPattern.matcher(username).matches())
-            return "EMAIL-WRONG-FORMAT";
+            return "invalidEmail";
 
         return "OK";
     }

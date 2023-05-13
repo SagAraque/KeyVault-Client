@@ -1,158 +1,114 @@
 package com.example.keyvault_client;
 
-import com.example.keyvault_client.viewControllers.AuthController;
 import com.example.keyvault_client.viewControllers.MainController;
 import com.keyvault.KeyVault;
 import com.keyvault.database.models.Devices;
 import com.keyvault.database.models.Items;
 import com.keyvault.database.models.Users;
 import javafx.application.Platform;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ConnectionController extends Thread{
     boolean local = true;
     private KeyVault api = new KeyVault(local);
     private Timer sessionTimer;
-    String email, plainPassword;
+    private String email, plainPassword;
+    private Users authUser = null;
 
     ConnectionController() {
 
     }
 
-    public void register(String username, String password, AuthController controller){
+    public int register(String username, String password)
+    {
         Users user = api.createUser(username, password);
         int response = api.register(user);
 
-        Platform.runLater(() ->{
-            if(response == 200)
-            {
-                ViewManager.switchToLogin();
-            }
-            else
-            {
-                controller.displayMessage(api.getResponseMessage(response));
-            }
-        });
+        return api.register(user);
     }
 
-    public void login(String username, String password, AuthController controller){
+    public int login(String username, String password)
+    {
         email = username;
         plainPassword = password;
 
         Users user = api.createUser(username, password);
         int response = api.login(user);
 
-        Platform.runLater(() ->{
-            switch (response){
-                case 200 -> {
-                    startTimer();
-                    ViewManager.switchToMainView();
-                }
-                case 102 ->ViewManager.switchToVerify();
-                default -> controller.displayMessage(api.getResponseMessage(response));
-            }
-        });
+        if(response == 200)
+        {
+            startTimer();
+            authUser = api.getAuthUser();
+        }
+
+        return response;
 
     }
 
-    public void verify(String code, boolean saveDevice, AuthController controller){
+    public int verify(String code, boolean saveDevice)
+    {
         Users user = api.createUser(email, plainPassword);
         int response = api.verifyLogin(code, saveDevice, user);
 
-        Platform.runLater(() -> {
-            if (response == 200)
-            {
-                startTimer();
-                ViewManager.switchToMainView();
-            }
-            else
-            {
-                controller.displayMessage(api.getResponseMessage(response));
-            }
-        });
+        if(response == 200)
+            startTimer();
+
+        return response;
     }
 
-    public List<Items> getItems(){
+    public List<Items> getItems()
+    {
+        return consumeListResponse(api::getItems);
+    }
+
+    public List<Devices> getDevices()
+    {
+        return consumeListResponse(api::getDevices);
+    }
+
+    private <T> List<T> consumeListResponse(Supplier<Integer> getFunction)
+    {
         restartTimer();
-        int response = api.getItems();
+        int response = getFunction.get();
 
         if(response == 200)
         {
-            return (List<Items>) api.getResponseContent();
+            return (List<T>) api.getResponseContent();
         }
         else if (response == 201)
         {
             closeSession(false);
-            return  null;
         }
-        else
-        {
-            return  null;
-        }
+
+        return null;
     }
 
-    public List<Devices> getDevices(){
+    public int deleteItem(Items delItem)
+    {
+        return performOperation(api::deleteItem, delItem);
+    }
+
+    public int modItem(Items modItem)
+    {
+        return performOperation(api::modItem, modItem);
+    }
+
+    public int insertItem(Items newItem)
+    {
+        return performOperation(api::insertItem, newItem);
+    }
+
+    public int performOperation(Function<Items, Integer> operation, Items item)
+    {
         restartTimer();
-        int response = api.getDevices();
-
-        if(response == 200)
-        {
-            return (List<Devices>) api.getResponseContent();
-        }
-        else if (response == 201)
-        {
-            closeSession(false);
-            return  null;
-        }
-        else
-        {
-            return  null;
-        }
+        return operation.apply(item);
     }
 
-    public void deleteItem(Items item, MainController controller){
-        restartTimer();
-        int response =  api.deleteItem(item);
-        boolean isNote = item.getNotesByIdI() != null;
-
-        Platform.runLater(() ->{
-            switch (response) {
-                case 200 -> {
-                    controller.removeItemFromArray(item);
-                    controller.showMessage(isNote ? "Nota modificada con éxito" : "Contraseña modificada con éxito", false);
-                    controller.reloadView();
-                }
-                case 201 -> closeSession(false);
-                default -> controller.showMessage(api.getResponseMessage(response), true);
-            }
-        });
-    }
-
-    public void modItem(Items item, MainController controller){
-        restartTimer();
-        int response = api.modItem(item);
-        boolean isNote = item.getNotesByIdI() != null;
-
-        Platform.runLater(() ->{
-            switch (response) {
-                case 200 -> {
-                    controller.updateItemFromArray(item);
-                    controller.showMessage(isNote ? "Nota modificada con éxito" : "Contraseña modificada con éxito" , false);
-                    controller.reloadView();
-                }
-                case 201 -> closeSession(false);
-                default -> controller.showMessage(api.getResponseMessage(response), true);
-            }
-        });
-    }
-
-    public void changeFav(Items item, MainController controller){
+    public void changeFav(Items item, MainController controller)
+    {
         restartTimer();
         int response = api.modItem(item);
 
@@ -190,40 +146,31 @@ public class ConnectionController extends Thread{
         return bufferedImage;
     }
 
-    public void insertItem(Items newItem, MainController controller){
     public int verifyTOTP(String code)
     {
         restartTimer();
-        int response = api.insertItem(newItem);
-        boolean isNote = newItem.getNotesByIdI() != null;
         int response = api.verifyTOTP(code);
 
-        Platform.runLater(() ->{
-            switch (response) {
-                case 200 -> {
-                    controller.addItemToArray(newItem);
-                    controller.showMessage(isNote ? "Nota creada con éxito" : "Contraseña creada con éxito", false);
-                    controller.reloadView();
-                }
-                case 201 -> closeSession(false);
-                default -> controller.showMessage(api.getResponseMessage(response), true);
-            }
-        });
         if(response == 200)
             authUser.setTotpverified(true);
 
         return response;
     }
 
-    public Items createNote(String name, String content){
+
+
+    public Items createNote(String name, String content)
+    {
         return  api.createNote(name, "", content);
     }
 
-    public Items createPassword(String name, String observations, String url, String email, String pass){
+    public Items createPassword(String name, String observations, String url, String email, String pass)
+    {
         return api.createPassword(name, observations, url, email, pass);
     }
 
-    public void closeSession(boolean fullDelete){
+    public void closeSession(boolean fullDelete)
+    {
         plainPassword = null;
         api = new KeyVault(local);
 
@@ -240,24 +187,29 @@ public class ConnectionController extends Thread{
         Platform.runLater(ViewManager::switchToLogin);
     }
 
-    public KeyVault getApi() {
+    public KeyVault getApi()
+    {
         return api;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    private void restartTimer(){
+    private void restartTimer()
+    {
         sessionTimer.restartTimer();
     }
 
-    private void startTimer() {
+    private void startTimer()
+    {
         sessionTimer = new Timer();
         sessionTimer.start();
     }
 
-    public void killTimer(){
+    public void killTimer()
+    {
         if(sessionTimer != null)
             sessionTimer.stopThread();
     }
