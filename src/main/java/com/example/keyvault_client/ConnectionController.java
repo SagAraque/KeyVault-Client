@@ -168,43 +168,35 @@ public class ConnectionController extends Thread{
         });
     }
 
-    public void changeTOTPstate()
+    public BufferedImage changeTOTPstate()
     {
         restartTimer();
         int response = api.totp();
+        BufferedImage bufferedImage = null;
 
-        Platform.runLater(() -> {
-            if(response == 200)
-            {
-                String qr = (String) api.getResponseContent();
+        if(response == 200)
+        {
+            String qr = (String) api.getResponseContent();
 
-                if(qr != null)
-                {
-                    BufferedImage bufferedImage = api.generateQR(qr);
-                    WritableImage image = new WritableImage(bufferedImage.getWidth(), bufferedImage.getHeight());
-                    PixelWriter pixelWriter = image.getPixelWriter();
+            if(authUser.isTotpverified())
+                authUser.setTotpverified(false);
 
-                    for (int x = 0; x < bufferedImage.getWidth(); x++) {
-                        for (int y = 0; y < bufferedImage.getHeight(); y++) {
-                            pixelWriter.setArgb(x, y, bufferedImage.getRGB(x, y));
-                        }
-                    }
+            System.out.println(qr);
 
+            if(qr != null)
+                bufferedImage = api.generateQR(qr);
+        }
 
-                }
-
-            }
-            else
-            {
-
-            }
-        });
+        return bufferedImage;
     }
 
     public void insertItem(Items newItem, MainController controller){
+    public int verifyTOTP(String code)
+    {
         restartTimer();
         int response = api.insertItem(newItem);
         boolean isNote = newItem.getNotesByIdI() != null;
+        int response = api.verifyTOTP(code);
 
         Platform.runLater(() ->{
             switch (response) {
@@ -217,6 +209,10 @@ public class ConnectionController extends Thread{
                 default -> controller.showMessage(api.getResponseMessage(response), true);
             }
         });
+        if(response == 200)
+            authUser.setTotpverified(true);
+
+        return response;
     }
 
     public Items createNote(String name, String content){

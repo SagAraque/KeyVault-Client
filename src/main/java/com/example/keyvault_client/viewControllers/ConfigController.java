@@ -37,6 +37,11 @@ public class ConfigController {
         languageSelect.getSelectionModel().selectFirst();
         themeSelect.getItems().addAll("Claro", "Oscuro");
         themeSelect.getSelectionModel().selectFirst();
+        if(connectionController.getApi().getAuthUser().isTotpverified())
+        {
+            switchBody.getStyleClass().add("switchBodyActive");
+            switchIsActive = true;
+        }
 
         for (Devices device : userDevices)
             devicesContainer.getChildren().add(NodeGenerator.generateDeviceCard(device));
@@ -61,16 +66,24 @@ public class ConfigController {
     }
 
     @FXML
-    public void changeSwitch()
+    public void changeSwitch() throws IOException
     {
         if(switchIsActive)
             switchBody.getStyleClass().remove("switchBodyActive");
         else
             switchBody.getStyleClass().add("switchBodyActive");
 
-        ViewManager.conn.changeTOTPstate();
-
         switchIsActive = !switchIsActive;
+
+        if(switchIsActive)
+        {
+            mainController.removeModal();
+            mainController.displayVerifyTotp();
+        }
+        else
+        {
+            executorService.submit(connectionController::changeTOTPstate);
+        }
     }
 
 
