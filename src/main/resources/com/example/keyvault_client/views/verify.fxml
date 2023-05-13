@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import com.example.keyvault_client.nodes.SingleNumInput?>
 <StackPane id="authBody" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.AuthController">
    <children>
       <VBox id="authBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css">
@@ -47,48 +48,48 @@
                <children>
                   <HBox fx:id="verifyFields" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <TextField focusTraversable="false" onKeyTyped="#moveFocusVerify">
+                        <SingleNumInput focusTraversable="false">
                            <styleClass>
                               <String fx:value="verifyField" />
                               <String fx:value="medium" />
                               <String fx:value="text16" />
                            </styleClass>
-                        </TextField>
-                        <TextField focusTraversable="false" onKeyTyped="#moveFocusVerify">
+                        </SingleNumInput>
+                        <SingleNumInput focusTraversable="false">
                            <styleClass>
                               <String fx:value="verifyField" />
                               <String fx:value="medium" />
                               <String fx:value="text16" />
                            </styleClass>
-                        </TextField>
-                        <TextField focusTraversable="false" onKeyTyped="#moveFocusVerify">
+                        </SingleNumInput>
+                        <SingleNumInput focusTraversable="false">
                            <styleClass>
                               <String fx:value="verifyField" />
                               <String fx:value="medium" />
                               <String fx:value="text16" />
                            </styleClass>
-                        </TextField>
-                        <TextField focusTraversable="false" onKeyTyped="#moveFocusVerify">
+                        </SingleNumInput>
+                        <SingleNumInput focusTraversable="false">
                            <styleClass>
                               <String fx:value="verifyField" />
                               <String fx:value="medium" />
                               <String fx:value="text16" />
                            </styleClass>
-                        </TextField>
-                        <TextField focusTraversable="false" onKeyTyped="#moveFocusVerify">
+                        </SingleNumInput>
+                        <SingleNumInput focusTraversable="false">
                            <styleClass>
                               <String fx:value="verifyField" />
                               <String fx:value="medium" />
                               <String fx:value="text16" />
                            </styleClass>
-                        </TextField>
-                        <TextField focusTraversable="false" onKeyTyped="#moveFocusVerify">
+                        </SingleNumInput>
+                        <SingleNumInput focusTraversable="false">
                            <styleClass>
                               <String fx:value="verifyField" />
                               <String fx:value="medium" />
                               <String fx:value="text16" />
                            </styleClass>
-                        </TextField>
+                        </SingleNumInput>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="48.0" prefWidth="600.0">
