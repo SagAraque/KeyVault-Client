@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -48,7 +47,6 @@ public class ViewManager extends Application {
             defaultLocale = new Locale("es", "Es");
         else
             defaultLocale = new Locale("en", "Us");
-
 
         bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", defaultLocale);
 
