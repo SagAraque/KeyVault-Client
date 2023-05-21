@@ -40,11 +40,11 @@ public class ShowController {
     @FXML
     VBox urlBox;
     @FXML
-    ImageView eyeIcon;
+    ImageView eyeIcon, copyUserIcon, copyPassIcon, copyUrlIcon, shareUrlIcon;
     HBox topMenuContainer;
     Items selectedItem;
-    Image openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye.png"));
-    Image closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye.png"));
+    Image openEyeIcon;
+    Image closeEyeIcon;
     boolean passIsVisible = false;
 
     public void initialize(Items item, HBox topMenu){
@@ -57,6 +57,20 @@ public class ShowController {
             passwordField.setText(password.getPassP());
             noteField.setText(item.getObservations());
             urlField.setText(password.getUrl());
+
+            String darkConcat = ViewManager.isDark ? "Dark" : "";
+            Image copyImg = new Image(ViewManager.class.getResourceAsStream("icons/copy"+ darkConcat +".png"));
+            Image shareImg = new Image(ViewManager.class.getResourceAsStream("icons/share"+ darkConcat +".png"));
+
+            openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
+            closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
+
+            copyPassIcon.setImage(copyImg);
+            copyUrlIcon.setImage(copyImg);
+            copyUserIcon.setImage(copyImg);
+            shareUrlIcon.setImage(shareImg);
+            eyeIcon.setImage(openEyeIcon);
+
         }
         else
         {
@@ -94,7 +108,7 @@ public class ShowController {
         passwordField.setText(null);
         passwordField.setText(pass);
 
-        eyeIcon.setImage(passIsVisible ? openEyeIcon : closeEyeIcon);
+        eyeIcon.setImage(passIsVisible ? closeEyeIcon : openEyeIcon);
     }
 
     @FXML

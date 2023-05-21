@@ -1,5 +1,7 @@
-package com.example.keyvault_client;
+package com.example.keyvault_client.Controllers;
 
+import com.example.keyvault_client.Timer;
+import com.example.keyvault_client.ViewManager;
 import com.example.keyvault_client.viewControllers.MainController;
 import com.keyvault.KeyVault;
 import com.keyvault.database.models.Devices;
@@ -18,7 +20,7 @@ public class ConnectionController extends Thread{
     private String email, plainPassword;
     private Users authUser = null;
 
-    ConnectionController() {
+    public ConnectionController() {
 
     }
 

@@ -31,8 +31,8 @@ public class CreateUpdateController {
     SplitPane topMenu;
     @FXML
     ImageView eyeIcon;
-    Image openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye.png"));
-    Image closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye.png"));
+    Image openEyeIcon;
+    Image closeEyeIcon;
     MainController mainController;
     Items newItem = null;
     boolean isNote = false;
@@ -44,6 +44,13 @@ public class CreateUpdateController {
         setMaxFields(256, usernameField);
         setMaxFields(64, passwordField);
         setMaxTextArea(256, noteField);
+
+        String darkConcat = ViewManager.isDark ? "Dark" : "";
+
+        openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
+        closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
+
+        eyeIcon.setImage(openEyeIcon);
     }
 
     @FXML
@@ -78,7 +85,7 @@ public class CreateUpdateController {
     @FXML
     public void changePasswordVisibility() {
         passwordField.changeVisibility();
-        eyeIcon.setImage(passwordField.isPassVisible() ? openEyeIcon : closeEyeIcon);
+        eyeIcon.setImage(passwordField.isPassVisible() ? closeEyeIcon : openEyeIcon);
     }
 
     public void setPasswordOnField(String password){

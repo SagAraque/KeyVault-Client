@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.MainController">
+<StackPane id="dark" fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.MainController">
    <children>
       <GridPane minWidth="1280.0" prefHeight="1080.0" prefWidth="1920.0">
         <columnConstraints>
@@ -196,7 +196,7 @@
                         </VBox>
                         <ScrollPane id="itemsContainer" fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="scrollItemContainer" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
+                              <VBox id="scrollItemsContainer" fx:id="scrollItemContainer" prefHeight="200.0" prefWidth="100.0" spacing="10.0" stylesheets="@../style.css" />
                            </content>
                         </ScrollPane>
                         <VBox id="buttonContainer" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style.css">

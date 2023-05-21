@@ -1,5 +1,7 @@
 package com.example.keyvault_client;
 
+import com.example.keyvault_client.Controllers.Config;
+import com.example.keyvault_client.Controllers.ConnectionController;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,6 +29,7 @@ public class ViewManager extends Application {
     public static ExecutorService executorService = Executors.newSingleThreadExecutor();
     public static ConnectionController conn = new ConnectionController();
     public static ResourceBundle bundle;
+    public static boolean isDark = false;
 
     @Override
     public void start(Stage stage) {
@@ -35,15 +39,18 @@ public class ViewManager extends Application {
         switchToLogin();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Medium.ttf"), 12);
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Regular.ttf"), 12);
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Bold.ttf"), 12);
         System.setProperty("prism.lcdtext", "false");
 
-        Locale defaultLocale = Locale.getDefault();
+        String lang = Config.getKey("lang");
+        isDark = Config.getKey("darkMode").equals("true");
 
-        if(defaultLocale.getLanguage().equals("es"))
+        Locale defaultLocale;
+
+        if(lang.equals("es"))
             defaultLocale = new Locale("es", "Es");
         else
             defaultLocale = new Locale("en", "Us");
@@ -71,6 +78,9 @@ public class ViewManager extends Application {
             FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml), bundle);
             Scene scene = new Scene(loader.load(), width, height,true, SceneAntialiasing.BALANCED);
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+
+            if(isDark)
+                scene.getStylesheets().add(ViewManager.class.getResource("darkMode.css").toString());
 
             window.setScene(scene);
             window.setMinWidth(width);
@@ -116,6 +126,12 @@ public class ViewManager extends Application {
                 }
             }).start();
         });
+    }
+
+    public static void changeTheme(boolean changeToDark) {
+        isDark = changeToDark;
+        Config.setKey("darkMode", String.valueOf(changeToDark));
+        switchToMainView();
     }
 
     @Override

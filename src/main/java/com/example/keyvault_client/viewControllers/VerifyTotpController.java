@@ -1,6 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
-import com.example.keyvault_client.ConnectionController;
+import com.example.keyvault_client.Controllers.ConnectionController;
 import com.example.keyvault_client.ViewManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

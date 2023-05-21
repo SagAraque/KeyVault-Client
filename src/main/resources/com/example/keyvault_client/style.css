@@ -63,10 +63,11 @@
 #authTop{
     -fx-min-height: 52px;
     -fx-max-height: 52px;
-    -fx-background-color: -fx-color-main;
+    -fx-background-color: -fx-light-main;
 }
 
-.whiteFieldContainer{
+.whiteFieldContainer
+{
     -fx-min-width: 400px;
     -fx-max-width: 500px;
     -fx-min-height: 20px;
@@ -78,23 +79,26 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 2.0);
 }
 
-.fieldsBody{
+.fieldsBody
+{
     -fx-max-height: 50px;
     -fx-min-height: 50px;
     -fx-spacing: 5px;
     -fx-cursor: text;
 }
 
-.fields{
+.fields
+{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-padding: 0px;
 }
 
-.authButton{
+.authButton
+{
     -fx-max-width: 200px;
     -fx-min-width: 200px;
-    -fx-background-color: -fx-color-main;
+    -fx-background-color: -fx-light-main;
     -fx-font-size: 20px;
     -fx-font-family: "Noto Sans";
     -fx-border-radius: 5px;
@@ -103,11 +107,13 @@
     -fx-cursor: hand;
 }
 
-.authButton:hover{
-    -fx-background-color: -fx-light-main;
+.authButton:hover
+{
+    -fx-background-color: -fx-color-main;
 }
 
-.verifyField{
+.verifyField
+{
     -fx-min-height: 50px;
     -fx-max-height: 50px;
     -fx-min-width: 40px;
@@ -119,7 +125,8 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 2.0);
 }
 
-.messageContainer{
+.messageContainer
+{
     -fx-min-width: 350px;
     -fx-max-width: 550px;
     -fx-max-height: 50px;
@@ -129,15 +136,18 @@
     -fx-alignment: center;
 }
 
-.messageError{
+.messageError
+{
     -fx-background-color: -fx-error;
 }
 
-.messageSuccess{
+.messageSuccess
+{
     -fx-background-color: -fx-success;
 }
 
-.infoMessage{
+.infoMessage
+{
     -fx-min-width: 580px;
     -fx-max-width: 580px;
 }
@@ -146,7 +156,8 @@
 ----- MAIN -----
  */
 
-.topMenu{
+.topMenu
+{
     -fx-background-color: -fx-light-main;
     -fx-min-height: 68px;
     -fx-pref-height: 68px;
@@ -156,7 +167,8 @@
     -fx-padding: 0px 20px 0px 20px;
 }
 
-#searchBar{
+#searchBar
+{
     -fx-background-color: -fx-color-main;
     -fx-max-height: 40px;
     -fx-border-radius: 5px;
@@ -166,7 +178,8 @@
     -fx-alignment: center-left;
 }
 
-#searchField{
+#searchField
+{
     -fx-min-height: 30px;
     -fx-padding: 0px;
     -fx-background-color: transparent;
@@ -182,22 +195,26 @@
     -fx-spacing: 50px;
 }
 
-.menuButtonContainer{
+.menuButtonContainer
+{
     -fx-spacing: 20px;
 }
 
-.menuButton{
+.menuButton
+{
     -fx-padding: 10px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-cursor: hand;
 }
 
-.menuButtonSelected, .menuButton:hover{
+.menuButtonSelected, .menuButton:hover
+{
     -fx-background-color: -fx-light-main;
 }
 
-.actionButton{
+.actionButton
+{
     -fx-background-color: -fx-color-main;
     -fx-min-width: 58px;
     -fx-max-height: 34px;
@@ -213,7 +230,8 @@
 ----- ITEMS MENU -----
  */
 
-#itemsMenu{
+#itemsMenu
+{
     -fx-pref-width: 540px;
     -fx-max-width: 540px;
     -fx-min-width: 380px;
@@ -222,19 +240,26 @@
     -fx-border-width: 0px;
 }
 
-#itemsContainer{
+#itemsContainer
+{
     -fx-background-color: transparent;
     -fx-border-width: 0;
     -fx-padding: 10px;
 }
 
-#infoContainer{
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+#infoContainer
+{
     -fx-background-color: -fx-light-gray;
     -fx-pref-width: 1098px;
     -fx-spacing: 40;
 }
 
-#addButton{
+#addButton
+{
     -fx-background-color: -fx-color-main;
     -fx-text-fill: -fx-color-white;
     -fx-max-width: 240px;
@@ -246,11 +271,13 @@
     -fx-padding: 0px;
 }
 
-#addButton:hover{
+#addButton:hover
+{
     -fx-background-color: -fx-light-main;
 }
 
-#buttonContainer{
+#buttonContainer
+{
     -fx-max-height:80px;
     -fx-pref-height: 80px;
     -fx-padding: 10px;
@@ -259,30 +286,26 @@
     -fx-background-color: transparent;
 }
 
-.activeButton{
-    -fx-background-color: -fx-dark-main;
-}
-
-#menuButton{
+#menuButton
+{
     -fx-pref-width: 72px;
     -fx-pref-height: 72px;
     -fx-alignment: center;
 }
 
-#menuButton:hover{
-    -fx-background-color: -fx-dark-main;
-}
-
-#userContainer{
+#userContainer
+{
     -fx-spacing: 10px;
 }
 
-#userContainerText{
+#userContainerText
+{
     -fx-spacing: 10px;
     -fx-alignment: center-left;
 }
 
-.itemContainer{
+.itemContainer
+{
     -fx-max-height: 50px;
     -fx-alignment: center-left;
     -fx-background-radius: 5px;
@@ -290,12 +313,14 @@
     -fx-spacing: 20px;
 }
 
-.itemContainer:hover{
+.itemContainer:hover
+{
     -fx-cursor: hand;
     -fx-background-color: -fx-light-gray;
 }
 
-.itemContainerBorder{
+.itemContainerBorder
+{
     -fx-min-width: 10px;
     -fx-max-width: 10px;
     -fx-background-color: -fx-color-main;
@@ -303,7 +328,8 @@
     -fx-border-radius: 5px 0px 0px 5px;
 }
 
-.itemTextContainer{
+.itemTextContainer
+{
     -fx-padding: 10px 0px 10px 0px;
 }
 
@@ -338,56 +364,66 @@
 ----- SHOW ITEMS -----
  */
 
-#infoItemPane{
+#infoItemPane
+{
     -fx-max-width: 640px;
     -fx-pref-width: 640px;
     -fx-min-width: 300px;
     -fx-padding: 0px 40px 0px 20px;
 }
 
-.infoItem{
+.infoItem
+{
     -fx-max-width: 600px;
     -fx-pref-width: 600px;
     -fx-background-color: rgba(255, 255, 255, 0);
     -fx-spacing: 20px;
 }
 
-.itemWhiteContainer{
+.itemWhiteContainer
+{
     -fx-pref-width: 600px;
     -fx-max-width: 600px;
 }
 
-.itemField90{
+.itemField90
+{
     -fx-pref-width: 525px;
 }
 
-.itemField80{
+.itemField80
+{
     -fx-pref-width: 480px;
 }
 
-.itemIconButton{
+.itemIconButton
+{
     -fx-max-width: 24px;
     -fx-max-height: 24px;
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }
 
-.itemIconButton:hover{
+.itemIconButton:hover
+{
     -fx-background-color: -fx-light-gray;
 }
 
-.fieldsBodyTextArea{
+.fieldsBodyTextArea
+{
     -fx-max-height: 300px;
 }
 
-.fieldsArea{
+.fieldsArea
+{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-padding: 0px;
     -fx-max-height: 180px;
 }
 
-.fieldsArea .content{
+.fieldsArea .content
+{
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
@@ -396,14 +432,16 @@
 ----- CREATE ITEMS -----
  */
 
-.createSelector{
+.createSelector
+{
     -fx-max-height: 36px;
     -fx-min-height: 36px;
     -fx-padding: 2px;
     -fx-cursor: hand;
 }
 
-.createSelectorSelected{
+.createSelectorSelected
+{
     -fx-background-color: -fx-light-main;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
@@ -414,13 +452,15 @@
 ----- PASSWORD GENERATOR -----
  */
 
-.modalWindow{
+.modalWindow
+{
     -fx-pref-width: 1920px;
     -fx-pref-height: 1080px;
     -fx-background-color: rgba(0, 0, 0, 0.4);
 }
 
-#generatorBody{
+#generatorBody
+{
     -fx-min-width: 600px;
     -fx-max-width: 600px;
     -fx-min-height: 480px;
@@ -430,7 +470,8 @@
     -fx-background-radius: 10px;
 }
 
-.modalTop{
+.modalTop
+{
     -fx-background-color: -fx-light-main;
     -fx-min-height: 48px;
     -fx-max-height: 48px;
@@ -439,13 +480,15 @@
     -fx-background-radius: 10px 10px 0px 0px;
 }
 
-.generatorBody{
+.generatorBody
+{
     -fx-padding: 15px 10px 5px 10px;
     -fx-spacing: 30px;
     -fx-alignment: top-center;
 }
 
-.generatorButton{
+.generatorButton
+{
     -fx-min-width: 180px;
     -fx-max-width: 180px;
     -fx-background-color: -fx-light-main;
@@ -454,36 +497,43 @@
     -fx-text-fill: white;
 }
 
-.generatorButtonWhite{
+.generatorButtonWhite
+{
     -fx-background-color: white;
     -fx-text-fill: -fx-light-main;
     -fx-border-color: -fx-light-main;
 }
 
-.generatorButton:hover{
+.generatorButton:hover
+{
     -fx-background-color: -fx-color-main;
 }
 
-.generatorCheckBox .box{
+.generatorCheckBox .box
+{
     -fx-background-color: -fx-light-gray;
     -fx-border-color: #b6b6b6;
     -fx-border-radius:3px;
 }
 
-.generatorCheckBox:selected .mark {
+.generatorCheckBox:selected .mark
+{
     -fx-background-color: white;
 }
 
-.generatorCheckBox:selected .box {
+.generatorCheckBox:selected .box
+{
     -fx-background-color: -fx-light-main;
     -fx-border-color: transparent;
 }
 
-.generatorSlider .thumb{
+.generatorSlider .thumb
+{
     -fx-background-color: -fx-color-main;
 }
 
-.generatorSlider .track{
+.generatorSlider .track
+{
     -fx-background-color: linear-gradient(to right, #475464 0, #e5e4e4 0);
 }
 
@@ -516,7 +566,8 @@
     -fx-min-height: 32px;
 }
 
-.configSelect .context-menu {
+.configSelect .context-menu
+{
     -fx-pref-width: 540;
 }
 

@@ -53,9 +53,9 @@
                         </VBox>
                         <Button fx:id="copyUser" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton" HBox.hgrow="ALWAYS">
                            <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="copyUserIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../icons/copyBlack.png" />
+                                    <Image url="@../icons/copy.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -87,9 +87,9 @@
                         </Button>
                         <Button fx:id="copyPass" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton">
                            <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="copyPassIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../icons/copyBlack.png" />
+                                    <Image url="@../icons/copy.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -120,7 +120,7 @@
                         </VBox>
                         <Button fx:id="goToLink" mnemonicParsing="false" onAction="#goTo" styleClass="itemIconButton">
                            <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="shareUrlIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../icons/share.png" />
                                  </image>
@@ -129,9 +129,9 @@
                         </Button>
                         <Button fx:id="copyUrl" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton">
                            <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="copyUrlIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../icons/copyBlack.png" />
+                                    <Image url="@../icons/copy.png" />
                                  </image>
                               </ImageView>
                            </graphic>

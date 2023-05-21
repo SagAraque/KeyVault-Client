@@ -1,6 +1,7 @@
 package com.example.keyvault_client.viewControllers;
 
-import com.example.keyvault_client.ConnectionController;
+import com.example.keyvault_client.Controllers.Config;
+import com.example.keyvault_client.Controllers.ConnectionController;
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
 import com.keyvault.database.models.Devices;
@@ -49,10 +50,6 @@ public class ConfigController {
 
         for (Devices device : userDevices)
             devicesContainer.getChildren().add(NodeGenerator.generateDeviceCard(device));
-
-        languageSelect.setOnAction(e ->{
-            changeLanguage(languageSelect.getSelectionModel().getSelectedIndex());
-        });
     }
 
     @FXML
@@ -90,10 +87,9 @@ public class ConfigController {
         }
     }
 
-
-    public void changeLanguage(int index)
-    {
+    private void changeLanguage(int index) {
         Locale lang =  index == 0 ? new Locale("es", "Es") : new Locale("en", "Us");
+        Config.setKey("lang", lang.getLanguage());
 
         bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", lang);
         ViewManager.bundle = bundle;
@@ -116,6 +112,10 @@ public class ConfigController {
     private void setSelects()
     {
         int indexLang = bundle.getLocale().toString().equals("es_ES") ? 0 : 1;
+        int indexTheme = ViewManager.isDark ? 1 : 0;
+
+        languageSelect.setOnAction(null);
+        themeSelect.setOnAction(null);
 
         languageSelect.getItems().clear();
         languageSelect.getItems().add(bundle.getString("spanish"));
@@ -125,6 +125,14 @@ public class ConfigController {
         themeSelect.getItems().clear();
         themeSelect.getItems().add(bundle.getString("light"));
         themeSelect.getItems().add(bundle.getString("dark"));
-        themeSelect.getSelectionModel().selectFirst();
+        themeSelect.getSelectionModel().select(indexTheme);
+
+        languageSelect.setOnAction(e ->{
+            changeLanguage(languageSelect.getSelectionModel().getSelectedIndex());
+        });
+
+        themeSelect.setOnAction(e ->{
+            ViewManager.changeTheme(themeSelect.getSelectionModel().getSelectedIndex() == 1);
+        });
     }
 }

@@ -1,6 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
-import com.example.keyvault_client.ConnectionController;
+import com.example.keyvault_client.Controllers.ConnectionController;
 import com.example.keyvault_client.ViewManager;
 import com.example.keyvault_client.nodes.PasswordFieldSkin;
 import javafx.application.Platform;
@@ -22,7 +22,7 @@ public class AuthController {
     @FXML
     private PasswordFieldSkin passwordField, repeatPasswordField;
     @FXML
-    private ImageView eyeIconPassword, eyeIconRepeatPassword;
+    private ImageView eyeIconPassword, eyeIconRepeatPassword, logo;
     @FXML
     private HBox errorMessage, verifyFields;
     @FXML
@@ -31,8 +31,9 @@ public class AuthController {
     private ProgressIndicator progressIndicator;
     @FXML
     private CheckBox saveDevice;
-    private Image openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye.png"));
-    private Image closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye.png"));
+
+    private Image openEyeIcon;
+    private Image closeEyeIcon;
     private ExecutorService executorService;
     private ConnectionController connectionController;
 
@@ -40,6 +41,19 @@ public class AuthController {
     {
         this.executorService = ViewManager.executorService;
         this.connectionController = ViewManager.conn;
+
+        String darkConcat = ViewManager.isDark ? "Dark" : "";
+
+        openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
+        closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
+
+        eyeIconPassword.setImage(openEyeIcon);
+
+        if(eyeIconRepeatPassword != null)
+            eyeIconRepeatPassword.setImage(openEyeIcon);
+
+        if(ViewManager.isDark)
+            logo.setImage(new Image(ViewManager.class.getResourceAsStream("icons/logoDark.png")));
 
         if(repeatPasswordField == null && connectionController.getEmail() != null && usernameField != null)
             usernameField.setText(connectionController.getEmail());
@@ -50,14 +64,14 @@ public class AuthController {
     public void changePasswordVisibility()
     {
         passwordField.changeVisibility();
-        eyeIconPassword.setImage(passwordField.isPassVisible() ? openEyeIcon : closeEyeIcon);
+        eyeIconPassword.setImage(passwordField.isPassVisible() ? closeEyeIcon : openEyeIcon);
     }
 
     @FXML
     public void changePasswordRepeatVisibility()
     {
         repeatPasswordField.changeVisibility();
-        eyeIconRepeatPassword.setImage(repeatPasswordField.isPassVisible() ? openEyeIcon : closeEyeIcon);
+        eyeIconRepeatPassword.setImage(repeatPasswordField.isPassVisible() ? closeEyeIcon : openEyeIcon);
     }
 
 
