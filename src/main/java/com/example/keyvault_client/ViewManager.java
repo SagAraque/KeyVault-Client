@@ -50,9 +50,9 @@ public class ViewManager extends Application {
         Locale defaultLocale;
 
         if(lang.equals("es"))
-            defaultLocale = new Locale("es", "Es");
+            defaultLocale = new Locale("es", "ES");
         else
-            defaultLocale = new Locale("en", "Us");
+            defaultLocale = new Locale("en", "US");
 
         bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", defaultLocale);
 

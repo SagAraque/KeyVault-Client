@@ -88,7 +88,7 @@ public class ConfigController {
     }
 
     private void changeLanguage(int index) {
-        Locale lang =  index == 0 ? new Locale("es", "Es") : new Locale("en", "Us");
+        Locale lang =  index == 0 ? new Locale("es", "ES") : new Locale("en", "US");
         Config.setKey("lang", lang.getLanguage());
 
         bundle = ResourceBundle.getBundle("com.example.keyvault_client.lang.lang", lang);
