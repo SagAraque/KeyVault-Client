@@ -39,6 +39,8 @@ public class MainController {
     public StackPane mainBody;
     @FXML
     public HBox topMenuContainer,infoContainer, messageContainer;
+    @FXML
+    public ImageView profileImage;
     public Label selectedMenu, messageLabel, devicesLabel;
     private List<Items> userItems = new ArrayList<>();
     private List<Items> userFavorites = new ArrayList<>();
@@ -65,6 +67,14 @@ public class MainController {
         scrollItemContainer.getChildren().add(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
 
         selectedMenu = allButton;
+
+        try
+        {
+            profileImage.setImage(new Image(ViewManager.class.getResourceAsStream("profileImage.png")));
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -139,18 +149,35 @@ public class MainController {
     public void changeUserImage()
     {
         FileChooser fileChooser = new FileChooser();
-        File file = null;
         fileChooser.setTitle("Imagen de perfil");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images (*.png , *.jpg, *.jpeg)", "*.png", "*.jpg", "*.jpeg"));
-        file = fileChooser.showOpenDialog(ViewManager.getStage());
+        File file = fileChooser.showOpenDialog(ViewManager.getStage());
+
+        executorService.execute(() -> {
+            int response = connectionController.sendImage(file);
+
+            if(response == 200)
+            {
+                Platform.runLater(() -> {
+                    try {
+                        profileImage.setImage(new Image(ViewManager.class.getResource("profileImage.png").openStream()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+        });
     }
 
     @FXML
-    public void showCreateView(){
+    public void showCreateView()
+    {
         addViewToInfoContainer("create-update-view.fxml", false);
     }
 
-    public void showEditView(){
+    public void showEditView()
+    {
         addViewToInfoContainer("create-update-view.fxml", true);
     }
 

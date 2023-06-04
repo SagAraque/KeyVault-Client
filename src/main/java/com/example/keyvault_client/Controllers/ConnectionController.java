@@ -8,13 +8,17 @@ import com.keyvault.database.models.Devices;
 import com.keyvault.database.models.Items;
 import com.keyvault.database.models.Users;
 import javafx.application.Platform;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ConnectionController extends Thread{
-    boolean local = true;
+    boolean local = false;
     private KeyVault api = new KeyVault(local);
     private Timer sessionTimer;
     private String email, plainPassword;
@@ -43,10 +47,54 @@ public class ConnectionController extends Thread{
         {
             startTimer();
             authUser = api.getAuthUser();
+
+            try
+            {
+                ConnectionController.class.getResource("profileImage.png");
+            }
+            catch (NullPointerException e)
+            {
+                response = getImage();
+            }
         }
 
         return response;
 
+    }
+
+    public void deleteAccount()
+    {
+        api.deleteAccount();
+        closeSession(true);
+    }
+
+    public int getImage()
+    {
+        try
+        {
+            int response = api.getImage();
+
+            if(response == 200)
+            {
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream((byte[]) api.getResponseContent());
+                BufferedImage image = ImageIO.read(byteArrayInputStream);
+
+                File savedImage = new File("src/main/resources/com/example/keyvault_client/profileImage.png");
+                ImageIO.write(image, "png", savedImage);
+            }
+
+            return response;
+        }
+        catch (IOException e)
+        {
+            return 202;
+        }
+    }
+
+    public int sendImage(File image)
+    {
+        File file = new File(ViewManager.class.getResource("").getFile());
+        return api.sendImage(image, file.getAbsolutePath() + "/" , "profileImage");
     }
 
     public int verify(String code, boolean saveDevice)
@@ -120,7 +168,7 @@ public class ConnectionController extends Thread{
             }
             else if(response != 200)
             {
-                controller.showMessage(api.getResponseMessage(response), false);
+
             }
         });
     }
