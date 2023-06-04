@@ -259,6 +259,7 @@ public class MainController {
         deleteButton.setOnMouseClicked((e) -> executorService.execute(this::deleteItem));
         favButton.setOnMouseClicked((e) -> changeFav(favButton));
         editButton.setOnMouseClicked((e) -> showEditView());
+        reloadButton.setOnMouseClicked((e) -> reload());
         addButtonsTopMenu(Pos.CENTER_RIGHT, editButton, deleteButton, favButton, reloadButton);
     }
 
@@ -303,10 +304,9 @@ public class MainController {
         });
     }
 
-    private void deleteItem(){
-        executorService.execute(() -> {
-            consumeOperation("delete", selectedItem, connectionController::deleteItem, this::removeItemFromArray);
-        });
+    private void deleteItem()
+    {
+        executorService.execute(() -> consumeOperation("delete", selectedItem, connectionController::deleteItem, this::removeItemFromArray));
     }
 
     private void updateItem()
@@ -328,6 +328,16 @@ public class MainController {
                     arrayOpertation.accept(item);
                     this.showMessage(successMessage , false);
                     this.reloadView();
+
+                    if(successMessage.equals("update") || successMessage.equals("create"))
+                    {
+                        selectedItem = item;
+                        showItemInfo(item);
+                    }
+
+                    if(successMessage.equals("create"))
+                        selectedItem.setIdI((Integer) connectionController.getApi().getResponseContent());
+
                 }
                 case 201 -> connectionController.closeSession(false);
                 default -> this.showMessage("message" + response, true);
