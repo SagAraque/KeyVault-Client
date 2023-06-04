@@ -135,4 +135,10 @@ public class ConfigController {
             ViewManager.changeTheme(themeSelect.getSelectionModel().getSelectedIndex() == 1);
         });
     }
+
+    @FXML
+    public void delete()
+    {
+        connectionController.deleteAccount();
+    }
 }
