@@ -105,7 +105,8 @@ public class MainController {
     }
 
     @FXML
-    public void closeSession(MouseEvent event){
+    public void closeSession(MouseEvent event)
+    {
         connectionController.closeSession(true);
     }
 
@@ -253,12 +254,22 @@ public class MainController {
         Button editButton = NodeGenerator.generateActionButton("pencil.png", null, "actionButton");
         Button deleteButton = NodeGenerator.generateActionButton("trash.png", null, "actionButton");
         Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() ? "starFill.png" : "star.png", null, "actionButton");
-        Button reloadButton = NodeGenerator.generateActionButton("reloadWhite.png", null, "actionButton");
+        Button reloadButton = NodeGenerator.generateActionButton("reloadDark.png", null, "actionButton");
 
         deleteButton.setOnMouseClicked((e) -> executorService.execute(this::deleteItem));
         favButton.setOnMouseClicked((e) -> changeFav(favButton));
         editButton.setOnMouseClicked((e) -> showEditView());
         addButtonsTopMenu(Pos.CENTER_RIGHT, editButton, deleteButton, favButton, reloadButton);
+    }
+
+    private void reload()
+    {
+        scrollItemContainer.getChildren().clear();
+        scrollItemContainer.setAlignment(Pos.CENTER);
+        scrollItemContainer.getChildren().add(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
+        this.executorService.execute(this::getContent);
+        this.executorService.execute(this::getDevices);
+        infoContainer.getChildren().clear();
     }
 
     private void generateCreateActionButtons(boolean isEdit)
