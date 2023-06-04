@@ -97,7 +97,12 @@ public class ShowController {
 
     @FXML
     public void goTo() throws URISyntaxException, IOException {
-        Desktop.getDesktop().browse(new URI(urlField.getText()));
+        String url = urlField.getText();
+
+        if(!url.contains("https://"))
+            url = "https://" + url;
+
+        Desktop.getDesktop().browse(new URI(url));
     }
 
     @FXML
