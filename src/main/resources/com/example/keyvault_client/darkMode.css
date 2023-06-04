@@ -195,8 +195,38 @@
     -fx-background-color: -fx-error;
 }
 
+#dark .dangerButton:hover
+{
+    -fx-background-color: #b75656;
+}
+
 #dark .switchBodyActive
 {
     -fx-background-color: -fx-ligth-blue;
     -fx-alignment: center-right;
+}
+
+#dark .verifyField
+{
+    -fx-background-color: -fx-light-gray;
+}
+
+#dark .verifyField.text16
+{
+    -fx-text-fill: #333333;
+}
+
+#dark .generatorCheckBox:selected .box
+{
+    -fx-background-color:  -fx-main-blue;
+}
+
+#dark .generatorSlider .thumb
+{
+    -fx-background-color: -fx-main-blue;
+}
+
+#dark .generatorSlider .track
+{
+    -fx-background-color: linear-gradient(to right, -fx-ligth-blue 0, -fx-light-gray 0);
 }
