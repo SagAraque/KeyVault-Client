@@ -47,7 +47,8 @@ public class AuthController {
         openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
         closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
 
-        eyeIconPassword.setImage(openEyeIcon);
+        if(eyeIconPassword != null)
+            eyeIconPassword.setImage(openEyeIcon);
 
         if(eyeIconRepeatPassword != null)
             eyeIconRepeatPassword.setImage(openEyeIcon);
@@ -148,7 +149,7 @@ public class AuthController {
         switch (response)
         {
             case 200 -> successFunction.run();
-            case 103 -> ViewManager.switchToVerify();
+            case 102 -> ViewManager.switchToVerify();
             default -> ViewManager.displayMessage("message" + response, errorMessage, errorLabel, progressIndicator);
         }
     }
