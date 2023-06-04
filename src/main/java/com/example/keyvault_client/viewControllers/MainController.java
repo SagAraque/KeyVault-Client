@@ -9,14 +9,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
@@ -70,11 +78,12 @@ public class MainController {
 
         try
         {
-            profileImage.setImage(new Image(ViewManager.class.getResourceAsStream("profileImage.png")));
+            profileImage.setImage(new Image(ViewManager.class.getResourceAsStream(connectionController.getEmail() + "-profileImage.png")));
         }
-        catch (NullPointerException e){
-            e.printStackTrace();
+        catch (NullPointerException ignored){
         }
+
+        setRoundedImage();
     }
 
     @FXML
@@ -102,6 +111,21 @@ public class MainController {
                 case "passwords" -> getPasswords();
             }
         }
+    }
+
+    private void setRoundedImage()
+    {
+        Rectangle clip = new Rectangle(60, 60);
+        clip.setArcHeight(10d);
+        clip.setArcWidth(10d);
+        profileImage.setClip(clip);
+
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(Color.TRANSPARENT);
+        WritableImage image = profileImage.snapshot(parameters, null);
+
+        profileImage.setClip(null);
+        profileImage.setImage(image);
     }
 
     @FXML
@@ -161,7 +185,8 @@ public class MainController {
             {
                 Platform.runLater(() -> {
                     try {
-                        profileImage.setImage(new Image(ViewManager.class.getResource("profileImage.png").openStream()));
+                        profileImage.setImage(new Image(ViewManager.class.getResource(connectionController.getEmail() + "-profileImage.png").openStream()));
+                        setRoundedImage();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -263,6 +288,13 @@ public class MainController {
         addButtonsTopMenu(Pos.CENTER_RIGHT, editButton, deleteButton, favButton, reloadButton);
     }
 
+    private void addReloadButton()
+    {
+        Button reloadButton = NodeGenerator.generateActionButton("reloadDark.png", null, "actionButton");
+        reloadButton.setOnMouseClicked((e) -> reload());
+        addButtonsTopMenu(Pos.CENTER_RIGHT, reloadButton);
+    }
+
     private void reload()
     {
         scrollItemContainer.getChildren().clear();
@@ -285,6 +317,7 @@ public class MainController {
         cancel.setOnMouseClicked((e) -> {
             Platform.runLater(() -> infoContainer.getChildren().clear());
             topMenuContainer.getChildren().clear();
+            addReloadButton();
         });
         addButtonsTopMenu(Pos.CENTER, cancel, accept);
     }
@@ -352,6 +385,7 @@ public class MainController {
         infoContainer.getChildren().clear();
         topMenuContainer.getChildren().clear();
         scrollItemContainer.getChildren().clear();
+        addReloadButton();
 
         switch (selectedMenu.getId()) {
             case "all" -> getAllContent();

@@ -18,7 +18,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ConnectionController extends Thread{
-    boolean local = false;
+    private boolean local = false;
     private KeyVault api = new KeyVault(local);
     private Timer sessionTimer;
     private String email, plainPassword;
@@ -50,7 +50,7 @@ public class ConnectionController extends Thread{
 
             try
             {
-                ConnectionController.class.getResource("profileImage.png");
+                ConnectionController.class.getResource(this.email + "-profileImage.png");
             }
             catch (NullPointerException e)
             {
@@ -79,7 +79,7 @@ public class ConnectionController extends Thread{
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream((byte[]) api.getResponseContent());
                 BufferedImage image = ImageIO.read(byteArrayInputStream);
 
-                File savedImage = new File("src/main/resources/com/example/keyvault_client/profileImage.png");
+                File savedImage = new File("src/main/resources/com/example/keyvault_client/" + email + "-profileImage.png");
                 ImageIO.write(image, "png", savedImage);
             }
 
@@ -94,7 +94,7 @@ public class ConnectionController extends Thread{
     public int sendImage(File image)
     {
         File file = new File(ViewManager.class.getResource("").getFile());
-        return api.sendImage(image, file.getAbsolutePath() + "/" , "profileImage");
+        return api.sendImage(image, file.getAbsolutePath() + "/" , email + "-profileImage");
     }
 
     public int verify(String code, boolean saveDevice)
