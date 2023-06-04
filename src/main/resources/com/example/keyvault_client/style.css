@@ -617,6 +617,11 @@
     -fx-background-color: -fx-error;
 }
 
+.dangerButton:hover
+{
+    -fx-background-color: #b75656;
+}
+
 /**
 ----- VERIFY TOTP VIEW -----
  */
@@ -630,4 +635,15 @@
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-spacing: 40px;
+}
+
+.itemIconBox
+{
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
+    -fx-min-width: 60px;
+    -fx-max-width: 60px;
+    -fx-alignment: center;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
