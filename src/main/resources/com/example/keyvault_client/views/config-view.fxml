@@ -68,7 +68,10 @@
                      <children>
                         <VBox fx:id="switchBody" alignment="CENTER_LEFT" onMouseClicked="#changeSwitch" prefHeight="200.0" prefWidth="100.0" styleClass="switchBody" GridPane.columnIndex="1">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="switchContent" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="switchContent">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></VBox>
                            </children>
                            <padding>
                               <Insets left="2.0" right="2.0" />
@@ -99,7 +102,10 @@
                                     <String fx:value="medium" />
                                  </styleClass>
                               </Label>
-                              <Button fx:id="closeSessionButton" mnemonicParsing="false" onAction="#closeAllSessions" styleClass="generatorButton" text="%closeSessions" GridPane.columnIndex="1" />
+                              <Button fx:id="closeSessionButton" mnemonicParsing="false" onAction="#closeAllSessions" styleClass="generatorButton" text="%closeSessions" GridPane.columnIndex="1">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                            </children>
                         </GridPane>
                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="290.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
@@ -128,7 +134,7 @@
                               <String fx:value="medium" />
                            </styleClass>
                         </Label>
-                        <Button fx:id="deleteButton" mnemonicParsing="false" text="%deleteAccount" GridPane.columnIndex="1">
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" text="%deleteAccount" GridPane.columnIndex="1">
                            <styleClass>
                               <String fx:value="generatorButton" />
                               <String fx:value="dangerButton" />

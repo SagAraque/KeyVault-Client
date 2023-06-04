@@ -35,7 +35,7 @@
                <children>
                   <HBox id="userContainer" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#changeUserImage" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="profileImage" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#changeUserImage" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image.png" />
                            </image>
@@ -196,7 +196,7 @@
                         </VBox>
                         <ScrollPane id="itemsContainer" fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox id="scrollItemsContainer" fx:id="scrollItemContainer" prefHeight="200.0" prefWidth="100.0" spacing="10.0" stylesheets="@../style.css" />
+                              <VBox id="scrollItemsContainer" fx:id="scrollItemContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" stylesheets="@../style.css" />
                            </content>
                         </ScrollPane>
                         <VBox id="buttonContainer" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style.css">

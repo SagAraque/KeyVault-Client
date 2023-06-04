@@ -32,7 +32,7 @@
                         <Font name="Franklin Gothic Medium" size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="290.0" style="-fx-text-alignment: center;" text="Introduce el código de seguridad que aparece en la aplicación de autenticación o email" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="320.0" style="-fx-text-alignment: center;" text="Introduce el código de seguridad que aparece en la aplicación de autenticación o email" wrapText="true">
                      <font>
                         <Font name="Franklin Gothic Medium" size="24.0" />
                      </font>
