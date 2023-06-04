@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 
 public class CreateUpdateController {
@@ -30,7 +29,7 @@ public class CreateUpdateController {
     @FXML
     SplitPane topMenu;
     @FXML
-    ImageView eyeIcon;
+    ImageView eyeIcon, generatorImage;
     Image openEyeIcon;
     Image closeEyeIcon;
     MainController mainController;
@@ -50,6 +49,7 @@ public class CreateUpdateController {
         openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
         closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
 
+        generatorImage.setImage(new Image(ViewManager.class.getResourceAsStream("icons/reload" + darkConcat + ".png")));
         eyeIcon.setImage(openEyeIcon);
     }
 

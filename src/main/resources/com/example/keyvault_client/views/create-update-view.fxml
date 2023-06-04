@@ -13,8 +13,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <?import com.example.keyvault_client.nodes.PasswordFieldSkin?>
+
 <AnchorPane id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.CreateUpdateController">
    <children>
       <VBox styleClass="infoItem" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -104,9 +104,9 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="copyPass" mnemonicParsing="false" onAction="#displayGenerator" styleClass="itemIconButton">
+                        <Button mnemonicParsing="false" onAction="#displayGenerator" styleClass="itemIconButton">
                            <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="generatorImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../icons/reload.png" />
                                  </image>
