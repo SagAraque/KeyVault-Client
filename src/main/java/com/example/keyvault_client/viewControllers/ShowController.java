@@ -1,5 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.Controllers.Cache;
 import com.example.keyvault_client.ViewManager;
 import com.keyvault.database.models.Items;
 import com.keyvault.database.models.Notes;
@@ -43,8 +44,7 @@ public class ShowController {
     ImageView eyeIcon, copyUserIcon, copyPassIcon, copyUrlIcon, shareUrlIcon;
     HBox topMenuContainer;
     Items selectedItem;
-    Image openEyeIcon;
-    Image closeEyeIcon;
+    Image openEyeIcon, closeEyeIcon;
     boolean passIsVisible = false;
 
     public void initialize(Items item, HBox topMenu){
@@ -59,11 +59,11 @@ public class ShowController {
             urlField.setText(password.getUrl());
 
             String darkConcat = ViewManager.isDark ? "Dark" : "";
-            Image copyImg = new Image(ViewManager.class.getResourceAsStream("icons/copy"+ darkConcat +".png"));
-            Image shareImg = new Image(ViewManager.class.getResourceAsStream("icons/share"+ darkConcat +".png"));
+            Image copyImg = Cache.loadImage("icons/copy"+ darkConcat +".png");
+            Image shareImg = Cache.loadImage("icons/share"+ darkConcat +".png");
 
-            openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
-            closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
+            openEyeIcon = Cache.loadImage("icons/openEye"+ darkConcat +".png");
+            closeEyeIcon = Cache.loadImage("icons/closeEye"+ darkConcat +".png");
 
             copyPassIcon.setImage(copyImg);
             copyUrlIcon.setImage(copyImg);
@@ -71,14 +71,14 @@ public class ShowController {
             shareUrlIcon.setImage(shareImg);
             eyeIcon.setImage(openEyeIcon);
 
+            changeVisibility(true, userBox, passwordBox, urlBox);
         }
         else
         {
             Notes note = item.getNotesByIdI();
             noteField.setText(note.getContent());
-            noteTitle.setText("Contenido de la nota");
 
-            hideNode(userBox, passwordBox, urlBox);
+            changeVisibility(false, userBox, passwordBox, urlBox);
         }
 
         passwordField.setSkin(new TextFieldSkin(passwordField){
@@ -133,7 +133,7 @@ public class ShowController {
         clipboard.setContents(new StringSelection(copyText), null);
     }
 
-    private void hideNode(Node... nodes){
-        MainController.changeNodeVisibility(false, nodes);
+    private void changeVisibility(boolean visible, Node... nodes){
+        MainController.changeNodeVisibility(visible, nodes);
     }
 }

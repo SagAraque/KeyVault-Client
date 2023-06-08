@@ -13,148 +13,138 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="modalWindow" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.ConfigController">
-   <children>
-      <VBox id="configModal" alignment="TOP_CENTER">
-         <children>
-            <HBox styleClass="modalTop">
-               <children>
-                  <Label fx:id="modalTitle" text="%configTitle" textFill="WHITE">
-                     <styleClass>
-                        <String fx:value="text20" />
-                        <String fx:value="medium" />
-                     </styleClass>
-                  </Label>
-               </children>
-            </HBox>
-            <VBox id="configWhiteContainer" styleClass="whiteFieldContainer">
-               <children>
-                  <VBox spacing="5.0">
-                     <children>
-                        <Label fx:id="themeLabel" text="%themeLabel">
-                           <styleClass>
-                              <String fx:value="text16" />
-                              <String fx:value="medium" />
-                           </styleClass>
-                        </Label>
-                        <ChoiceBox fx:id="themeSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></ChoiceBox>
-                     </children>
-                  </VBox>
-                  <VBox spacing="5.0">
-                     <children>
-                        <Label fx:id="languageLabel" text="%languageLabel">
-                           <styleClass>
-                              <String fx:value="text16" />
-                              <String fx:value="medium" />
-                           </styleClass>
-                        </Label>
-                        <ChoiceBox fx:id="languageSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></ChoiceBox>
-                     </children>
-                  </VBox>
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="490.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="50.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <VBox fx:id="switchBody" alignment="CENTER_LEFT" onMouseClicked="#changeSwitch" prefHeight="200.0" prefWidth="100.0" styleClass="switchBody" GridPane.columnIndex="1">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="switchContent">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></VBox>
-                           </children>
-                           <padding>
-                              <Insets left="2.0" right="2.0" />
-                           </padding>
-                        </VBox>
-                        <Label fx:id="totpLabel" text="%totpLabel">
-                           <styleClass>
-                              <String fx:value="text16" />
-                              <String fx:value="medium" />
-                           </styleClass>
-                        </Label>
-                     </children>
-                  </GridPane>
-                  <VBox spacing="15.0">
-                     <children>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="357.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="183.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label fx:id="sessionsLabel" prefHeight="25.0" prefWidth="393.0" text="%sessionsLabel">
-                                 <styleClass>
-                                    <String fx:value="text16" />
-                                    <String fx:value="medium" />
-                                 </styleClass>
-                              </Label>
-                              <Button fx:id="closeSessionButton" mnemonicParsing="false" onAction="#closeAllSessions" styleClass="generatorButton" text="%closeSessions" GridPane.columnIndex="1">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></Button>
-                           </children>
-                        </GridPane>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="290.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
-                           <content>
-                              <VBox fx:id="devicesContainer" alignment="TOP_CENTER" spacing="15.0">
-                                 <padding>
-                                    <Insets bottom="7.0" top="7.0" />
-                                 </padding>
-                              </VBox>
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </VBox>
-                  <GridPane>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="357.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="183.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label fx:id="deleteLabel" prefHeight="25.0" prefWidth="393.0" text="%deleteLabel">
-                           <styleClass>
-                              <String fx:value="text16" />
-                              <String fx:value="medium" />
-                           </styleClass>
-                        </Label>
-                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" text="%deleteAccount" GridPane.columnIndex="1">
-                           <styleClass>
-                              <String fx:value="generatorButton" />
-                              <String fx:value="dangerButton" />
-                           </styleClass>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </GridPane>
-               </children>
-            </VBox>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeModal" styleClass="generatorButton" text="%close">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      styleClass="modalWindow" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.keyvault_client.viewControllers.ConfigController">
+   <VBox id="configModal" alignment="TOP_CENTER">
+      <padding>
+         <Insets bottom="20.0"/>
+      </padding>
+      <HBox styleClass="modalTop">
+         <Label fx:id="modalTitle" text="%configTitle" textFill="WHITE">
+            <styleClass>
+               <String fx:value="text20"/>
+               <String fx:value="medium"/>
+            </styleClass>
+         </Label>
+      </HBox>
+      <VBox id="configWhiteContainer" styleClass="whiteFieldContainer">
+         <VBox spacing="5.0">
+            <children>
+               <Label fx:id="themeLabel" text="%themeLabel">
+                  <styleClass>
+                     <String fx:value="text16"/>
+                     <String fx:value="medium"/>
+                  </styleClass>
+               </Label>
+               <ChoiceBox fx:id="themeSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect">
+                  <cursor>
+                     <Cursor fx:constant="HAND"/>
+                  </cursor>
+               </ChoiceBox>
+            </children>
+         </VBox>
+         <VBox spacing="5.0">
+            <Label fx:id="languageLabel" text="%languageLabel">
+               <styleClass>
+                  <String fx:value="text16"/>
+                  <String fx:value="medium"/>
+               </styleClass>
+            </Label>
+            <ChoiceBox fx:id="languageSelect" prefHeight="27.0" prefWidth="586.0" styleClass="configSelect">
                <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-         </children>
-         <padding>
-            <Insets bottom="20.0" />
-         </padding>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </ChoiceBox>
+         </VBox>
+         <GridPane>
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="490.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="50.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <VBox fx:id="switchBody" alignment="CENTER_LEFT" onMouseClicked="#changeSwitch" prefHeight="200.0"
+                  prefWidth="100.0" styleClass="switchBody" GridPane.columnIndex="1">
+               <padding>
+                  <Insets left="2.0" right="2.0"/>
+               </padding>
+               <VBox prefHeight="200.0" prefWidth="100.0" styleClass="switchContent">
+                  <cursor>
+                     <Cursor fx:constant="HAND"/>
+                  </cursor>
+               </VBox>
+            </VBox>
+            <Label fx:id="totpLabel" text="%totpLabel">
+               <styleClass>
+                  <String fx:value="text16"/>
+                  <String fx:value="medium"/>
+               </styleClass>
+            </Label>
+         </GridPane>
+         <VBox spacing="15.0">
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="357.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="183.0"/>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
+               <Label fx:id="sessionsLabel" prefHeight="25.0" prefWidth="393.0" text="%sessionsLabel">
+                  <styleClass>
+                     <String fx:value="text16"/>
+                     <String fx:value="medium"/>
+                  </styleClass>
+               </Label>
+               <Button fx:id="closeSessionButton" mnemonicParsing="false" onAction="#closeAllSessions"
+                       styleClass="generatorButton" text="%closeSessions" GridPane.columnIndex="1">
+                  <cursor>
+                     <Cursor fx:constant="HAND"/>
+                  </cursor>
+               </Button>
+            </GridPane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="290.0"
+                        style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+               <VBox fx:id="devicesContainer" alignment="TOP_CENTER" spacing="15.0">
+                  <padding>
+                     <Insets bottom="7.0" top="7.0"/>
+                  </padding>
+               </VBox>
+            </ScrollPane>
+         </VBox>
+         <GridPane>
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="357.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="183.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Label fx:id="deleteLabel" prefHeight="25.0" prefWidth="393.0" text="%deleteLabel">
+               <styleClass>
+                  <String fx:value="text16"/>
+                  <String fx:value="medium"/>
+               </styleClass>
+            </Label>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" text="%deleteAccount"
+                    GridPane.columnIndex="1">
+               <styleClass>
+                  <String fx:value="generatorButton"/>
+                  <String fx:value="dangerButton"/>
+               </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </Button>
+         </GridPane>
       </VBox>
-   </children>
+      <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeModal" styleClass="generatorButton"
+              text="%close">
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+      </Button>
+   </VBox>
 </VBox>

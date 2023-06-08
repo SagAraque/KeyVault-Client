@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -38,11 +39,13 @@ public class ViewManager extends Application {
         switchToLogin();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Medium.ttf"), 12);
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Regular.ttf"), 12);
         Font.loadFont(ViewManager.class.getResourceAsStream("fonts/NotoSans-Bold.ttf"), 12);
         System.setProperty("prism.lcdtext", "false");
+        System.setProperty("javafx.acrylic.j2d.gpu", "true");
+
 
         String lang = Config.getKey("lang");
         isDark = Config.getKey("darkMode").equals("true");
@@ -59,29 +62,38 @@ public class ViewManager extends Application {
         launch();
     }
 
-    public static void switchToLogin() {loadFXML("Login.fxml", 800, 600, false);}
+    public static void switchToLogin() {loadFXML("views/Login.fxml", 800, 600, false);}
 
     public static void switchToRegister() {
-        loadFXML("register.fxml", 800, 600, false);
+        loadFXML("views/register.fxml", 800, 600, false);
     }
 
-    public static void switchToVerify(){loadFXML("verify.fxml", 800, 600, false);}
+    public static void switchToVerify(){loadFXML("views/verify.fxml", 800, 600, false);}
 
-    public static void switchToMainView(){loadFXML("main-view.fxml", 900, 1280, true);}
+    public static void switchToMainView(){loadFXML("views/main-view.fxml", 900, 1280, true);}
 
     private static void loadFXML(String fxml, int height, int width, boolean isResizable){
-
-        try {
-            restartExecutor();
-
-            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml), bundle);
-            Scene scene = new Scene(loader.load(), width, height,true, SceneAntialiasing.BALANCED);
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource(fxml), bundle);
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
-            if(isDark)
-                scene.getStylesheets().add(ViewManager.class.getResource("darkMode.css").toString());
+            if(window.getScene() == null)
+            {
+                Scene scene = new Scene(loader.load(), width, height,true, SceneAntialiasing.BALANCED);
 
-            window.setScene(scene);
+                if(isDark)
+                    scene.getStylesheets().add(ViewManager.class.getResource("darkMode-min.css").toString());
+
+                scene.getStylesheets().add(ViewManager.class.getResource("style-min.css").toString());
+
+                window.setScene(scene);
+            }
+            else
+            {
+                window.getScene().setRoot(loader.load());
+            }
+
             window.setMinWidth(width);
             window.setMinHeight(height);
             window.setWidth(isResizable ? screenBounds.getWidth() : width);
@@ -90,14 +102,11 @@ public class ViewManager extends Application {
             window.setResizable(isResizable);
 
             window.show();
-        } catch (IOException e) {
+        }
+         catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
 
-    private static void restartExecutor(){
-        executorService.shutdownNow();
-        executorService = Executors.newSingleThreadExecutor();
     }
 
     public static void displayMessage(String message, HBox errorMessage, Label errorLabel, ProgressIndicator progressIndicator){

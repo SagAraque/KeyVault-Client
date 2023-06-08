@@ -1,5 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.Controllers.Cache;
 import com.example.keyvault_client.ViewManager;
 import com.example.keyvault_client.nodes.PasswordFieldSkin;
 import com.keyvault.database.models.Items;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 
 public class CreateUpdateController {
@@ -46,10 +48,10 @@ public class CreateUpdateController {
 
         String darkConcat = ViewManager.isDark ? "Dark" : "";
 
-        openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
-        closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
+        openEyeIcon = Cache.loadImage("icons/openEye"+ darkConcat +".png");
+        closeEyeIcon = Cache.loadImage("icons/closeEye"+ darkConcat +".png");
 
-        generatorImage.setImage(new Image(ViewManager.class.getResourceAsStream("icons/reload" + darkConcat + ".png")));
+        generatorImage.setImage(Cache.loadImage("icons/reload"+ darkConcat +".png"));
         eyeIcon.setImage(openEyeIcon);
     }
 
@@ -72,14 +74,13 @@ public class CreateUpdateController {
                 showNode(urlBox, passwordBox, userBox);
             }
 
-            noteTitle.setText(target == passwordButton ? "Anotación" : "Contenido de la nota");
             isNote = !isNote;
         }
     }
 
     @FXML
     public void displayGenerator() throws IOException {
-        mainController.displayGenerator(this, "generator-view.fxml");
+        mainController.displayGenerator(this);
     }
 
     @FXML

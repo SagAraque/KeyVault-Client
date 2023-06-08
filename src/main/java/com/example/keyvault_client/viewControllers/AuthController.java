@@ -1,5 +1,6 @@
 package com.example.keyvault_client.viewControllers;
 
+import com.example.keyvault_client.Controllers.Cache;
 import com.example.keyvault_client.Controllers.ConnectionController;
 import com.example.keyvault_client.ViewManager;
 import com.example.keyvault_client.nodes.PasswordFieldSkin;
@@ -44,8 +45,8 @@ public class AuthController {
 
         String darkConcat = ViewManager.isDark ? "Dark" : "";
 
-        openEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/openEye"+ darkConcat +".png"));
-        closeEyeIcon = new Image(ViewManager.class.getResourceAsStream("icons/closeEye"+ darkConcat +".png"));
+        openEyeIcon = Cache.loadImage("icons/openEye"+ darkConcat +".png");
+        closeEyeIcon = Cache.loadImage("icons/closeEye"+ darkConcat +".png");
 
         if(eyeIconPassword != null)
             eyeIconPassword.setImage(openEyeIcon);
@@ -54,7 +55,7 @@ public class AuthController {
             eyeIconRepeatPassword.setImage(openEyeIcon);
 
         if(ViewManager.isDark)
-            logo.setImage(new Image(ViewManager.class.getResourceAsStream("icons/logoDark.png")));
+            logo.setImage(Cache.loadImage("icons/logoDark.png"));
 
         if(repeatPasswordField == null && connectionController.getEmail() != null && usernameField != null)
             usernameField.setText(connectionController.getEmail());

@@ -11,111 +11,100 @@
 <?import javafx.scene.text.Font?>
 <?import com.example.keyvault_client.nodes.SingleNumInput?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="modalWindow" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.VerifyTotpController">
-   <children>
-      <VBox id="verifyTotpModal" alignment="TOP_CENTER">
-         <children>
-            <HBox styleClass="modalTop">
-               <children>
-                  <Label fx:id="modalTitle" text="%verifyTotp" textFill="WHITE">
-                     <styleClass>
-                        <String fx:value="text20" />
-                        <String fx:value="medium" />
-                     </styleClass>
-                  </Label>
-               </children>
-            </HBox>
-            <Label text="%scanTotp">
-               <styleClass>
-                  <String fx:value="text16" />
-                  <String fx:value="medium" />
-               </styleClass>
-            </Label>
-            <HBox fx:id="qrBox" alignment="CENTER" prefHeight="300.0" prefWidth="300.0">
-               <children>
-                  <ProgressIndicator radius="50.0" />
-               </children>
-            </HBox>
-            <HBox fx:id="verifyFields" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
-               <children>
-                  <SingleNumInput focusTraversable="false">
-                     <styleClass>
-                        <String fx:value="verifyField" />
-                        <String fx:value="medium" />
-                        <String fx:value="text16" />
-                     </styleClass>
-                  </SingleNumInput>
-                  <SingleNumInput focusTraversable="false">
-                     <styleClass>
-                        <String fx:value="verifyField" />
-                        <String fx:value="medium" />
-                        <String fx:value="text16" />
-                     </styleClass>
-                  </SingleNumInput>
-                  <SingleNumInput focusTraversable="false">
-                     <styleClass>
-                        <String fx:value="verifyField" />
-                        <String fx:value="medium" />
-                        <String fx:value="text16" />
-                     </styleClass>
-                  </SingleNumInput>
-                  <SingleNumInput focusTraversable="false">
-                     <styleClass>
-                        <String fx:value="verifyField" />
-                        <String fx:value="medium" />
-                        <String fx:value="text16" />
-                     </styleClass>
-                  </SingleNumInput>
-                  <SingleNumInput focusTraversable="false">
-                     <styleClass>
-                        <String fx:value="verifyField" />
-                        <String fx:value="medium" />
-                        <String fx:value="text16" />
-                     </styleClass>
-                  </SingleNumInput>
-                  <SingleNumInput focusTraversable="false">
-                     <styleClass>
-                        <String fx:value="verifyField" />
-                        <String fx:value="medium" />
-                        <String fx:value="text16" />
-                     </styleClass>
-                  </SingleNumInput>
-               </children>
-            </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="verifyButton" mnemonicParsing="false" onAction="#verify" styleClass="authButton" text="%verify" />
-                  <Label onMouseClicked="#back" styleClass="text16" text="%back">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
-                  <ProgressIndicator fx:id="progressIndicator" progress="0.0">
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                  </ProgressIndicator>
-               </children>
-            </VBox>
-            <HBox fx:id="errorMessage" visible="false">
-               <styleClass>
-                  <String fx:value="messageContainer" />
-                  <String fx:value="messageError" />
-               </styleClass>
-               <children>
-                  <Label fx:id="errorLabel" styleClass="text16" textFill="#e4e4e4" />
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="20.0" />
-         </padding>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      styleClass="modalWindow" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.keyvault_client.viewControllers.VerifyTotpController">
+   <VBox id="verifyTotpModal" alignment="TOP_CENTER">
+      <padding>
+         <Insets bottom="20.0"/>
+      </padding>
+      <HBox styleClass="modalTop">
+         <Label fx:id="modalTitle" text="%verifyTotp" textFill="WHITE">
+            <styleClass>
+               <String fx:value="text20"/>
+               <String fx:value="medium"/>
+            </styleClass>
+         </Label>
+      </HBox>
+      <Label text="%scanTotp">
+         <styleClass>
+            <String fx:value="text16"/>
+            <String fx:value="medium"/>
+         </styleClass>
+      </Label>
+      <HBox fx:id="qrBox" alignment="CENTER" prefHeight="300.0" prefWidth="300.0">
+         <ProgressIndicator radius="50.0"/>
+      </HBox>
+      <HBox fx:id="verifyFields" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+         <SingleNumInput focusTraversable="false">
+            <styleClass>
+               <String fx:value="verifyField"/>
+               <String fx:value="medium"/>
+               <String fx:value="text16"/>
+            </styleClass>
+         </SingleNumInput>
+         <SingleNumInput focusTraversable="false">
+            <styleClass>
+               <String fx:value="verifyField"/>
+               <String fx:value="medium"/>
+               <String fx:value="text16"/>
+            </styleClass>
+         </SingleNumInput>
+         <SingleNumInput focusTraversable="false">
+            <styleClass>
+               <String fx:value="verifyField"/>
+               <String fx:value="medium"/>
+               <String fx:value="text16"/>
+            </styleClass>
+         </SingleNumInput>
+         <SingleNumInput focusTraversable="false">
+            <styleClass>
+               <String fx:value="verifyField"/>
+               <String fx:value="medium"/>
+               <String fx:value="text16"/>
+            </styleClass>
+         </SingleNumInput>
+         <SingleNumInput focusTraversable="false">
+            <styleClass>
+               <String fx:value="verifyField"/>
+               <String fx:value="medium"/>
+               <String fx:value="text16"/>
+            </styleClass>
+         </SingleNumInput>
+         <SingleNumInput focusTraversable="false">
+            <styleClass>
+               <String fx:value="verifyField"/>
+               <String fx:value="medium"/>
+               <String fx:value="text16"/>
+            </styleClass>
+         </SingleNumInput>
+      </HBox>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+         <Button fx:id="verifyButton" mnemonicParsing="false" onAction="#verify" styleClass="authButton"
+                 text="%verify"/>
+         <Label onMouseClicked="#back" styleClass="text16" text="%back">
+            <VBox.margin>
+               <Insets top="20.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="20.0"/>
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Label>
+         <ProgressIndicator fx:id="progressIndicator" progress="0.0">
+            <VBox.margin>
+               <Insets top="30.0"/>
+            </VBox.margin>
+         </ProgressIndicator>
       </VBox>
-   </children>
+      <HBox fx:id="errorMessage" visible="false">
+         <styleClass>
+            <String fx:value="messageContainer"/>
+            <String fx:value="messageError"/>
+         </styleClass>
+         <Label fx:id="errorLabel" styleClass="text16" textFill="#e4e4e4"/>
+      </HBox>
+   </VBox>
 </VBox>

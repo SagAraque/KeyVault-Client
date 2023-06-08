@@ -7,7 +7,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import com.example.keyvault_client.nodes.PasswordFieldSkin?>
 
-<AnchorPane id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.CreateUpdateController">
+<HBox id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.CreateUpdateController">
    <children>
       <VBox styleClass="infoItem" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,7 +22,7 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <Label fx:id="passwordButton" alignment="CENTER" onMouseClicked="#actionMenu" text="Contraseña" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label fx:id="passwordButton" alignment="CENTER" onMouseClicked="#actionMenu" text="%loginPassword" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="medium" />
@@ -34,7 +33,7 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <Label fx:id="noteButton" alignment="CENTER" onMouseClicked="#actionMenu" text="Nota segura" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label fx:id="noteButton" alignment="CENTER" onMouseClicked="#actionMenu" text="%notes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="text16" />
                               <String fx:value="medium" />
@@ -57,7 +56,7 @@
                <children>
                   <VBox styleClass="fieldsBody">
                      <children>
-                        <Label styleClass="text16" text="Nombre" textFill="#676767" />
+                        <Label styleClass="text16" text="%name" textFill="#676767" />
                         <TextField fx:id="nameField">
                            <styleClass>
                               <String fx:value="fields" />
@@ -71,7 +70,7 @@
                   </VBox>
                   <VBox fx:id="userBox" styleClass="fieldsBody">
                      <children>
-                        <Label styleClass="text16" text="Usuario" textFill="#676767" />
+                        <Label styleClass="text16" text="%user" textFill="#676767" />
                         <TextField fx:id="usernameField">
                            <styleClass>
                               <String fx:value="itemField90" />
@@ -85,7 +84,7 @@
                      <children>
                         <VBox styleClass="fieldsBody">
                            <children>
-                              <Label styleClass="text16" text="Contraseña" textFill="#676767" />
+                              <Label styleClass="text16" text="%loginPassword" textFill="#676767" />
                               <PasswordFieldSkin fx:id="passwordField">
                                  <styleClass>
                                     <String fx:value="itemField80" />
@@ -98,18 +97,12 @@
                         <Button fx:id="showPass" mnemonicParsing="false" onAction="#changePasswordVisibility" styleClass="itemIconButton">
                            <graphic>
                               <ImageView fx:id="eyeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/closeEye.png" />
-                                 </image>
                               </ImageView>
                            </graphic>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#displayGenerator" styleClass="itemIconButton">
                            <graphic>
                               <ImageView fx:id="generatorImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/reload.png" />
-                                 </image>
                               </ImageView>
                            </graphic>
                         </Button>
@@ -144,7 +137,7 @@
                <children>
                   <VBox>
                      <children>
-                        <Label fx:id="noteTitle" styleClass="text16" text="Anotación" textFill="#676767" />
+                        <Label fx:id="noteTitle" styleClass="text16" text="%annotation" textFill="#676767" />
                         <TextArea fx:id="noteField" wrapText="true">
                            <styleClass>
                               <String fx:value="fieldsArea" />
@@ -165,4 +158,4 @@
    <padding>
       <Insets left="20.0" right="40.0" />
    </padding>
-</AnchorPane>
+</HBox>

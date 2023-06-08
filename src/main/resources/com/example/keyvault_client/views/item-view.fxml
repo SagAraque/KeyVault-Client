@@ -6,164 +6,133 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.ShowController">
-   <children>
-      <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="infoItem" stylesheets="@../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox>
+<HBox id="infoItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.keyvault_client.viewControllers.ShowController">
+   <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" styleClass="infoItem" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox>
+         <styleClass>
+            <String fx:value="whiteFieldContainer"/>
+            <String fx:value="itemWhiteContainer"/>
+         </styleClass>
+         <VBox styleClass="fieldsBody">
+            <Label styleClass="text16" text="%name" textFill="#676767"/>
+            <TextField fx:id="nameField" editable="false">
                <styleClass>
-                  <String fx:value="whiteFieldContainer" />
-                  <String fx:value="itemWhiteContainer" />
+                  <String fx:value="fields"/>
+                  <String fx:value="text16"/>
                </styleClass>
-               <children>
-                  <VBox styleClass="fieldsBody">
-                     <children>
-                        <Label styleClass="text16" text="Nombre" textFill="#676767" />
-                        <TextField fx:id="nameField" editable="false">
-                           <styleClass>
-                              <String fx:value="fields" />
-                              <String fx:value="text16" />
-                           </styleClass>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </VBox>
-                  <HBox fx:id="userBox" alignment="BOTTOM_CENTER" styleClass="fieldsBody">
-                     <children>
-                        <VBox styleClass="fieldsBody" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="text16" text="Usuario" textFill="#676767" />
-                              <TextField fx:id="usernameField" editable="false">
-                                 <styleClass>
-                                    <String fx:value="itemField90" />
-                                    <String fx:value="fields" />
-                                    <String fx:value="text16" />
-                                 </styleClass>
-                              </TextField>
-                           </children>
-                        </VBox>
-                        <Button fx:id="copyUser" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton" HBox.hgrow="ALWAYS">
-                           <graphic>
-                              <ImageView fx:id="copyUserIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/copy.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox fx:id="passwordBox" alignment="BOTTOM_CENTER" spacing="20.0" styleClass="fieldsBody">
-                     <children>
-                        <VBox styleClass="fieldsBody">
-                           <children>
-                              <Label styleClass="text16" text="Contraseña" textFill="#676767" />
-                              <PasswordField fx:id="passwordField" editable="false">
-                                 <styleClass>
-                                    <String fx:value="itemField80" />
-                                    <String fx:value="fields" />
-                                    <String fx:value="text16" />
-                                 </styleClass>
-                              </PasswordField>
-                           </children>
-                        </VBox>
-                        <Button fx:id="showPass" mnemonicParsing="false" onAction="#changePasswordVisibility" styleClass="itemIconButton">
-                           <graphic>
-                              <ImageView fx:id="eyeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/closeEye.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="copyPass" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton">
-                           <graphic>
-                              <ImageView fx:id="copyPassIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/copy.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
+               <font>
+                  <Font size="16.0"/>
+               </font>
+            </TextField>
+         </VBox>
+         <HBox fx:id="userBox" alignment="BOTTOM_CENTER" styleClass="fieldsBody">
+            <VBox styleClass="fieldsBody" HBox.hgrow="ALWAYS">
+               <Label styleClass="text16" text="%user" textFill="#676767"/>
+               <TextField fx:id="usernameField" editable="false">
+                  <styleClass>
+                     <String fx:value="itemField90"/>
+                     <String fx:value="fields"/>
+                     <String fx:value="text16"/>
+                  </styleClass>
+               </TextField>
             </VBox>
-            <VBox fx:id="urlBox">
-               <styleClass>
-                  <String fx:value="whiteFieldContainer" />
-                  <String fx:value="itemWhiteContainer" />
-               </styleClass>
-               <children>
-                  <HBox alignment="BOTTOM_CENTER" spacing="20.0" styleClass="fieldsBody">
-                     <children>
-                        <VBox styleClass="fieldsBody">
-                           <children>
-                              <Label styleClass="text16" text="URL" textFill="#676767" />
-                              <TextField fx:id="urlField">
-                                 <styleClass>
-                                    <String fx:value="itemField80" />
-                                    <String fx:value="fields" />
-                                    <String fx:value="text16" />
-                                 </styleClass>
-                              </TextField>
-                           </children>
-                        </VBox>
-                        <Button fx:id="goToLink" mnemonicParsing="false" onAction="#goTo" styleClass="itemIconButton">
-                           <graphic>
-                              <ImageView fx:id="shareUrlIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/share.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="copyUrl" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton">
-                           <graphic>
-                              <ImageView fx:id="copyUrlIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/copy.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
+            <Button fx:id="copyUser" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton"
+                    HBox.hgrow="ALWAYS">
+               <graphic>
+                  <ImageView fx:id="copyUserIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                             preserveRatio="true">
+                  </ImageView>
+               </graphic>
+            </Button>
+         </HBox>
+         <HBox fx:id="passwordBox" alignment="BOTTOM_CENTER" spacing="20.0" styleClass="fieldsBody">
+            <VBox styleClass="fieldsBody">
+               <Label styleClass="text16" text="%loginPassword" textFill="#676767"/>
+               <PasswordField fx:id="passwordField" editable="false">
+                  <styleClass>
+                     <String fx:value="itemField80"/>
+                     <String fx:value="fields"/>
+                     <String fx:value="text16"/>
+                  </styleClass>
+               </PasswordField>
             </VBox>
-            <VBox>
-               <styleClass>
-                  <String fx:value="whiteFieldContainer" />
-                  <String fx:value="itemWhiteContainer" />
-               </styleClass>
-               <children>
-                  <VBox>
-                     <children>
-                        <Label fx:id="noteTitle" styleClass="text16" text="Anotación" textFill="#676767" />
-                        <TextArea fx:id="noteField" editable="false">
-                           <styleClass>
-                              <String fx:value="fieldsArea" />
-                              <String fx:value="text16" />
-                           </styleClass>
-                        </TextArea>
-                     </children>
-                     <styleClass>
-                        <String fx:value="fieldsBody" />
-                        <String fx:value="fieldsBodyTextArea" />
-                     </styleClass>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
+            <Button fx:id="showPass" mnemonicParsing="false" onAction="#changePasswordVisibility"
+                    styleClass="itemIconButton">
+               <graphic>
+                  <ImageView fx:id="eyeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                             preserveRatio="true">
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="copyPass" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton">
+               <graphic>
+                  <ImageView fx:id="copyPassIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                             preserveRatio="true">
+                  </ImageView>
+               </graphic>
+            </Button>
+         </HBox>
       </VBox>
-   </children>
-</AnchorPane>
+      <VBox fx:id="urlBox">
+         <styleClass>
+            <String fx:value="whiteFieldContainer"/>
+            <String fx:value="itemWhiteContainer"/>
+         </styleClass>
+         <HBox alignment="BOTTOM_CENTER" spacing="20.0" styleClass="fieldsBody">
+            <VBox styleClass="fieldsBody">
+               <Label styleClass="text16" text="URL" textFill="#676767"/>
+               <TextField fx:id="urlField">
+                  <styleClass>
+                     <String fx:value="itemField80"/>
+                     <String fx:value="fields"/>
+                     <String fx:value="text16"/>
+                  </styleClass>
+               </TextField>
+            </VBox>
+            <Button fx:id="goToLink" mnemonicParsing="false" onAction="#goTo" styleClass="itemIconButton">
+               <graphic>
+                  <ImageView fx:id="shareUrlIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                             preserveRatio="true">
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="copyUrl" mnemonicParsing="false" onAction="#copyField" styleClass="itemIconButton">
+               <graphic>
+                  <ImageView fx:id="copyUrlIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                             preserveRatio="true">
+                  </ImageView>
+               </graphic>
+            </Button>
+         </HBox>
+      </VBox>
+      <VBox>
+         <styleClass>
+            <String fx:value="whiteFieldContainer"/>
+            <String fx:value="itemWhiteContainer"/>
+         </styleClass>
+         <VBox>
+            <styleClass>
+               <String fx:value="fieldsBody"/>
+               <String fx:value="fieldsBodyTextArea"/>
+            </styleClass>
+            <Label fx:id="noteTitle" styleClass="text16" text="%annotation" textFill="#676767"/>
+            <TextArea fx:id="noteField" editable="false">
+               <styleClass>
+                  <String fx:value="fieldsArea"/>
+                  <String fx:value="text16"/>
+               </styleClass>
+            </TextArea>
+         </VBox>
+      </VBox>
+   </VBox>
+</HBox>

@@ -1,19 +1,20 @@
 package com.example.keyvault_client;
 
+import com.example.keyvault_client.Controllers.Cache;
 import com.keyvault.database.models.Devices;
 import com.keyvault.database.models.Items;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
 public class NodeGenerator {
+
     public static Button generateActionButton(String icon, String text, String... classText){
         String dark = ViewManager.isDark ? "dark" : "";
-        ImageView iconView = new ImageView(new Image(NodeGenerator.class.getResourceAsStream("icons/" + icon)));
+        ImageView iconView = new ImageView(Cache.loadImage(icon));
         iconView.setFitHeight(22);
         iconView.setFitWidth(22);
 
@@ -68,12 +69,10 @@ public class NodeGenerator {
         return container;
     }
 
-
-
     public static HBox generateDeviceCard(Devices device)
     {
         String dark = ViewManager.isDark ? "Light" : "";
-        ImageView iconView = new ImageView(new Image(NodeGenerator.class.getResourceAsStream("icons/windows"+ dark +".png")));
+        ImageView iconView = new ImageView(Cache.loadImage("icons/windows"+ dark +".png"));
         iconView.setFitHeight(32);
         iconView.setFitWidth(32);
 

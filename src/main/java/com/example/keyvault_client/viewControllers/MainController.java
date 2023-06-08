@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -28,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -129,9 +129,10 @@ public class MainController {
     }
 
     @FXML
-    public void closeSession(MouseEvent event)
+    public void closeSession()
     {
         connectionController.closeSession(true);
+        executorService.shutdownNow();
     }
 
     @FXML
@@ -143,13 +144,9 @@ public class MainController {
         {
             scrollItemContainer.getChildren().clear();
 
-            for (Items i : userItems) {
+            for (Items i : userItems)
                 if (i.getName().toLowerCase().contains(toSearch))
-                {
-                   HBox card = generateItemCard(i);
-                   scrollItemContainer.getChildren().add(card);
-                }
-            }
+                   scrollItemContainer.getChildren().add(generateItemCard(i));
         }
         else
         {
@@ -168,6 +165,7 @@ public class MainController {
         menuNotes.setText(resourceBundle.getString("notes"));
         menuSettings.setText(resourceBundle.getString("configuration"));
         closeSession.setText(resourceBundle.getString("closeSession"));
+        devicesLabel.setText(resourceBundle.getString("devices") + ": " + userDevices.size());
     }
 
     @FXML
@@ -184,8 +182,8 @@ public class MainController {
             if(response == 200)
             {
                 Platform.runLater(() -> {
-                    try {
-                        profileImage.setImage(new Image(ViewManager.class.getResource(connectionController.getEmail() + "-profileImage.png").openStream()));
+                    try (InputStream inputStream = ViewManager.class.getResource(connectionController.getEmail() + "-profileImage.png").openStream() ) {
+                        profileImage.setImage(new Image(inputStream));
                         setRoundedImage();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -199,24 +197,20 @@ public class MainController {
     @FXML
     public void showCreateView()
     {
-        addViewToInfoContainer("create-update-view.fxml", false);
+        addViewToInfoContainer(false);
     }
 
     public void showEditView()
     {
-        addViewToInfoContainer("create-update-view.fxml", true);
+        addViewToInfoContainer(true);
     }
 
     public void showMessage(String text, boolean isError)
     {
         if(isError)
-        {
             messageContainer.getStyleClass().add("messageError");
-        }
         else
-        {
             messageContainer.getStyleClass().remove("messageError");
-        }
 
         ViewManager.displayMessage(text, messageContainer, messageLabel, null);
     }
@@ -224,8 +218,8 @@ public class MainController {
     private void showItemInfo(Items target)
     {
         try {
-            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/item-view.fxml"));
-            AnchorPane box = loader.load();
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/item-view.fxml"), resourceBundle);
+            HBox box = loader.load();
 
             ShowController controller = loader.getController();
             controller.initialize(target, topMenuContainer);
@@ -243,11 +237,11 @@ public class MainController {
         }
     }
 
-    private void addViewToInfoContainer(String fxml, boolean isEdit)
+    private void addViewToInfoContainer(boolean isEdit)
     {
         try {
-            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml));
-            AnchorPane box = loader.load();
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/create-update-view.fxml"), resourceBundle);
+            HBox box = loader.load();
 
             createUpdateController = loader.getController();
             createUpdateController.initialize(this);
@@ -276,10 +270,10 @@ public class MainController {
 
     private void generateActionButtons()
     {
-        Button editButton = NodeGenerator.generateActionButton("pencil.png", null, "actionButton");
-        Button deleteButton = NodeGenerator.generateActionButton("trash.png", null, "actionButton");
-        Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() ? "starFill.png" : "star.png", null, "actionButton");
-        Button reloadButton = NodeGenerator.generateActionButton("reloadDark.png", null, "actionButton");
+        Button editButton = NodeGenerator.generateActionButton("icons/pencil.png", null, "actionButton");
+        Button deleteButton = NodeGenerator.generateActionButton("icons/trash.png", null, "actionButton");
+        Button favButton = NodeGenerator.generateActionButton(selectedItem.getFav() ? "icons/starFill.png" : "icons/star.png", null, "actionButton");
+        Button reloadButton = NodeGenerator.generateActionButton("icons/reloadDark.png", null, "actionButton");
 
         deleteButton.setOnMouseClicked((e) -> executorService.execute(this::deleteItem));
         favButton.setOnMouseClicked((e) -> changeFav(favButton));
@@ -290,7 +284,7 @@ public class MainController {
 
     private void addReloadButton()
     {
-        Button reloadButton = NodeGenerator.generateActionButton("reloadDark.png", null, "actionButton");
+        Button reloadButton = NodeGenerator.generateActionButton("icons/reloadDark.png", null, "actionButton");
         reloadButton.setOnMouseClicked((e) -> reload());
         addButtonsTopMenu(Pos.CENTER_RIGHT, reloadButton);
     }
@@ -307,8 +301,8 @@ public class MainController {
 
     private void generateCreateActionButtons(boolean isEdit)
     {
-        Button cancel = NodeGenerator.generateActionButton("x.png", "   Cancelar", "actionButton");
-        Button accept = NodeGenerator.generateActionButton("tick.png", "   Aceptar", "actionButton");
+        Button cancel = NodeGenerator.generateActionButton("icons/x.png", "   Cancelar", "actionButton");
+        Button accept = NodeGenerator.generateActionButton("icons/tick.png", "   Aceptar", "actionButton");
 
         accept.getStyleClass().add("actionButton");
         cancel.getStyleClass().add("actionButton");
@@ -332,9 +326,7 @@ public class MainController {
     private void insertItem()
     {
         Items newItem = createUpdateController.generateItem();
-        executorService.execute(() -> {
-            consumeOperation("create", newItem, connectionController::insertItem, this::addItemToArray);
-        });
+        executorService.execute(() -> consumeOperation("create", newItem, connectionController::insertItem, this::addItemToArray));
     }
 
     private void deleteItem()
@@ -347,9 +339,7 @@ public class MainController {
         Items modItem = createUpdateController.updateItem();
         modItem.setIdI(selectedItem.getIdI());
 
-        executorService.execute(() -> {
-            consumeOperation("update", modItem, connectionController::modItem, this::updateItemFromArray);
-        });
+        executorService.execute(() -> consumeOperation("update", modItem, connectionController::modItem, this::updateItemFromArray));
     }
 
     private void consumeOperation(String successMessage, Items item, Function<Items, Integer> operation, Consumer<Items> arrayOpertation)
@@ -402,13 +392,9 @@ public class MainController {
         favButton.setGraphic(new ImageView(selectedItem.getFav() ? fillStar : emptyStar));
 
         if(selectedItem.getFav())
-        {
             userFavorites.add(selectedItem);
-        }
         else
-        {
             userFavorites.remove(selectedItem);
-        }
 
         executorService.execute(() -> connectionController.changeFav(selectedItem, this));
     }
@@ -416,7 +402,7 @@ public class MainController {
     private void getDevices()
     {
         userDevices = connectionController.getDevices();
-        Platform.runLater(() -> devicesLabel.setText(userDevices.size() + " dispositivos"));
+        Platform.runLater(() -> devicesLabel.setText(resourceBundle.getString("devices") + ": " + userDevices.size()));
     }
 
     private void getContent()
@@ -433,39 +419,44 @@ public class MainController {
     private void getAllContent()
     {
         scrollItemContainer.setAlignment(Pos.TOP_LEFT);
-        Platform.runLater(() -> scrollItemContainer.getChildren().clear());
 
-        executorService.execute(this::getPasswords);
-        executorService.execute(this::getNotes);
+        Platform.runLater(() ->
+        {
+            scrollItemContainer.getChildren().clear();
+
+            for (Items i : userItems)
+                scrollItemContainer.getChildren().add(generateItemCard(i));
+        });
     }
 
     private void getPasswords()
     {
-        for (Items i : userItems)
+        Platform.runLater(() ->
         {
-            if(i.getPasswordsByIdI() != null)
-                Platform.runLater(() -> scrollItemContainer.getChildren().add(
-                        generateItemCard(i)
-                ));
-        }
+            for (Items i : userItems)
+                if(i.getPasswordsByIdI() != null)
+                    scrollItemContainer.getChildren().add(generateItemCard(i));
+        });
+
     }
 
     private void getNotes()
     {
-        for (Items i : userItems)
+        Platform.runLater(() ->
         {
-            if(i.getNotesByIdI() != null)
-                Platform.runLater(() -> scrollItemContainer.getChildren().add(
-                        generateItemCard(i)
-                ));
-        }
+            for (Items i : userItems)
+                if(i.getNotesByIdI() != null)
+                    scrollItemContainer.getChildren().add(generateItemCard(i));
+        });
     }
 
     private void getFavorites()
     {
-        for (Items i : userFavorites)
-            Platform.runLater(() -> scrollItemContainer.getChildren().add(generateItemCard(i)));
-
+        Platform.runLater(() ->
+        {
+            for (Items i : userFavorites)
+                scrollItemContainer.getChildren().add(generateItemCard(i));
+        });
     }
 
     public void removeItemFromArray(Items item)
@@ -499,9 +490,8 @@ public class MainController {
         }
     }
 
-    public void displayGenerator(CreateUpdateController controller, String fxml) throws IOException
-    {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/" + fxml), resourceBundle);
+    public void displayGenerator(CreateUpdateController controller) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/generator-view.fxml"), resourceBundle);
         VBox modal = loader.load();
 
         GeneratorController generatorController = loader.getController();

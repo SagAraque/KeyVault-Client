@@ -39,11 +39,9 @@ public class VerifyTotpController
             WritableImage image = new WritableImage(qr.getWidth(), qr.getHeight());
             PixelWriter pixelWriter = image.getPixelWriter();
 
-            for (int x = 0; x < qr.getWidth(); x++) {
-                for (int y = 0; y < qr.getHeight(); y++) {
+            for (int x = 0; x < qr.getWidth(); x++)
+                for (int y = 0; y < qr.getHeight(); y++)
                     pixelWriter.setArgb(x, y, qr.getRGB(x, y));
-                }
-            }
 
             Platform.runLater(() -> {
                 ImageView qrCode = new ImageView(image);
@@ -80,13 +78,9 @@ public class VerifyTotpController
                int response = ViewManager.conn.verifyTOTP(code.toString());
 
                if(response == 200)
-               {
                    Platform.runLater(this::back);
-               }
                else
-               {
                    ViewManager.displayMessage("message" + response, errorMessage, errorLabel, progressIndicator);
-               }
 
             });
         }else{

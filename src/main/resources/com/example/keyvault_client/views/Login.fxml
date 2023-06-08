@@ -15,106 +15,90 @@
 <?import javafx.scene.text.Font?>
 <?import com.example.keyvault_client.nodes.PasswordFieldSkin?>
 
-<StackPane id="dark" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.keyvault_client.viewControllers.AuthController">
-   <children>
-      <VBox id="authBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css">
-         <children>
-            <VBox id="authTop" prefHeight="200.0" prefWidth="100.0" />
-            <VBox alignment="TOP_CENTER" prefWidth="100.0" spacing="10.0">
-               <children>
-                  <ImageView fx:id="logo" id="authImage" fitHeight="134.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/logo.png" />
-                     </image>
-                  </ImageView>
-                  <Label styleClass="medium" text="%loginTitle">
-                     <font>
-                        <Font name="MS Outlook" size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox styleClass="whiteFieldContainer">
-               <children>
-                  <VBox onMouseClicked="#cursorToField" prefHeight="200.0" prefWidth="100.0" styleClass="fieldsBody">
-                     <children>
-                        <Label styleClass="text16" text="%loginEmail" textFill="#676767">
-                           <font>
-                              <Font name="Franklin Gothic Book" size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="usernameField" styleClass="fields">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </VBox>
-                  <HBox alignment="BOTTOM_CENTER">
-                     <children>
-                        <VBox onMouseClicked="#cursorToField">
-                           <children>
-                              <Label styleClass="text16" text="%loginPassword" textFill="#676767">
-                                 <font>
-                                    <Font name="Franklin Gothic Book" size="16.0" />
-                                 </font>
-                              </Label>
-                              <PasswordFieldSkin fx:id="passwordField" styleClass="fields">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </PasswordFieldSkin>
-                           </children>
-                           <styleClass>
-                              <String fx:value="fieldsBody" />
-                              <String fx:value="itemField90" />
-                           </styleClass>
-                        </VBox>
-                        <Button fx:id="showPassword" mnemonicParsing="false" onAction="#changePasswordVisibility" styleClass="itemIconButton">
-                           <graphic>
-                              <ImageView fx:id="eyeIconPassword" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/closeEye.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" styleClass="authButton" text="%loginTitle" />
-                  <Label styleClass="text16" text="%loginRegister">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label onMouseClicked="#toRegister" styleClass="text16" text="%createAccount" textFill="#2a333f">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Label>
-                  <ProgressIndicator fx:id="progressIndicator" progress="0.0">
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                  </ProgressIndicator>
-               </children>
-            </VBox>
-         </children>
+<StackPane id="dark" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.keyvault_client.viewControllers.AuthController">
+   <VBox id="authBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="400.0" prefWidth="600.0">
+      <VBox id="authTop" prefHeight="200.0" prefWidth="100.0"/>
+      <VBox alignment="TOP_CENTER" prefWidth="100.0" spacing="10.0">
+         <ImageView fx:id="logo" id="authImage" fitHeight="134.0" fitWidth="134.0" pickOnBounds="true"
+                    preserveRatio="true">
+            <Image url="@../icons/logo.png"/>
+         </ImageView>
+         <Label styleClass="medium" text="%loginTitle">
+            <font>
+               <Font name="MS Outlook" size="24.0"/>
+            </font>
+         </Label>
       </VBox>
-      <HBox fx:id="errorMessage" translateY="300.0" visible="false">
-         <styleClass>
-            <String fx:value="messageContainer" />
-            <String fx:value="messageError" />
-         </styleClass>
-         <children>
-            <Label fx:id="errorLabel" styleClass="text16" textFill="#e4e4e4" />
-         </children>
-      </HBox>
-   </children>
+      <VBox styleClass="whiteFieldContainer">
+         <VBox onMouseClicked="#cursorToField" prefHeight="200.0" prefWidth="100.0" styleClass="fieldsBody">
+            <Label styleClass="text16" text="%loginEmail" textFill="#676767">
+               <font>
+                  <Font name="Franklin Gothic Book" size="16.0"/>
+               </font>
+            </Label>
+            <TextField fx:id="usernameField" styleClass="fields">
+               <font>
+                  <Font size="16.0"/>
+               </font>
+            </TextField>
+         </VBox>
+         <HBox alignment="BOTTOM_CENTER">
+            <VBox onMouseClicked="#cursorToField">
+               <styleClass>
+                  <String fx:value="fieldsBody"/>
+                  <String fx:value="itemField90"/>
+               </styleClass>
+               <Label styleClass="text16" text="%loginPassword" textFill="#676767">
+                  <font>
+                     <Font name="Franklin Gothic Book" size="16.0"/>
+                  </font>
+               </Label>
+               <PasswordFieldSkin fx:id="passwordField" styleClass="fields">
+                  <font>
+                     <Font size="16.0"/>
+                  </font>
+               </PasswordFieldSkin>
+            </VBox>
+            <Button fx:id="showPassword" mnemonicParsing="false" onAction="#changePasswordVisibility"
+                    styleClass="itemIconButton">
+               <graphic>
+                  <ImageView fx:id="eyeIconPassword" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                             preserveRatio="true">
+                  </ImageView>
+               </graphic>
+            </Button>
+         </HBox>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" styleClass="authButton"
+                 text="%loginTitle"/>
+         <Label styleClass="text16" text="%loginRegister">
+            <VBox.margin>
+               <Insets top="20.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="20.0"/>
+            </font>
+         </Label>
+         <Label onMouseClicked="#toRegister" styleClass="text16" text="%createAccount" textFill="#2a333f">
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Label>
+         <ProgressIndicator fx:id="progressIndicator" progress="0.0">
+            <VBox.margin>
+               <Insets top="30.0"/>
+            </VBox.margin>
+         </ProgressIndicator>
+      </VBox>
+   </VBox>
+   <HBox fx:id="errorMessage" translateY="300.0" visible="false">
+      <styleClass>
+         <String fx:value="messageContainer"/>
+         <String fx:value="messageError"/>
+      </styleClass>
+      <Label fx:id="errorLabel" styleClass="text16" textFill="#e4e4e4"/>
+   </HBox>
 </StackPane>
