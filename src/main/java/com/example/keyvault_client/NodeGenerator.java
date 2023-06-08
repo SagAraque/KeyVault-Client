@@ -72,7 +72,18 @@ public class NodeGenerator {
     public static HBox generateDeviceCard(Devices device)
     {
         String dark = ViewManager.isDark ? "Light" : "";
-        ImageView iconView = new ImageView(Cache.loadImage("icons/windows"+ dark +".png"));
+        String agent = device.getAgent().toLowerCase();
+        String os = "device";
+
+        if (agent.contains("windows"))
+            os = "windows";
+        else if (agent.contains("linux")) 
+            os = "linux";
+        else if (agent.contains("mac"))
+            os = "mac";
+
+        ImageView iconView = new ImageView(Cache.loadImage("icons/"+ os + dark +".png"));
+
         iconView.setFitHeight(32);
         iconView.setFitWidth(32);
 
