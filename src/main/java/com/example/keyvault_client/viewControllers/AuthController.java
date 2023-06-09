@@ -166,8 +166,8 @@ public class AuthController {
 
     private String verifyFields(String username, String password, String repeatPassword)
     {
-        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[!@#$&*])(?=\\S+$).{8,}$");
-        Pattern emailPattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[!@#$&*])(?=\\S+$)(?!.*[\\p{So}\\p{Sk}]).{8,}$");
+        Pattern emailPattern = Pattern.compile("^(?!.*[\\p{So}\\p{Sk}])[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
         if(username.length() == 0 || password.length() == 0 || repeatPassword.length() == 0)
             return "emptyFields";
