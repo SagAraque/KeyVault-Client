@@ -75,24 +75,24 @@ public class ViewManager extends Application {
     private static void loadFXML(String fxml, int height, int width, boolean isResizable){
         try
         {
+            executorService.shutdownNow();
+            executorService = Executors.newSingleThreadExecutor();
+
             FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource(fxml), bundle);
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
             if(window.getScene() == null)
             {
                 Scene scene = new Scene(loader.load(), width, height,true, SceneAntialiasing.BALANCED);
-
-                if(isDark)
-                    scene.getStylesheets().add(ViewManager.class.getResource("darkMode-min.css").toString());
-
                 scene.getStylesheets().add(ViewManager.class.getResource("style-min.css").toString());
-
                 window.setScene(scene);
             }
             else
             {
                 window.getScene().setRoot(loader.load());
             }
+
+            changeTheme();
 
             window.setMinWidth(width);
             window.setMinHeight(height);
@@ -140,6 +140,21 @@ public class ViewManager extends Application {
         isDark = changeToDark;
         Config.setKey("darkMode", String.valueOf(changeToDark));
         switchToMainView();
+    }
+
+    private static void changeTheme()
+    {
+        try
+        {
+          if(isDark)
+              window.getScene().getStylesheets().add(ViewManager.class.getResource("darkMode-min.css").toString());
+          else
+              window.getScene().getStylesheets().remove(1);
+        }
+        catch (IndexOutOfBoundsException ignored)
+        {
+
+        }
     }
 
     @Override
