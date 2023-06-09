@@ -89,13 +89,23 @@ public class AuthController {
     {
         username = usernameField.getText().trim();
         password = passwordField.getText().trim();
+        String verify = verifyFields(username, password, null);
 
-        progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        if(!verify.equals("OK"))
+        {
+            ViewManager.displayMessage(verify,  errorMessage, errorLabel, progressIndicator);
+        }
+        else
+        {
+            progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-        executorService.execute(() -> {
-            int response = connectionController.login(username, password);
-            Platform.runLater(() -> consumeResponse(response, ViewManager::switchToMainView));
-        } );
+            executorService.execute(() -> {
+                int response = connectionController.login(username, password);
+                Platform.runLater(() -> consumeResponse(response, ViewManager::switchToMainView));
+            } );
+        }
+
+
     }
 
     @FXML
@@ -169,13 +179,13 @@ public class AuthController {
         Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[!@#$&*])(?=\\S+$)(?!.*[\\p{So}\\p{Sk}]).{8,}$");
         Pattern emailPattern = Pattern.compile("^(?!.*[\\p{So}\\p{Sk}])[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
-        if(username.length() == 0 || password.length() == 0 || repeatPassword.length() == 0)
+        if(username.length() == 0 || password.length() == 0 || (repeatPassword != null && repeatPassword.length() == 0))
             return "emptyFields";
 
         if(!pattern.matcher(password).matches())
             return "wrongPasswordFormat";
 
-        if(!password.equals(repeatPassword))
+        if(repeatPassword != null && !password.equals(repeatPassword))
             return "wrongMatch";
 
         if(!emailPattern.matcher(username).matches())
