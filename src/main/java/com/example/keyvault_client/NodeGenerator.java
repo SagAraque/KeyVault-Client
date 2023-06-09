@@ -77,7 +77,7 @@ public class NodeGenerator {
 
         if (agent.contains("windows"))
             os = "windows";
-        else if (agent.contains("linux")) 
+        else if (agent.contains("linux"))
             os = "linux";
         else if (agent.contains("mac"))
             os = "mac";
