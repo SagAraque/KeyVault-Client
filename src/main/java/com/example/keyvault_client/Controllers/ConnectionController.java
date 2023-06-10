@@ -22,7 +22,6 @@ public class ConnectionController extends Thread{
     private KeyVault api = new KeyVault(local);
     private Timer sessionTimer;
     private String email, plainPassword;
-    private Users authUser = null;
 
     public ConnectionController() {
 
@@ -46,7 +45,6 @@ public class ConnectionController extends Thread{
         if(response == 200)
         {
             startTimer();
-            authUser = api.getAuthUser();
 
             try
             {
@@ -183,9 +181,6 @@ public class ConnectionController extends Thread{
         {
             String qr = (String) api.getResponseContent();
 
-            if(authUser.isTotpverified())
-                authUser.setTotpverified(false);
-
             System.out.println(qr);
 
             if(qr != null)
@@ -198,12 +193,7 @@ public class ConnectionController extends Thread{
     public int verifyTOTP(String code)
     {
         restartTimer();
-        int response = api.verifyTOTP(code);
-
-        if(response == 200)
-            authUser.setTotpverified(true);
-
-        return response;
+        return api.verifyTOTP(code);
     }
 
 
