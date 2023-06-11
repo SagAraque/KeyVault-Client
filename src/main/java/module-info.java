@@ -1,5 +1,6 @@
 module com.example.keyvault_client {
     requires javafx.controls;
+    requires javafx.base;
     requires javafx.fxml;
     requires KeyVault.API;
     requires java.sql;
