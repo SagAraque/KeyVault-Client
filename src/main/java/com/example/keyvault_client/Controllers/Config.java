@@ -1,13 +1,11 @@
 package com.example.keyvault_client.Controllers;
 
-import com.example.keyvault_client.ViewManager;
-
 import java.io.*;
 import java.util.Properties;
 
 public class Config {
     private static Properties config;
-    static String configDir = System.getProperty("user.home") + File.separator + "config";
+    public static String configDir = System.getProperty("user.home") + File.separator + "KeyVault";
     static String configFile = configDir + File.separator + "config.conf";
 
 
@@ -37,9 +35,9 @@ public class Config {
     }
 
     private static void createFile(File directory) {
-            directory.mkdirs();
+        directory.mkdirs();
 
-            setKey("darkMode", "false");
-            setKey("lang", "es");
+        setKey("darkMode", "false");
+        setKey("lang", "es");
     }
 }

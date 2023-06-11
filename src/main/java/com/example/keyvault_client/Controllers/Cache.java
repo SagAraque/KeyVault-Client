@@ -6,12 +6,7 @@ import java.util.Map;
 
 public class Cache {
     private static Map<String, Image> imageCache = new HashMap<>();
-
-    public Cache()
-    {
-
-    }
-
+    public Cache() {}
     public static Image loadImage(String name)
     {
         Image image = imageCache.get(name);

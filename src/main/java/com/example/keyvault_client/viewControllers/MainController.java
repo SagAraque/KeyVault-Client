@@ -1,4 +1,5 @@
 package com.example.keyvault_client.viewControllers;
+import com.example.keyvault_client.Controllers.Config;
 import com.example.keyvault_client.Controllers.ConnectionController;
 import com.example.keyvault_client.NodeGenerator;
 import com.example.keyvault_client.ViewManager;
@@ -18,16 +19,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -76,11 +75,15 @@ public class MainController {
 
         selectedMenu = allButton;
 
-        try
+        File image = new File(Config.configDir + "/" + connectionController.getEmail() + "-profileImage.png");
+
+        try (InputStream inputStream = new FileInputStream(image))
         {
-            profileImage.setImage(new Image(ViewManager.class.getResourceAsStream(connectionController.getEmail() + "-profileImage.png")));
+            profileImage.setImage(new Image(inputStream));
         }
-        catch (NullPointerException ignored){
+        catch (NullPointerException | IOException ignored)
+        {
+
         }
 
         setRoundedImage();
@@ -181,8 +184,10 @@ public class MainController {
 
             if(response == 200)
             {
+                File image = new File(Config.configDir + "/" + connectionController.getEmail() + "-profileImage.png");
+
                 Platform.runLater(() -> {
-                    try (InputStream inputStream = ViewManager.class.getResource(connectionController.getEmail() + "-profileImage.png").openStream() ) {
+                    try (InputStream inputStream = new FileInputStream(image)) {
                         profileImage.setImage(new Image(inputStream));
                         setRoundedImage();
                     } catch (IOException e) {
@@ -490,50 +495,47 @@ public class MainController {
         }
     }
 
-    public void displayGenerator(CreateUpdateController controller) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/generator-view.fxml"), resourceBundle);
-        VBox modal = loader.load();
-
-        GeneratorController generatorController = loader.getController();
-        generatorController.initialize(controller);
-
-        displayModalWindow(modal);
+    public void displayGenerator(CreateUpdateController controller) throws IOException
+    {
+        displayModalWindow("views/generator-view.fxml", loader -> {
+            GeneratorController generatorController = loader.getController();
+            generatorController.initialize(controller);
+        });
     }
 
     @FXML
     public void displayConfig() throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/config-view.fxml"), resourceBundle);
-        VBox modal = loader.load();
-
-        ConfigController configController = loader.getController();
-        configController.initialize(this, userDevices);
-
-        displayModalWindow(modal);
+        displayModalWindow("views/config-view.fxml", loader -> {
+            ConfigController configController = loader.getController();
+            configController.initialize(this, userDevices);
+        });
     }
 
     public void displayVerifyTotp() throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource("views/verify-totp-view.fxml"), resourceBundle);
-        VBox modal = loader.load();
-        VerifyTotpController controller = loader.getController();
-        controller.initialize(this);
+        displayModalWindow("views/verify-totp-view.fxml", loader -> {
+            VerifyTotpController controller = loader.getController();
+            controller.initialize(this);
+        });
+    }
 
-        displayModalWindow(modal);
+    private void displayModalWindow(String path, Consumer<FXMLLoader> controller) throws IOException {
+        if(mainBody.getChildren().size() == 1)
+        {
+            FXMLLoader loader = new FXMLLoader(ViewManager.class.getResource(path), resourceBundle);
+            VBox modal = loader.load();
+
+            controller.accept(loader);
+
+            modal.toFront();
+            mainBody.getChildren().add(modal);
+        }
     }
 
     public void removeModal()
     {
         if(mainBody.getChildren().size() != 1)
             mainBody.getChildren().remove(1);
-    }
-
-    private void displayModalWindow(Node modal)
-    {
-        if(mainBody.getChildren().size() == 1)
-        {
-            modal.toFront();
-            mainBody.getChildren().add(modal);
-        }
     }
 }

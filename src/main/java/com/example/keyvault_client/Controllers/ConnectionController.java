@@ -46,14 +46,10 @@ public class ConnectionController extends Thread{
         {
             startTimer();
 
-            try
-            {
-                ConnectionController.class.getResource(this.email + "-profileImage.png");
-            }
-            catch (NullPointerException e)
-            {
+            File image = new File(Config.configDir + "/" + this.email + "-profileImage.png");
+            if(!image.exists())
                 response = getImage();
-            }
+
         }
 
         return response;
@@ -77,7 +73,7 @@ public class ConnectionController extends Thread{
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream((byte[]) api.getResponseContent());
                 BufferedImage image = ImageIO.read(byteArrayInputStream);
 
-                File savedImage = new File("src/main/resources/com/example/keyvault_client/" + email + "-profileImage.png");
+                File savedImage = new File(Config.configDir +"/" + email + "-profileImage.png");
                 ImageIO.write(image, "png", savedImage);
             }
 
@@ -91,8 +87,7 @@ public class ConnectionController extends Thread{
 
     public int sendImage(File image)
     {
-        File file = new File(ViewManager.class.getResource("").getFile());
-        return api.sendImage(image, file.getAbsolutePath() + "/" , email + "-profileImage");
+        return api.sendImage(image, Config.configDir + "/" , email + "-profileImage");
     }
 
     public int verify(String code, boolean saveDevice)
