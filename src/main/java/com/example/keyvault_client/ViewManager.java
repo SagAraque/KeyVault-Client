@@ -46,7 +46,6 @@ public class ViewManager extends Application {
         System.setProperty("prism.lcdtext", "false");
         System.setProperty("javafx.acrylic.j2d.gpu", "true");
 
-
         String lang = Config.getKey("lang");
         isDark = Config.getKey("darkMode").equals("true");
 
@@ -63,13 +62,10 @@ public class ViewManager extends Application {
     }
 
     public static void switchToLogin() {loadFXML("views/Login.fxml", 800, 600, false);}
-
     public static void switchToRegister() {
         loadFXML("views/register.fxml", 800, 600, false);
     }
-
     public static void switchToVerify(){loadFXML("views/verify.fxml", 800, 600, false);}
-
     public static void switchToMainView(){loadFXML("views/main-view.fxml", 900, 1280, true);}
 
     private static void loadFXML(String fxml, int height, int width, boolean isResizable){
@@ -92,7 +88,7 @@ public class ViewManager extends Application {
                 window.getScene().setRoot(loader.load());
             }
 
-            changeTheme();
+            changeStyleSheet();
 
             window.setMinWidth(width);
             window.setMinHeight(height);
@@ -142,7 +138,7 @@ public class ViewManager extends Application {
         switchToMainView();
     }
 
-    private static void changeTheme()
+    private static void changeStyleSheet()
     {
         try
         {
